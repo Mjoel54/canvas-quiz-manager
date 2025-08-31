@@ -1,0 +1,20 @@
+{
+  "name": "canvas-quiz-manager",
+  "version": "1.0.0",
+  "description": "This is a TypeScript application designed to manage New Quizzes in the Canvas Learning Management System (LMS). The primary goal of this project is to streamline and automate the process of handling quiz-related tasks.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^17.2.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.2",
+    "@types/node": "^24.1.0",
+    "ts-node": "^10.9.1"
+  }
+}

@@ -6,14 +6,15 @@ dotenv.config();
 const baseUrl = process.env.BASE_URL;
 const apiToken = process.env.API_TOKEN;
 
-export async function listNewQuizzesInCourse(
-  courseId: number
-): Promise<NewQuiz[]> {
+export async function getNewQuiz(
+  courseId: number,
+  assignmentId: number
+): Promise<NewQuiz> {
   if (!baseUrl || !apiToken) {
     throw new Error("Missing required variables");
   }
 
-  const url = `${baseUrl}/api/quiz/v1/courses/${courseId}/quizzes`;
+  const url = `${baseUrl}/api/quiz/v1/courses/${courseId}/quizzes/${assignmentId}`;
 
   try {
     const response = await fetch(url, {
@@ -28,9 +29,9 @@ export async function listNewQuizzesInCourse(
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    const newQuizzes = (await response.json()) as NewQuiz[];
-    console.log(newQuizzes);
-    return newQuizzes;
+    const retrievedNewQuiz = (await response.json()) as NewQuiz;
+    console.log(retrievedNewQuiz);
+    return retrievedNewQuiz;
   } catch (error) {
     console.error("Error fetching quizzes:", error);
     throw error;
@@ -38,4 +39,4 @@ export async function listNewQuizzesInCourse(
 }
 
 // Example usage
-// listNewQuizzesInCourse(945);
+// getNewQuiz(934, 1964);

@@ -10,7 +10,6 @@ const samplePayload: CreateNewQuizParams = {
   quiz: {
     title: "Mitch's Quiz Creator Test",
     instructions: "Answer all questions.",
-
     points_possible: 10,
     due_at: "2025-09-10T00:00:00Z",
     lock_at: null,

@@ -6,9 +6,7 @@ dotenv.config();
 const baseUrl = process.env.BASE_URL;
 const apiToken = process.env.API_TOKEN;
 
-export async function listNewQuizzesInCourse(
-  courseId: number
-): Promise<NewQuiz[]> {
+export async function listNewQuizzes(courseId: number): Promise<NewQuiz[]> {
   if (!baseUrl || !apiToken) {
     throw new Error("Missing required variables");
   }
@@ -38,4 +36,4 @@ export async function listNewQuizzesInCourse(
 }
 
 // Example usage
-// listNewQuizzesInCourse(945);
+// listNewQuizzes(945);

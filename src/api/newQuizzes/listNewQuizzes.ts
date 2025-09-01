@@ -38,4 +38,4 @@ export async function listNewQuizzesInCourse(
 }
 
 // Example usage
-// listNewQuizzesInCourse(934);
+// listNewQuizzesInCourse(945);

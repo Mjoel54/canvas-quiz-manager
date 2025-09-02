@@ -37,6 +37,3 @@ export async function getNewQuiz(
     throw error;
   }
 }
-
-// Example usage
-// getNewQuiz(934, 1964);

@@ -34,6 +34,3 @@ export async function listNewQuizzes(courseId: number): Promise<NewQuiz[]> {
     throw error;
   }
 }
-
-// Example usage
-listNewQuizzes(934);

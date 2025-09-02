@@ -36,4 +36,4 @@ export async function listNewQuizzes(courseId: number): Promise<NewQuiz[]> {
 }
 
 // Example usage
-// listNewQuizzes(945);
+listNewQuizzes(934);

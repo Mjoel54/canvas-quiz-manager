@@ -66,4 +66,4 @@ export async function createNewQuiz(
 }
 
 //Example Usage
-// createNewQuiz(945, samplePayload);
+createNewQuiz(945, samplePayload);

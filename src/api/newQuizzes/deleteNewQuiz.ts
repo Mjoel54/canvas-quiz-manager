@@ -37,6 +37,3 @@ export async function deleteNewQuiz(
     throw error;
   }
 }
-
-// Example usage
-// deleteNewQuiz(945, 2280);

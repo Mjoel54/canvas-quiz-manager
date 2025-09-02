@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import { NewQuiz, CreateNewQuizParams } from "./types";
+import { NewQuiz } from "./types";
 
 dotenv.config();
 
@@ -45,6 +45,3 @@ export async function updateNewQuiz(
     throw error;
   }
 }
-
-//Example Usage
-updateNewQuiz(934, 1964, samplePayload);

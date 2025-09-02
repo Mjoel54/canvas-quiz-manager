@@ -64,6 +64,3 @@ export async function createNewQuiz(
     throw error;
   }
 }
-
-//Example Usage
-// createNewQuiz(945, samplePayload);

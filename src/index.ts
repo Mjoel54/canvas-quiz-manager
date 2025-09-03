@@ -7,6 +7,8 @@ import {
 
 const courseId = process.env.COURSE_ID;
 
+const testQuizId = 58052421;
+
 const courseNumber = Number(courseId);
 
 // const samplePayload: CreateNewQuizParams = {
@@ -44,4 +46,4 @@ const samplePayload = {
   },
 };
 
-updateNewQuiz(courseNumber, 58052421, samplePayload);
+updateNewQuiz(courseNumber, testQuizId, samplePayload);

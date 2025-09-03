@@ -1,5 +1,5 @@
 export interface NewQuiz {
-  id?: string;
+  id: string;
   title: string;
   instructions: string;
   assignment_group_id?: string;
@@ -8,7 +8,12 @@ export interface NewQuiz {
   lock_at: string | null;
   unlock_at: string | null;
   published: boolean;
-  grading_type: string;
+  grading_type:
+    | "pass_fail"
+    | "percent"
+    | "letter_grade"
+    | "gpa_scale"
+    | "points";
   quiz_settings?: QuizSettings | null;
 }
 
@@ -61,5 +66,9 @@ export interface ResultViewSettings {
 }
 
 export interface CreateNewQuizParams {
-  quiz: NewQuiz;
+  quiz: Omit<NewQuiz, "id" | "published">;
+}
+
+export interface UpdateNewQuizParams {
+  quiz: Partial<Omit<NewQuiz, "id" | "published">>;
 }

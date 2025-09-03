@@ -1,4 +1,4 @@
-import { NewQuiz } from "./types";
+import { NewQuiz, UpdateNewQuizParams } from "./index";
 
 const baseUrl = process.env.BASE_URL;
 const apiToken = process.env.API_TOKEN;
@@ -6,7 +6,7 @@ const apiToken = process.env.API_TOKEN;
 export async function updateNewQuiz(
   courseId: number,
   assignmentId: number,
-  quizParams: any
+  quizParams: UpdateNewQuizParams
 ): Promise<NewQuiz> {
   if (!baseUrl || !apiToken) {
     throw new Error("Missing required variables");

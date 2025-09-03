@@ -2,6 +2,7 @@ import {
   createNewQuiz,
   updateNewQuiz,
   CreateNewQuizParams,
+  UpdateNewQuizParams,
   NewQuiz,
 } from "./api/newQuizzes";
 
@@ -40,9 +41,9 @@ const courseNumber = Number(courseId);
 
 // createNewQuiz(courseNumber, samplePayload);
 
-const samplePayload = {
+const samplePayload: UpdateNewQuizParams = {
   quiz: {
-    instructions: "Take this quiz at the start of semester",
+    points_possible: 24,
   },
 };
 

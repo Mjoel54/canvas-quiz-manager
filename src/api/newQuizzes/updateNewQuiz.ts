@@ -1,16 +1,7 @@
-import dotenv from "dotenv";
 import { NewQuiz } from "./types";
-
-dotenv.config();
 
 const baseUrl = process.env.BASE_URL;
 const apiToken = process.env.API_TOKEN;
-
-const samplePayload = {
-  quiz: {
-    title: "Chapter 1 Quiz - Updated AGAIN",
-  },
-};
 
 export async function updateNewQuiz(
   courseId: number,

@@ -11,6 +11,7 @@ import {
   MultipleAttemptsSettings,
   ResultViewSettings,
   CreateNewQuizParams,
+  UpdateNewQuizParams,
 } from "./types";
 
 // export helper functions
@@ -29,4 +30,5 @@ export {
   MultipleAttemptsSettings,
   ResultViewSettings,
   CreateNewQuizParams,
+  UpdateNewQuizParams,
 };

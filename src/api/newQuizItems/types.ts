@@ -1,0 +1,62 @@
+export interface QuizItem {
+  id: string;
+  position: number;
+  points_possible: number;
+  entry_type: "Item" | "Stimulus" | "BankEntry" | "Bank";
+  entry_editable: boolean;
+  stimulus_quiz_entry_id: string | null;
+  status: "mutable" | "immutable";
+  properties: any | null;
+  entry: any | null;
+}
+
+export interface QuizItemDetails {
+  title: string;
+  item_body: string;
+  calculator_type: "none" | "basic" | "scientific";
+  feedback: any | null;
+  interaction_type_slug:
+    | "multi-answer"
+    | "matching"
+    | "categorization"
+    | "file-upload"
+    | "formula"
+    | "ordering"
+    | "rich-fill-blank"
+    | "hot-spot"
+    | "choice"
+    | "numeric"
+    | "true-false"
+    | "essay"
+    | "fill-blank";
+  interaction_data: any | null;
+  properties: any | null;
+  scoring_data: any | null;
+  answer_feedback: Record<string, string>;
+  scoring_algorithm: string;
+}
+
+export interface StimulusItem {
+  title: string;
+  body: string;
+  instructions: string;
+  source_url: string;
+  orientation: "top" | "left";
+  passage: boolean;
+}
+
+export interface BankEntryItem {
+  entry_type: string;
+  archived: boolean;
+  entry: null | any; // the item (either a QuestionItem or StimulusItem, depending on entry_type)
+}
+
+export interface ItemProperties {
+  sample_num: number;
+}
+
+export interface QuestionFeedbackObject {
+  neutral: string;
+  correct: string;
+  incorrect: string;
+}

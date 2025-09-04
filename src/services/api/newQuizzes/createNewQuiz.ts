@@ -1,7 +1,7 @@
-import { NewQuiz, CreateNewQuizParams } from "./index";
+import type { NewQuiz, CreateNewQuizParams } from "./index";
 
-const baseUrl = process.env.BASE_URL;
-const apiToken = process.env.API_TOKEN;
+const baseUrl = import.meta.env.VITE_BASE_URL as string | undefined;
+const apiToken = import.meta.env.VITE_API_TOKEN as string | undefined;
 
 export async function createNewQuiz(
   courseId: number,

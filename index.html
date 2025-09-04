@@ -1,108 +1,13 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Canvas Quiz Creator</title>
-    <!-- Use Tailwind CSS for modern, responsive styling -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-      /* Custom styles for the layout and button effects */
-      body {
-        font-family: "Inter", sans-serif;
-        @apply bg-gray-900 text-white flex items-center justify-center min-h-screen p-4;
-      }
-      .container {
-        @apply flex flex-col items-center justify-center bg-gray-800 p-8 rounded-2xl shadow-lg w-full max-w-xl;
-      }
-      .main-heading {
-        @apply text-4xl font-extrabold mb-4 text-center;
-      }
-      .sub-heading {
-        @apply text-lg text-gray-400 mb-8 text-center;
-      }
-      .action-button {
-        @apply bg-indigo-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105 hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-500 focus:ring-opacity-50;
-      }
-      .status-message {
-        @apply mt-6 text-sm font-medium transition-opacity duration-500;
-      }
-    </style>
+    <title>Vite + React + TS</title>
   </head>
   <body>
-    <div class="container">
-      <!-- Main application heading -->
-      <h1 class="main-heading">Canvas Quiz Creator</h1>
-      <p class="sub-heading">
-        Click the button below to create a new quiz in your Canvas course.
-      </p>
-
-      <!-- Action button to trigger the API logic -->
-      <button id="create-quiz-btn" class="action-button">
-        Create New Quiz
-      </button>
-
-      <!-- Status message area for user feedback -->
-      <p id="status-message" class="status-message opacity-0"></p>
-    </div>
-
-    <script>
-      // Wait for the DOM to be fully loaded before running the script
-      document.addEventListener("DOMContentLoaded", () => {
-        const createQuizBtn = document.getElementById("create-quiz-btn");
-        const statusMessage = document.getElementById("status-message");
-
-        // Function to display a status message to the user
-        const showStatus = (message, isError = false) => {
-          statusMessage.textContent = message;
-          statusMessage.classList.remove(
-            "text-green-400",
-            "text-red-400",
-            "opacity-0"
-          );
-          statusMessage.classList.add(
-            isError ? "text-red-400" : "text-green-400",
-            "opacity-100"
-          );
-        };
-
-        // Add a click event listener to the button
-        createQuizBtn.addEventListener("click", async () => {
-          showStatus("Creating quiz...", false);
-          createQuizBtn.disabled = true;
-
-          // --- START: PLACE YOUR API LOGIC HERE ---
-          // This is where you will place your existing asynchronous API logic.
-          // For example, if you have a function that makes a fetch request to the Canvas API,
-          // you would call that function here. The 'await' keyword is important for asynchronous operations.
-
-          try {
-            // Example placeholder for your API logic.
-            // Replace the following line with your actual API function call.
-            await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulate a network request
-
-            // On success:
-            showStatus("Quiz successfully created!", false);
-          } catch (error) {
-            // On failure:
-            console.error("Failed to create quiz:", error);
-            showStatus(
-              `Error: Failed to create quiz. Check the console for details.`,
-              true
-            );
-          }
-
-          // Restore the button's interactive state
-          createQuizBtn.disabled = false;
-
-          // You can add a timer to hide the message after a few seconds
-          setTimeout(() => {
-            statusMessage.classList.add("opacity-0");
-          }, 5000);
-
-          // --- END: PLACE YOUR API LOGIC HERE ---
-        });
-      });
-    </script>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

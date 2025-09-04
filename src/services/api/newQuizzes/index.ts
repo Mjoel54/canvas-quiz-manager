@@ -5,7 +5,7 @@ import { updateNewQuiz } from "./updateNewQuiz";
 import { deleteNewQuiz } from "./deleteNewQuiz";
 
 //import types
-import {
+import type {
   NewQuiz,
   QuizSettings,
   MultipleAttemptsSettings,
@@ -24,7 +24,7 @@ export {
 };
 
 //export types
-export {
+export type {
   NewQuiz,
   QuizSettings,
   MultipleAttemptsSettings,

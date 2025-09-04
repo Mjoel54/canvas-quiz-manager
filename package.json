@@ -1,23 +1,31 @@
 {
-  "name": "canvas-quiz-manager",
-  "version": "1.0.0",
+  "name": "canvas-qui-manager",
+  "private": true,
+  "version": "0.0.0",
   "description": "This is a TypeScript application designed to manage New Quizzes in the Canvas Learning Management System (LMS). The primary goal of this project is to streamline and automate the process of handling quiz-related tasks.",
-  "main": "./dist/main.js",
+  "type": "module",
   "scripts": {
-    "build": "tsc",
-    "start": "electron .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "@dotenvx/dotenvx": "^1.49.0",
-    "electron": "^37.4.0"
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "@dotenvx/dotenvx": "^1.49.0"
   },
   "devDependencies": {
-    "@types/node": "^24.1.0",
-    "ts-node": "^10.9.1",
-    "typescript": "^5.9.2"
+    "@eslint/js": "^9.33.0",
+    "@types/react": "^19.1.10",
+    "@types/react-dom": "^19.1.7",
+    "@vitejs/plugin-react": "^5.0.0",
+    "eslint": "^9.33.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.20",
+    "globals": "^16.3.0",
+    "typescript": "~5.8.3",
+    "typescript-eslint": "^8.39.1",
+    "vite": "^7.1.2"
   }
 }

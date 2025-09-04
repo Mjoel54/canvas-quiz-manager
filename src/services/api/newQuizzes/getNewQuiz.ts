@@ -1,12 +1,11 @@
-import { NewQuiz, UpdateNewQuizParams } from "./index";
+import type { NewQuiz } from "./types";
 
-const baseUrl = process.env.BASE_URL;
-const apiToken = process.env.API_TOKEN;
+const baseUrl = import.meta.env.VITE_BASE_URL as string | undefined;
+const apiToken = import.meta.env.VITE_API_TOKEN as string | undefined;
 
-export async function updateNewQuiz(
+export async function getNewQuiz(
   courseId: number,
-  assignmentId: number,
-  quizParams: UpdateNewQuizParams
+  assignmentId: number
 ): Promise<NewQuiz> {
   if (!baseUrl || !apiToken) {
     throw new Error("Missing required variables");
@@ -16,23 +15,22 @@ export async function updateNewQuiz(
 
   try {
     const response = await fetch(url, {
-      method: "PATCH",
+      method: "GET",
       headers: {
         Authorization: `Bearer ${apiToken}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(quizParams),
     });
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    const createdQuiz = (await response.json()) as NewQuiz;
-    console.log(createdQuiz);
-    return createdQuiz;
+    const retrievedNewQuiz = (await response.json()) as NewQuiz;
+    console.log(retrievedNewQuiz);
+    return retrievedNewQuiz;
   } catch (error) {
-    console.error("Error creating quiz:", error);
+    console.error("Error fetching quizzes:", error);
     throw error;
   }
 }

@@ -7,10 +7,9 @@ import {
 } from "./api/newQuizzes";
 
 const courseId = process.env.COURSE_ID;
+const courseNumber = Number(courseId);
 
 const testQuizId = 58052421;
-
-const courseNumber = Number(courseId);
 
 // const samplePayload: CreateNewQuizParams = {
 //   quiz: {
@@ -43,7 +42,7 @@ const courseNumber = Number(courseId);
 
 const samplePayload: UpdateNewQuizParams = {
   quiz: {
-    points_possible: 24,
+    title: "Quiz renamed - Updated via API",
   },
 };
 

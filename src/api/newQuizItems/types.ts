@@ -2,12 +2,12 @@ export interface QuizItem {
   id: string;
   position: number;
   points_possible: number;
+  properties: any | null;
   entry_type: "Item" | "Stimulus" | "BankEntry" | "Bank";
   entry_editable: boolean;
   stimulus_quiz_entry_id: string | null;
   status: "mutable" | "immutable";
-  properties: any | null;
-  entry: any | null;
+  entry: QuizItemDetails | null;
 }
 
 export interface QuizItemDetails {
@@ -59,4 +59,12 @@ export interface QuestionFeedbackObject {
   neutral: string;
   correct: string;
   incorrect: string;
+}
+
+export interface CreateQuizItemParams {
+  quizItem: Partial<Omit<QuizItem, "id">>;
+}
+
+export interface UpdateQuizItemParams {
+  quizItem: Partial<Omit<QuizItem, "id" | "published">>;
 }

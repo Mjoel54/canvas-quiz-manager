@@ -3,7 +3,7 @@ import { QuizItem } from "./types";
 const baseUrl = process.env.BASE_URL;
 const apiToken = process.env.API_TOKEN;
 
-export async function listQuizItems(
+export async function listNewQuizItems(
   courseId: number,
   quizId: number
 ): Promise<QuizItem[]> {
@@ -27,7 +27,7 @@ export async function listQuizItems(
     }
 
     const quizItems = (await response.json()) as QuizItem[];
-    console.log(quizItems);
+    // console.log(quizItems);
     return quizItems;
   } catch (error) {
     console.error("Error fetching quiz items:", error);

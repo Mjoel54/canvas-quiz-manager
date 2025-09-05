@@ -1,7 +1,10 @@
-import { listQuizItems } from "./listQuizItems";
+// import { listNewQuizItems } from "./listNewQuizItems";
+import { getNewQuizItem } from "./getNewQuizItem";
 
 const testCourseId = process.env.COURSE_ID;
+const testQuizId = process.env.TEST_QUIZ_ID;
 
-const testQuizId = 58052421;
+let quizItemId = 82079;
 
-listQuizItems(Number(testCourseId), testQuizId);
+// listNewQuizItems(Number(testCourseId), Number(testQuizId));
+getNewQuizItem(Number(testCourseId), Number(testQuizId), quizItemId);

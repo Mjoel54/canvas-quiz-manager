@@ -1,5 +1,3 @@
-// import { CreateQuizItemParams, QuizItem } from "./types";
-
 // const baseUrl = process.env.BASE_URL;
 // const apiToken = process.env.API_TOKEN;
 

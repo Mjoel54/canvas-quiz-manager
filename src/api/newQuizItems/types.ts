@@ -1,4 +1,4 @@
-export interface QuizItem {
+export interface NewQuizItem {
   id: string;
   position: number;
   points_possible: number;
@@ -61,10 +61,15 @@ export interface QuestionFeedbackObject {
   incorrect: string;
 }
 
-export interface CreateQuizItemParams {
-  quizItem: Partial<Omit<QuizItem, "id">>;
-}
+// Deep partial type that makes all nested properties optional
+// export type DeepPartial<T> = {
+//   [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
+// };
 
-export interface UpdateQuizItemParams {
-  quizItem: Partial<Omit<QuizItem, "id" | "published">>;
-}
+// export interface CreateQuizItemParams {
+//   item: DeepPartial<Omit<NewQuizItem, "id">>;
+// }
+
+// export interface UpdateNewQuizItemParams {
+//   item: DeepPartial<Omit<NewQuizItem, "id">>;
+// }

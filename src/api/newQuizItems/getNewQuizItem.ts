@@ -1,4 +1,4 @@
-import { QuizItem } from "./types";
+import { NewQuizItem } from "./types";
 
 const baseUrl = process.env.BASE_URL;
 const apiToken = process.env.API_TOKEN;
@@ -7,7 +7,7 @@ export async function getNewQuizItem(
   courseId: number,
   quizId: number,
   itemId: number
-): Promise<QuizItem> {
+): Promise<NewQuizItem> {
   if (!baseUrl || !apiToken) {
     throw new Error("Missing required variables");
   }
@@ -27,7 +27,7 @@ export async function getNewQuizItem(
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    const quizItem = (await response.json()) as QuizItem;
+    const quizItem = (await response.json()) as NewQuizItem;
     // console.log(quizItem);
     return quizItem;
   } catch (error) {

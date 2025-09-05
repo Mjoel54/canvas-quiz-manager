@@ -1,18 +1,19 @@
-import { NewQuiz, UpdateNewQuizParams } from "./index";
+import { NewQuizItem } from "./types";
 
 const baseUrl = process.env.BASE_URL;
 const apiToken = process.env.API_TOKEN;
 
-export async function updateNewQuiz(
+export async function updateNewQuizItem(
   courseId: number,
   assignmentId: number,
-  quizParams: UpdateNewQuizParams
-): Promise<NewQuiz> {
+  itemId: number,
+  quizParams: any
+): Promise<NewQuizItem> {
   if (!baseUrl || !apiToken) {
     throw new Error("Missing required variables");
   }
 
-  const url = `${baseUrl}/api/quiz/v1/courses/${courseId}/quizzes/${assignmentId}`;
+  const url = `${baseUrl}/api/quiz/v1/courses/${courseId}/quizzes/${assignmentId}/items/${itemId}`;
 
   try {
     const response = await fetch(url, {
@@ -28,9 +29,9 @@ export async function updateNewQuiz(
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    const createdQuiz = (await response.json()) as NewQuiz;
-    // console.log(createdQuiz);
-    return createdQuiz;
+    const updatedQuizItem = (await response.json()) as NewQuizItem;
+    console.log(updatedQuizItem);
+    return updatedQuizItem;
   } catch (error) {
     console.error("Error creating quiz:", error);
     throw error;

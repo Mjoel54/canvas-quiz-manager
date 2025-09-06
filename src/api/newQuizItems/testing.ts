@@ -17,7 +17,7 @@ async function runCreateTest() {
       Number(assignmentId),
       data
     );
-    // console.log(quizItem);
+    console.log(quizItem);
   } catch (error) {
     console.error("Test failed:", error);
   }

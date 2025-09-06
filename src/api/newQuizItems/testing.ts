@@ -11,6 +11,7 @@ const testCourseId = process.env.COURSE_ID;
 const assignmentId = process.env.NEW_QUIZ_ID;
 
 async function runCreateTest() {
+
   try {
     const quizItem = await createMultipleChoiceQuestionInNewQuiz(
       Number(testCourseId),
@@ -63,8 +64,3 @@ runCreateTest();
 //     console.error("Test failed:", error);
 //   }
 // }
-
-// // Run the test
-// // runListTest();
-
-// runUpdateTest();

@@ -1,0 +1,29 @@
+{
+  "item": {
+    "entry_type": "Item",
+    "points_possible": 1,
+    "position": 1,
+    "entry": {
+      "interaction_type_slug": "choice",
+      "item_body": "Which part of the cell contains most of the DNA? - New Quiz ITems",
+      "interaction_data": {
+        "choices": [
+          {
+            "id": "4",
+            "position": 1,
+            "itemBody": "Nucleus"
+          },
+          {
+            "id": "5",
+            "position": 2,
+            "itemBody": "Mitochondria"
+          }
+        ]
+      },
+      "scoring_data": {
+        "value": "1"
+      },
+      "scoring_algorithm": "Equivalence"
+    }
+  }
+}

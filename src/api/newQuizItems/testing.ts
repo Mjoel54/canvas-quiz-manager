@@ -1,14 +1,8 @@
-<<<<<<< HEAD
 import { getNewQuizItem, listNewQuizItems, updateNewQuizItem } from "./index";
-=======
-// import { listNewQuizItems } from "./listNewQuizItems";
-import { getNewQuizItem } from "./getNewQuizItem";
->>>>>>> b995b3fc363446908a0a4fbb03b05a25b8eb4cc6
 
 const testCourseId = process.env.COURSE_ID;
 const testQuizId = process.env.TEST_QUIZ_ID;
 
-<<<<<<< HEAD
 const quizItemId = 82095;
 
 async function runListTest() {
@@ -49,9 +43,3 @@ async function runUpdateTest() {
 // runListTest();
 
 runUpdateTest();
-=======
-let quizItemId = 82079;
-
-// listNewQuizItems(Number(testCourseId), Number(testQuizId));
-getNewQuizItem(Number(testCourseId), Number(testQuizId), quizItemId);
->>>>>>> b995b3fc363446908a0a4fbb03b05a25b8eb4cc6

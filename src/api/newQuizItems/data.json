@@ -5,7 +5,7 @@
     "position": 1,
     "entry": {
       "interaction_type_slug": "choice",
-      "item_body": "Which part of the cell contains most of the DNA? - New Quiz ITems",
+      "item_body": "Which part of the cell contains most of the DNA?",
       "interaction_data": {
         "choices": [
           {

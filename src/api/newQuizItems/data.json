@@ -1,29 +1,54 @@
 {
-  "item": {
-    "entry_type": "Item",
-    "points_possible": 1,
-    "position": 1,
-    "entry": {
-      "interaction_type_slug": "choice",
-      "item_body": "Which part of the cell contains most of the DNA?",
-      "interaction_data": {
-        "choices": [
-          {
-            "id": "4",
-            "position": 1,
-            "itemBody": "Nucleus"
+  "questions": [
+    {
+      "item": {
+        "position": 1,
+        "points_possible": 1,
+        "entry_type": "Item",
+        "entry": {
+          "title": "Geography Question",
+          "item_body": "The Amazon River is the longest river in the world.",
+          "calculator_type": "none",
+          "interaction_type_slug": "true-false",
+          "interaction_data": {
+            "true_choice": "True",
+            "false_choice": "False"
           },
-          {
-            "id": "5",
-            "position": 2,
-            "itemBody": "Mitochondria"
-          }
-        ]
-      },
-      "scoring_data": {
-        "value": "1"
-      },
-      "scoring_algorithm": "Equivalence"
+          "scoring_data": {
+            "value": false
+          },
+          "scoring_algorithm": "Equivalence"
+        }
+      }
+    },
+    {
+      "item": {
+        "entry_type": "Item",
+        "points_possible": 1,
+        "position": 2,
+        "entry": {
+          "interaction_type_slug": "choice",
+          "item_body": "Which part of the cell contains most of the DNA?",
+          "interaction_data": {
+            "choices": [
+              {
+                "id": "4",
+                "position": 1,
+                "itemBody": "Nucleus"
+              },
+              {
+                "id": "5",
+                "position": 2,
+                "itemBody": "Mitochondria"
+              }
+            ]
+          },
+          "scoring_data": {
+            "value": "1"
+          },
+          "scoring_algorithm": "Equivalence"
+        }
+      }
     }
-  }
+  ]
 }

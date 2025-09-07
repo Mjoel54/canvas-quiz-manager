@@ -80,7 +80,35 @@ export interface NewQuizChoiceQuestionRequest {
       scoring_data: {
         value: string;
       };
-      scoring_algorithm: string;
+      scoring_algorithm: "Equivalence" | "VaryPointsByAnswer";
+    };
+  };
+}
+
+export interface NewQuizTrueFalseQuestionRequest {
+  item: {
+    position?: number;
+    points_possible?: number;
+    entry_type: "Item";
+    entry: {
+      title?: string;
+      item_body: string;
+      calculator_type?: "none" | "basic" | "scientific";
+      feedback?: {
+        neutral?: string;
+        correct?: string;
+        incorrect?: string;
+      };
+      interaction_type_slug: "true-false";
+      interaction_data: {
+        true_choice: string;
+        false_choice: string;
+      };
+      properties?: Record<string, unknown>;
+      scoring_data: {
+        value: boolean;
+      };
+      scoring_algorithm: "Equivalence";
     };
   };
 }

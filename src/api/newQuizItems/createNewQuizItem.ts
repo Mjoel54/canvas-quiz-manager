@@ -1,4 +1,4 @@
-import { NewQuizItem } from "./types";
+import { NewQuizItem, NewQuizChoiceQuestionRequest } from "./types";
 
 const baseUrl = process.env.BASE_URL;
 const apiToken = process.env.API_TOKEN;
@@ -52,6 +52,11 @@ export function isValidMultipleChoiceRequest(data: any): boolean {
 
     return true;
   } catch {
+    // console.error(
+    //   `❌ Incorrect multiple choice format: ${JSON.stringify(
+    //     data.item.entry.item_body
+    //   )}`
+    // );
     return false;
   }
 }
@@ -59,16 +64,18 @@ export function isValidMultipleChoiceRequest(data: any): boolean {
 export async function createMultipleChoiceQuestionInNewQuiz(
   courseId: number,
   quizId: number,
-  quizParams: any
+  quizParams: NewQuizChoiceQuestionRequest
 ): Promise<NewQuizItem> {
   if (!baseUrl || !apiToken) {
     throw new Error("Missing required variables");
   }
 
   if (isValidMultipleChoiceRequest(quizParams)) {
-    console.log("✅ Valid multiple choice request");
+    console.log("✅ Valid new quiz choice question request data structure");
   } else {
-    throw new Error("❌ Invalid request structure");
+    throw new Error(
+      "❌ Invalid new quiz choice question request data structure"
+    );
   }
 
   const url = `${baseUrl}/api/quiz/v1/courses/${courseId}/quizzes/${quizId}/items`;

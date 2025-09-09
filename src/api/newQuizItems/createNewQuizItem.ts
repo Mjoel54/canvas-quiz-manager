@@ -2,6 +2,7 @@ import {
   NewQuizItem,
   NewQuizChoiceQuestionRequest,
   NewQuizTrueFalseQuestionRequest,
+  NewQuizEssayQuestionRequest,
 } from "./types";
 
 const baseUrl = process.env.BASE_URL;
@@ -66,6 +67,12 @@ export async function createMultipleQuestionsInNewQuiz(
         case "true-false":
           if (!isValidTrueFalseRequestData(question)) {
             throw new Error("❌ Invalid true/false question request");
+          }
+          break;
+
+        case "essay":
+          if (!isValidEssayRequestData(question)) {
+            throw new Error("❌ Invalid essay question request");
           }
           break;
 
@@ -193,4 +200,82 @@ export function isValidTrueFalseRequestData(
   }
 
   return true;
+}
+
+export function isValidEssayRequestData(input: any): string[] {
+  const errors: string[] = [];
+  const isObj = (v: unknown): v is Record<string, unknown> =>
+    typeof v === "object" && v !== null && !Array.isArray(v);
+
+  if (!isObj(input)) {
+    return ["Root must be an object"];
+  }
+
+  if (input.entry_type !== "Item") {
+    errors.push('entry_type must equal "Item"');
+  }
+
+  if (!isObj(input.entry)) {
+    errors.push("entry must be an object");
+    return errors;
+  }
+
+  const entry = input.entry as NewQuizEssayQuestionRequest["entry"];
+
+  if (typeof entry.item_body !== "string" || !entry.item_body.trim()) {
+    errors.push("entry.item_body must be a non-empty string");
+  }
+
+  if (entry.interaction_type_slug !== "essay") {
+    errors.push('entry.interaction_type_slug must equal "essay"');
+  }
+
+  const id = entry.interaction_data;
+  if (!isObj(id)) {
+    errors.push("interaction_data must be an object");
+  } else {
+    if (typeof id.rce !== "boolean") errors.push("rce must be boolean");
+    if (id.essay !== null) errors.push("essay must be null");
+    if (typeof id.word_count !== "boolean")
+      errors.push("word_count must be boolean");
+    if (typeof id.file_upload !== "boolean")
+      errors.push("file_upload must be boolean");
+    if (id.file_upload !== false)
+      errors.push("file_upload must be false for essay");
+    if (typeof id.spell_check !== "boolean")
+      errors.push("spell_check must be boolean");
+    if (typeof id.word_limit_enabled !== "boolean")
+      errors.push("word_limit_enabled must be boolean");
+
+    const numeric = (s: unknown) => typeof s === "string" && /^-?\d+$/.test(s);
+    if (!numeric(id.word_limit_max))
+      errors.push("word_limit_max must be numeric string");
+    if (!numeric(id.word_limit_min))
+      errors.push("word_limit_min must be numeric string");
+
+    if (id.word_limit_enabled) {
+      const max = Number(id.word_limit_max);
+      const min = Number(id.word_limit_min);
+      if (min < 0) errors.push("word_limit_min cannot be negative");
+      if (max < min) errors.push("word_limit_max must be >= word_limit_min");
+    }
+  }
+
+  if (!isObj(entry.properties) || Object.keys(entry.properties).length > 0) {
+    errors.push("properties must be an empty object");
+  }
+
+  if (
+    !isObj(entry.scoring_data) ||
+    typeof entry.scoring_data.value !== "string" ||
+    !entry.scoring_data.value.trim()
+  ) {
+    errors.push("scoring_data.value must be a non-empty string");
+  }
+
+  if (entry.scoring_algorithm !== "None") {
+    errors.push('scoring_algorithm must equal "None"');
+  }
+
+  return errors;
 }

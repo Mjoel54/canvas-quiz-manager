@@ -3,15 +3,18 @@ import {
   listNewQuizItems,
   updateNewQuizItem,
   createQuestionItemInNewQuiz,
-  isValidMultipleChoiceRequestData,
-  isValidTrueFalseRequestData,
+  createMultipleQuestionsInNewQuiz,
 } from "./index";
 import data from "./data.json";
 
 const testCourseId = process.env.COURSE_ID;
 const assignmentId = process.env.NEW_QUIZ_ID;
 
-// runCreateTest();
+createMultipleQuestionsInNewQuiz(
+  Number(testCourseId),
+  Number(assignmentId),
+  data
+);
 
 // const testCourseId = process.env.COURSE_ID;
 // const testQuizId = process.env.TEST_QUIZ_ID;

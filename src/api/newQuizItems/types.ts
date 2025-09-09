@@ -113,4 +113,31 @@ export interface NewQuizTrueFalseQuestionRequest {
   };
 }
 
-export interface NewQuizEssayQuestionRequest {}
+export interface NewQuizEssayQuestionRequest {
+  position?: number;
+  points_possible?: number;
+  entry_type: "Item";
+  entry: {
+    item_body: string;
+    interaction_type_slug: "essay";
+    interaction_data: {
+      rce: boolean;
+      essay: null;
+      word_count: boolean;
+      file_upload: boolean;
+      spell_check: boolean;
+      word_limit_max: string;
+      word_limit_min: string;
+      word_limit_enabled: boolean;
+    };
+
+    // required (must be an empty object for essay)
+    properties: {};
+
+    scoring_data: {
+      value: string;
+    };
+
+    scoring_algorithm: "None";
+  };
+}

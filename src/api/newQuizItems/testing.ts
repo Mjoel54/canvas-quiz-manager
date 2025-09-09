@@ -46,7 +46,7 @@ async function runCreateQuestions(data: { questions: any[] }) {
       );
 
       results.push(created);
-      console.log(`✅ Created ${slug} item:`, created);
+      console.log(`✅ Created ${slug} item:`);
     }
 
     return results;

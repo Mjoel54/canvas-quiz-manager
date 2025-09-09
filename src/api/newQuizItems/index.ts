@@ -4,6 +4,7 @@ import { updateNewQuizItem } from "./updateNewQuizItem";
 //create
 import {
   createQuestionItemInNewQuiz,
+  createMultipleQuestionsInNewQuiz,
   isValidMultipleChoiceRequestData,
   isValidTrueFalseRequestData,
 } from "./createNewQuizItem";
@@ -20,6 +21,7 @@ export {
   listNewQuizItems,
   updateNewQuizItem,
   createQuestionItemInNewQuiz,
+  createMultipleQuestionsInNewQuiz,
   isValidMultipleChoiceRequestData,
   isValidTrueFalseRequestData,
 };

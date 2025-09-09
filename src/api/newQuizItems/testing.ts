@@ -2,28 +2,16 @@ import {
   getNewQuizItem,
   listNewQuizItems,
   updateNewQuizItem,
-  createMultipleChoiceQuestionInNewQuiz,
+  createQuestionItemInNewQuiz,
+  isValidMultipleChoiceRequestData,
+  isValidTrueFalseRequestData,
 } from "./index";
 import data from "./data.json";
-import { run } from "node:test";
 
 const testCourseId = process.env.COURSE_ID;
 const assignmentId = process.env.NEW_QUIZ_ID;
 
-async function runCreateTest() {
-  try {
-    const quizItem = await createMultipleChoiceQuestionInNewQuiz(
-      Number(testCourseId),
-      Number(assignmentId),
-      data
-    );
-    console.log(quizItem);
-  } catch (error) {
-    console.error("Test failed:", error);
-  }
-}
-
-runCreateTest();
+// runCreateTest();
 
 // const testCourseId = process.env.COURSE_ID;
 // const testQuizId = process.env.TEST_QUIZ_ID;
@@ -32,16 +20,19 @@ runCreateTest();
 
 // async function runListTest() {
 //   try {
-//     // listNewQuizItems(Number(testCourseId), Number(testQuizId));
 //     const quizItem = await listNewQuizItems(
 //       Number(testCourseId),
-//       Number(testQuizId)
+//       Number(assignmentId)
 //     );
 //     console.log(quizItem);
+//     return quizItem;
 //   } catch (error) {
 //     console.error("Test failed:", error);
+//     throw error;
 //   }
 // }
+
+// runListTest();
 
 // async function runUpdateTest() {
 //   try {

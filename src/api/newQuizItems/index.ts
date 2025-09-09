@@ -2,7 +2,12 @@ import { getNewQuizItem } from "./getNewQuizItem";
 import { listNewQuizItems } from "./listNewQuizItems";
 import { updateNewQuizItem } from "./updateNewQuizItem";
 //create
-import { createMultipleChoiceQuestionInNewQuiz } from "./createNewQuizItem";
+import {
+  createQuestionItemInNewQuiz,
+  createMultipleQuestionsInNewQuiz,
+  isValidMultipleChoiceRequestData,
+  isValidTrueFalseRequestData,
+} from "./createNewQuizItem";
 // update
 // delete
 // get items media upload url
@@ -15,7 +20,10 @@ export {
   getNewQuizItem,
   listNewQuizItems,
   updateNewQuizItem,
-  createMultipleChoiceQuestionInNewQuiz,
+  createQuestionItemInNewQuiz,
+  createMultipleQuestionsInNewQuiz,
+  isValidMultipleChoiceRequestData,
+  isValidTrueFalseRequestData,
 };
 
 // export types

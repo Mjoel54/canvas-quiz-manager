@@ -2,7 +2,9 @@ import {
   getNewQuizItem,
   listNewQuizItems,
   updateNewQuizItem,
-  createMultipleChoiceQuestionInNewQuiz,
+  createQuestionItemInNewQuiz,
+  isValidMultipleChoiceRequestData,
+  isValidTrueFalseRequestData,
 } from "./index";
 import data from "./data.json";
 import { run } from "node:test";
@@ -10,20 +12,53 @@ import { run } from "node:test";
 const testCourseId = process.env.COURSE_ID;
 const assignmentId = process.env.NEW_QUIZ_ID;
 
-async function runCreateTest() {
+async function runCreateQuestions(data: { questions: any[] }) {
   try {
-    const quizItem = await createMultipleChoiceQuestionInNewQuiz(
-      Number(testCourseId),
-      Number(assignmentId),
-      data
-    );
-    console.log(quizItem);
+    const results: any = [];
+
+    for (const question of data.questions) {
+      const slug = question?.item?.entry?.interaction_type_slug;
+
+      switch (slug) {
+        case "choice":
+          if (!isValidMultipleChoiceRequestData(question)) {
+            throw new Error("❌ Invalid multiple choice question request");
+          }
+          break;
+
+        case "true-false":
+          if (!isValidTrueFalseRequestData(question)) {
+            throw new Error("❌ Invalid true/false question request");
+          }
+          break;
+
+        default:
+          throw new Error(
+            `❌ Unsupported or missing interaction_type_slug: ${slug}`
+          );
+      }
+
+      // Only runs if validation passed
+      const created = await createQuestionItemInNewQuiz(
+        Number(testCourseId),
+        Number(assignmentId),
+        question
+      );
+
+      results.push(created);
+      console.log(`✅ Created ${slug} item:`, created);
+    }
+
+    return results;
   } catch (error) {
-    console.error("Test failed:", error);
+    console.error("Batch creation failed:", error);
+    throw error;
   }
 }
 
-runCreateTest();
+runCreateQuestions(data);
+
+// runCreateTest();
 
 // const testCourseId = process.env.COURSE_ID;
 // const testQuizId = process.env.TEST_QUIZ_ID;
@@ -32,16 +67,19 @@ runCreateTest();
 
 // async function runListTest() {
 //   try {
-//     // listNewQuizItems(Number(testCourseId), Number(testQuizId));
 //     const quizItem = await listNewQuizItems(
 //       Number(testCourseId),
-//       Number(testQuizId)
+//       Number(assignmentId)
 //     );
 //     console.log(quizItem);
+//     return quizItem;
 //   } catch (error) {
 //     console.error("Test failed:", error);
+//     throw error;
 //   }
 // }
+
+// runListTest();
 
 // async function runUpdateTest() {
 //   try {

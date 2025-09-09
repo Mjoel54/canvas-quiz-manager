@@ -49,6 +49,30 @@
           "scoring_algorithm": "Equivalence"
         }
       }
+    },
+    {
+      "item": {
+        "entry_type": "Item",
+        "entry": {
+          "item_body": "Explain the process of photosynthesis in your own words.",
+          "interaction_type_slug": "essay",
+          "interaction_data": {
+            "rce": true,
+            "essay": null,
+            "word_count": true,
+            "file_upload": false,
+            "spell_check": true,
+            "word_limit_max": "500",
+            "word_limit_min": "50",
+            "word_limit_enabled": true
+          },
+          "properties": {},
+          "scoring_data": {
+            "value": "Ensure the answer includes mention of light, carbon dioxide, water, and glucose."
+          },
+          "scoring_algorithm": "exact"
+        }
+      }
     }
   ]
 }

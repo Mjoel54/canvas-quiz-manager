@@ -53,6 +53,7 @@
     {
       "item": {
         "entry_type": "Item",
+        "points_possible": 5,
         "entry": {
           "item_body": "Explain the process of photosynthesis in your own words.",
           "interaction_type_slug": "essay",
@@ -70,7 +71,7 @@
           "scoring_data": {
             "value": "Ensure the answer includes mention of light, carbon dioxide, water, and glucose."
           },
-          "scoring_algorithm": "exact"
+          "scoring_algorithm": "None"
         }
       }
     }

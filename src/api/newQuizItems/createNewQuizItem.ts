@@ -194,3 +194,5 @@ export function isValidTrueFalseRequestData(
 
   return true;
 }
+
+export function isValidEssayRequestData(data: any): boolean {}

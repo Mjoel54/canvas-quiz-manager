@@ -112,3 +112,5 @@ export interface NewQuizTrueFalseQuestionRequest {
     };
   };
 }
+
+export interface NewQuizEssayQuestionRequest {}

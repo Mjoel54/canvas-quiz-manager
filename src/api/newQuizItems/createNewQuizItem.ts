@@ -1,8 +1,10 @@
+import { v4 as uuidv4 } from "uuid";
 import {
   NewQuizItem,
   NewQuizChoiceQuestionRequest,
   NewQuizTrueFalseQuestionRequest,
   NewQuizEssayQuestionRequest,
+  NewQuizOrderingQuestionRequest,
 } from "./types";
 
 const baseUrl = process.env.BASE_URL;
@@ -31,7 +33,10 @@ export async function createQuestionItemInNewQuiz(
     });
 
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      const errText = await response.text(); // 👈 capture full error body
+      throw new Error(
+        `HTTP error! status: ${response.status}, body: ${errText}`
+      );
     }
 
     const createdQuizItem = (await response.json()) as NewQuizItem;
@@ -54,7 +59,7 @@ export async function createMultipleQuestionsInNewQuiz(
   try {
     const results: any = [];
 
-    for (const question of data.questions) {
+    for (let question of data.questions) {
       const slug = question?.item?.entry?.interaction_type_slug;
 
       switch (slug) {
@@ -74,6 +79,9 @@ export async function createMultipleQuestionsInNewQuiz(
           if (!isValidEssayRequestData(question)) {
             throw new Error("❌ Invalid essay question request");
           }
+          break;
+        case "ordering":
+          question = transformOrderingQuestion(question);
           break;
 
         default:
@@ -98,6 +106,48 @@ export async function createMultipleQuestionsInNewQuiz(
     console.error("Batch creation failed:", error);
     throw error;
   }
+}
+
+// Add UUID to incoming ordering JSON data
+export function transformOrderingQuestion(
+  incoming: any
+): NewQuizOrderingQuestionRequest {
+  const newChoices: Record<string, { id: string; item_body: string }> = {};
+  const idMap: Record<string, string> = {};
+
+  // Generate fresh UUIDs for each choice
+  for (const key of Object.keys(incoming.item.entry.interaction_data.choices)) {
+    const oldChoice = incoming.item.entry.interaction_data.choices[key];
+    const newId = uuidv4();
+    idMap[oldChoice.id] = newId;
+    newChoices[newId] = {
+      id: newId,
+      item_body: oldChoice.item_body,
+    };
+  }
+
+  // Replace scoring_data.value with new UUIDs in the same order
+  interface ScoringData {
+    value: string[];
+  }
+
+  const newScoringData: ScoringData = {
+    value: (incoming.item.entry.scoring_data.value as string[]).map(
+      (oldId: string) => idMap[oldId]
+    ),
+  };
+
+  return {
+    ...incoming,
+    item: {
+      ...incoming.item,
+      entry: {
+        ...incoming.item.entry,
+        interaction_data: { choices: newChoices },
+        scoring_data: newScoringData,
+      },
+    },
+  };
 }
 
 // Canvas New Quiz data validation helper functions

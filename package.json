@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "This is a TypeScript application designed to manage New Quizzes in the Canvas Learning Management System (LMS). The primary goal of this project is to streamline and automate the process of handling quiz-related tasks.",
   "main": "./dist/main.js",
+  "type": "module",
   "scripts": {
     "build": "tsc",
     "start": "electron .",
@@ -13,7 +14,8 @@
   "license": "ISC",
   "dependencies": {
     "@dotenvx/dotenvx": "^1.49.0",
-    "electron": "^37.4.0"
+    "electron": "^37.4.0",
+    "uuid": "^13.0.0"
   },
   "devDependencies": {
     "@types/node": "^24.1.0",

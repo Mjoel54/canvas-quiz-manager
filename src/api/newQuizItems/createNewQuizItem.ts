@@ -81,7 +81,12 @@ export async function createMultipleQuestionsInNewQuiz(
           }
           break;
         case "ordering":
-          question = transformOrderingQuestion(question);
+          if (!isValidOrderingQuestion(question)) {
+            throw new Error("❌ Invalid ordering question request");
+          } else {
+            question = transformOrderingQuestion(question);
+          }
+
           break;
 
         default:
@@ -209,9 +214,7 @@ export function isValidMultipleChoiceRequestData(data: any): boolean {
   }
 }
 
-export function isValidTrueFalseRequestData(
-  obj: unknown
-): obj is NewQuizTrueFalseQuestionRequest {
+export function isValidTrueFalseRequestData(obj: unknown): boolean {
   if (typeof obj !== "object" || obj === null) return false;
 
   const root = obj as Partial<NewQuizTrueFalseQuestionRequest>;
@@ -252,7 +255,7 @@ export function isValidTrueFalseRequestData(
   return true;
 }
 
-export function isValidEssayRequestData(input: any): string[] {
+export function isValidEssayRequestData(input: any): boolean | string[] {
   const errors: string[] = [];
   const isObj = (v: unknown): v is Record<string, unknown> =>
     typeof v === "object" && v !== null && !Array.isArray(v);
@@ -328,4 +331,43 @@ export function isValidEssayRequestData(input: any): string[] {
   }
 
   return errors;
+}
+
+export function isValidOrderingQuestion(input: any): boolean {
+  if (!input?.item?.entry) return false;
+
+  const entry = input.item.entry;
+
+  // Rule 1: Must be ordering type
+  if (entry.interaction_type_slug !== "ordering") return false;
+
+  // Rule 2: Choices must exist
+  const choices = entry.interaction_data?.choices;
+  if (!choices || typeof choices !== "object") return false;
+
+  // Rule 3: Validate each choice
+  for (const key of Object.keys(choices)) {
+    const choice = choices[key];
+    if (
+      typeof choice?.id !== "string" ||
+      typeof choice?.item_body !== "string"
+    ) {
+      return false;
+    }
+  }
+
+  // Rule 4: scoring_data must exist
+  const scoring = entry.scoring_data;
+  if (!scoring || !Array.isArray(scoring.value)) return false;
+
+  // Rule 5: scoring_data values must match choice IDs
+  const choiceIds = new Set(Object.values(choices).map((c: any) => c.id));
+  for (const val of scoring.value) {
+    if (!choiceIds.has(val)) return false;
+  }
+
+  // Rule 6: scoring_algorithm
+  if (entry.scoring_algorithm !== "DeepEquals") return false;
+
+  return true;
 }

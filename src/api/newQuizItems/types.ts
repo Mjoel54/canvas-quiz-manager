@@ -179,3 +179,44 @@ export interface NewQuizOrderingQuestionRequest {
     };
   };
 }
+
+export interface NewQuizMultipleAnswerQuestionRequest {
+  course_id: number;
+  assignment_id: number;
+  item: {
+    position?: number;
+    points_possible?: number;
+    entry_type: "Item";
+    entry: {
+      title?: string;
+      item_body: string;
+      calculator_type?: "none" | "basic" | "scientific";
+      feedback?: {
+        neutral?: string;
+        correct?: string;
+        incorrect?: string;
+      };
+      interaction_type_slug: "multi-answer";
+      interaction_data: {
+        choices: {
+          id: string;
+          position: number;
+          item_body: string;
+        }[];
+      };
+      properties?: {
+        shuffle_rules?: {
+          choices?: {
+            to_lock?: number[];
+            shuffled?: boolean;
+          };
+        };
+      };
+      scoring_data: {
+        value: string[];
+      };
+      answer_feedback?: Record<string, string>;
+      scoring_algorithm: "AllOrNothing" | "PartialScore";
+    };
+  };
+}

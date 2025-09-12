@@ -1,49 +1,53 @@
-import {
-  createNewQuiz,
-  updateNewQuiz,
-  CreateNewQuizParams,
-  UpdateNewQuizParams,
-  NewQuiz,
-} from "./api/newQuizzes";
+import { createMultipleQuestionsInNewQuiz } from "./api/newQuizItems/index.js";
+import data from "./data/data.json" assert { type: "json" };
 
-const courseId = process.env.COURSE_ID;
-const courseNumber = Number(courseId);
+const testCourseId = process.env.COURSE_ID;
+const assignmentId = process.env.NEW_QUIZ_ID;
 
-const testQuizId = 58052421;
+createMultipleQuestionsInNewQuiz(
+  Number(testCourseId),
+  Number(assignmentId),
+  data
+);
 
-// const samplePayload: CreateNewQuizParams = {
-//   quiz: {
-//     title: "Mitch's Quiz Creator Test",
-//     instructions: "Answer all questions.",
-//     points_possible: 10,
-//     due_at: "2025-09-10T00:00:00Z",
-//     lock_at: null,
-//     unlock_at: null,
-//     published: false,
-//     grading_type: "points",
-//     quiz_settings: {
-//       calculator_type: "none",
-//       filter_ip_address: false,
-//       one_at_a_time_type: "none",
-//       allow_backtracking: true,
-//       shuffle_answers: false,
-//       shuffle_questions: false,
-//       require_student_access_code: false,
-//       student_access_code: "",
-//       has_time_limit: false,
-//       session_time_limit_in_seconds: 0,
-//       multiple_attempts: null,
-//       result_view_settings: null,
-//     },
-//   },
-// };
+// const testCourseId = process.env.COURSE_ID;
+// const testQuizId = process.env.TEST_QUIZ_ID;
 
-// createNewQuiz(courseNumber, samplePayload);
+// const quizItemId = 82095;
 
-const samplePayload: UpdateNewQuizParams = {
-  quiz: {
-    title: "Quiz renamed - Updated via API",
-  },
-};
+// async function runListTest() {
+//   try {
+//     const quizItem = await listNewQuizItems(
+//       Number(testCourseId),
+//       Number(assignmentId)
+//     );
+//     console.log(quizItem);
+//     return quizItem;
+//   } catch (error) {
+//     console.error("Test failed:", error);
+//     throw error;
+//   }
+// }
 
-updateNewQuiz(courseNumber, testQuizId, samplePayload);
+// runListTest();
+
+// async function runUpdateTest() {
+//   try {
+//     // Example 1: Update just the title
+//     const quizItem1 = await updateNewQuizItem(
+//       Number(testCourseId),
+//       Number(testQuizId),
+//       quizItemId,
+//       {
+//         item: {
+//           entry: {
+//             item_body: "Updated question text only",
+//           },
+//         },
+//       }
+//     );
+//     console.log("Updated title:", quizItem1);
+//   } catch (error) {
+//     console.error("Test failed:", error);
+//   }
+// }

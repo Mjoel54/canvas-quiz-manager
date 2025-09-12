@@ -141,3 +141,41 @@ export interface NewQuizEssayQuestionRequest {
     scoring_algorithm: "None";
   };
 }
+
+export interface NewQuizOrderingQuestionRequest {
+  item: {
+    position?: number;
+    points_possible: number;
+    entry_type: "Item";
+    entry: {
+      title?: string;
+      item_body: string;
+      calculator_type?: "none" | "basic" | "scientific";
+      feedback?: {
+        neutral?: string;
+        correct?: string;
+        incorrect?: string;
+      };
+      interaction_type_slug: "ordering";
+      interaction_data: {
+        choices: {
+          [uuid: string]: {
+            id: string;
+            item_body: string;
+          };
+        };
+      };
+      properties?: {
+        top_label?: string;
+        bottom_label?: string;
+        shuffle_rules?: null;
+        include_labels?: boolean;
+        display_answers_paragraph?: boolean;
+      };
+      scoring_data: {
+        value: string[];
+      };
+      scoring_algorithm: string;
+    };
+  };
+}

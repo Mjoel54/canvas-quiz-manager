@@ -1,13 +1,13 @@
-import { getNewQuizItem } from "./getNewQuizItem";
-import { listNewQuizItems } from "./listNewQuizItems";
-import { updateNewQuizItem } from "./updateNewQuizItem";
+import { getNewQuizItem } from "./getNewQuizItem.js";
+import { listNewQuizItems } from "./listNewQuizItems.js";
+import { updateNewQuizItem } from "./updateNewQuizItem.js";
 //create
 import {
   createQuestionItemInNewQuiz,
   createMultipleQuestionsInNewQuiz,
   isValidMultipleChoiceRequestData,
   isValidTrueFalseRequestData,
-} from "./createNewQuizItem";
+} from "./createNewQuizItem.js";
 // update
 // delete
 // get items media upload url
@@ -27,4 +27,4 @@ export {
 };
 
 // export types
-export * from "./types";
+export * from "./types.js";

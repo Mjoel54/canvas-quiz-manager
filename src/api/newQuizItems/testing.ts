@@ -4,8 +4,10 @@ import {
   updateNewQuizItem,
   createQuestionItemInNewQuiz,
   createMultipleQuestionsInNewQuiz,
-} from "./index";
-import data from "./data.json";
+} from "./index.js";
+import data from "./data.json" assert { type: "json" };
+import sampleOrderingQuestionData from "./orderingQuestion.json" assert { type: "json" };
+import geographyQuestions from "./geographyQuiz.json" assert { type: "json" };
 
 const testCourseId = process.env.COURSE_ID;
 const assignmentId = process.env.NEW_QUIZ_ID;
@@ -13,7 +15,7 @@ const assignmentId = process.env.NEW_QUIZ_ID;
 createMultipleQuestionsInNewQuiz(
   Number(testCourseId),
   Number(assignmentId),
-  data
+  geographyQuestions
 );
 
 // const testCourseId = process.env.COURSE_ID;

@@ -1,14 +1,21 @@
-import { createMultipleQuestionsInNewQuiz } from "./api/newQuizItems/index.js";
+import {
+  createMultipleQuestionsInNewQuiz,
+  listNewQuizItems,
+  deleteAllNewQuizItems,
+} from "./api/newQuizItems/index.js";
 import data from "./data/data.json" assert { type: "json" };
+import musicQuestions from "./data/musicQuiz.json" assert { type: "json" };
 
 const testCourseId = process.env.COURSE_ID;
 const assignmentId = process.env.NEW_QUIZ_ID;
 
-createMultipleQuestionsInNewQuiz(
-  Number(testCourseId),
-  Number(assignmentId),
-  data
-);
+// createMultipleQuestionsInNewQuiz(
+//   Number(testCourseId),
+//   Number(assignmentId),
+//   musicQuestions
+// );
+
+deleteAllNewQuizItems(Number(testCourseId), Number(assignmentId));
 
 // const testCourseId = process.env.COURSE_ID;
 // const testQuizId = process.env.TEST_QUIZ_ID;

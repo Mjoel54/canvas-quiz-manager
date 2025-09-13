@@ -5,13 +5,13 @@ const apiToken = process.env.API_TOKEN;
 
 export async function listNewQuizItems(
   courseId: number,
-  quizId: number
+  assignmentId: number
 ): Promise<NewQuizItem[]> {
   if (!baseUrl || !apiToken) {
     throw new Error("Missing required variables");
   }
 
-  const url = `${baseUrl}/api/quiz/v1/courses/${courseId}/quizzes/${quizId}/items`;
+  const url = `${baseUrl}/api/quiz/v1/courses/${courseId}/quizzes/${assignmentId}/items`;
 
   try {
     const response = await fetch(url, {
@@ -26,9 +26,8 @@ export async function listNewQuizItems(
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    const quizItems = (await response.json()) as NewQuizItem[];
-    // console.log(quizItems);
-    return quizItems;
+    const retrievedQuizItems = (await response.json()) as NewQuizItem[];
+    return retrievedQuizItems;
   } catch (error) {
     console.error("Error fetching quiz items:", error);
     throw error;

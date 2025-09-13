@@ -10,6 +10,10 @@ import {
 } from "./createNewQuizItem.js";
 // update
 // delete
+import {
+  deleteNewQuizItem,
+  deleteAllNewQuizItems,
+} from "./deleteNewQuizItem.js";
 // get items media upload url
 // appendixes
 
@@ -20,6 +24,8 @@ export {
   getNewQuizItem,
   listNewQuizItems,
   updateNewQuizItem,
+  deleteNewQuizItem,
+  deleteAllNewQuizItems,
   createQuestionItemInNewQuiz,
   createMultipleQuestionsInNewQuiz,
   isValidMultipleChoiceRequestData,

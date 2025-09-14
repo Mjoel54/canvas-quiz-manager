@@ -50,7 +50,7 @@ export async function deleteAllNewQuizItems(
     const items: NewQuizItem[] = await listNewQuizItems(courseId, assignmentId);
     const itemIds = items.map((item) => item.id);
 
-    console.log(`Found ${itemIds.length} quiz items:`, itemIds);
+    // console.log(`Found ${itemIds.length} quiz items:`, itemIds);
 
     // Step 2: Loop and delete
     for (const id of itemIds) {
@@ -60,7 +60,7 @@ export async function deleteAllNewQuizItems(
         deleted.push(id);
 
         // Small delay to avoid rate limits
-        await new Promise((resolve) => setTimeout(resolve, 300));
+        await new Promise((resolve) => setTimeout(resolve, 200));
       } catch (error) {
         console.error(`❌ Failed to delete quiz item ${id}:`, error);
         failed.push(id);

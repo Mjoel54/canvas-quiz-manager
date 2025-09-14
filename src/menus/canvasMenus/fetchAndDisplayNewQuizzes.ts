@@ -2,7 +2,7 @@ import inquirer from "inquirer";
 // import your API function (adjust the path if needed)
 import { listNewQuizzes, NewQuiz } from "../../api/newQuizzes/index.js";
 
-export async function newQuizzesMenu() {
+export async function fetchAndDisplayNewQuizzes() {
   const answers = await inquirer.prompt([
     {
       type: "input",

@@ -24,7 +24,7 @@ export async function listNewQuizzes(courseId: number): Promise<NewQuiz[]> {
     }
 
     const newQuizzes = (await response.json()) as NewQuiz[];
-    console.log(newQuizzes);
+
     return newQuizzes;
   } catch (error) {
     console.error("Error fetching quizzes:", error);

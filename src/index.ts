@@ -15,7 +15,7 @@ const assignmentId = process.env.NEW_QUIZ_ID;
 //   musicQuestions
 // );
 
-deleteAllNewQuizItems(Number(testCourseId), Number(assignmentId));
+// deleteAllNewQuizItems(Number(testCourseId), Number(assignmentId));
 
 // const testCourseId = process.env.COURSE_ID;
 // const testQuizId = process.env.TEST_QUIZ_ID;

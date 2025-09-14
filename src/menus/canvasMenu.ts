@@ -1,5 +1,6 @@
 import inquirer from "inquirer";
-import { newQuizzesMenu } from "./canvasMenus/newQuizzesMenu.js";
+import { fetchAndDisplayNewQuizzes } from "./canvasMenus/fetchAndDisplayNewQuizzes.js";
+import { editNewQuizzes } from "./canvasMenus/editNewQuizzes.js";
 
 export async function showCanvasMenu() {
   const { action } = await inquirer.prompt([
@@ -18,8 +19,12 @@ export async function showCanvasMenu() {
   ]);
 
   if (action === "list") {
-    await newQuizzesMenu();
+    await fetchAndDisplayNewQuizzes();
+  } else if (action === "edit") {
+    await editNewQuizzes();
   } else if (action === "delete") {
     console.log("Delete functionality not implemented yet.");
+  } else if (action === "back") {
+    return; // Go back to main menu
   }
 }

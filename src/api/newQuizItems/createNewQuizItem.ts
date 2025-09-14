@@ -86,7 +86,11 @@ export async function createMultipleQuestionsInNewQuiz(
           } else {
             question = transformOrderingQuestion(question);
           }
-
+          break;
+        case "multi-answer":
+          if (!isNewQuizMultiAnswerQuestionRequest(question)) {
+            throw new Error("❌ Invalid multi-answer question request");
+          }
           break;
 
         default:
@@ -261,7 +265,8 @@ export function isValidEssayRequestData(input: any): boolean | string[] {
     typeof v === "object" && v !== null && !Array.isArray(v);
 
   if (!isObj(input)) {
-    return ["Root must be an object"];
+    console.log("Root is not an object");
+    return false;
   }
 
   if (input.entry_type !== "Item") {
@@ -368,6 +373,49 @@ export function isValidOrderingQuestion(input: any): boolean {
 
   // Rule 6: scoring_algorithm
   if (entry.scoring_algorithm !== "DeepEquals") return false;
+
+  return true;
+}
+
+export function isNewQuizMultiAnswerQuestionRequest(x: any): boolean {
+  if (!x || typeof x !== "object") return false;
+  if (!Number.isInteger(x.course_id) || x.course_id <= 0) return false;
+  if (!Number.isInteger(x.assignment_id) || x.assignment_id <= 0) return false;
+
+  const it = x.item;
+  if (!it || typeof it !== "object") return false;
+  if (it.entry_type !== "Item") return false;
+
+  const e = it.entry;
+  if (!e || typeof e !== "object") return false;
+  if (typeof e.item_body !== "string" || !e.item_body) return false;
+  if (e.interaction_type_slug !== "multi-answer") return false;
+  if (!["AllOrNothing", "PartialScore"].includes(e.scoring_algorithm))
+    return false;
+
+  const idata = e.interaction_data;
+  if (
+    !idata ||
+    typeof idata !== "object" ||
+    !Array.isArray(idata.choices) ||
+    idata.choices.length < 2
+  )
+    return false;
+  for (const c of idata.choices) {
+    if (!c || typeof c !== "object") return false;
+    if (typeof c.id !== "string" || !c.id) return false;
+    if (!Number.isInteger(c.position) || c.position < 1) return false;
+    if (typeof c.item_body !== "string" || !c.item_body) return false;
+  }
+
+  const sdata = e.scoring_data;
+  if (
+    !sdata ||
+    typeof sdata !== "object" ||
+    !Array.isArray(sdata.value) ||
+    sdata.value.length < 1
+  )
+    return false;
 
   return true;
 }

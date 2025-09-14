@@ -1,8 +1,8 @@
-import { getNewQuiz } from "./getNewQuiz";
-import { listNewQuizzes } from "./listNewQuizzes";
-import { createNewQuiz } from "./createNewQuiz";
-import { updateNewQuiz } from "./updateNewQuiz";
-import { deleteNewQuiz } from "./deleteNewQuiz";
+import { getNewQuiz } from "./getNewQuiz.js";
+import { listNewQuizzes } from "./listNewQuizzes.js";
+import { createNewQuiz } from "./createNewQuiz.js";
+import { updateNewQuiz } from "./updateNewQuiz.js";
+import { deleteNewQuiz } from "./deleteNewQuiz.js";
 
 //import types
 import {

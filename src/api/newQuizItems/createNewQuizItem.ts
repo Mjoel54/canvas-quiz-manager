@@ -379,8 +379,6 @@ export function isValidOrderingQuestion(input: any): boolean {
 
 export function isNewQuizMultiAnswerQuestionRequest(x: any): boolean {
   if (!x || typeof x !== "object") return false;
-  if (!Number.isInteger(x.course_id) || x.course_id <= 0) return false;
-  if (!Number.isInteger(x.assignment_id) || x.assignment_id <= 0) return false;
 
   const it = x.item;
   if (!it || typeof it !== "object") return false;

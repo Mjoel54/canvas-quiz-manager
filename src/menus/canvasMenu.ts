@@ -10,7 +10,7 @@ export async function showCanvasMenu() {
       message: "Canvas Actions:",
       choices: [
         { name: "Create a New Quiz", value: "create" },
-        { name: "List New Quizzes", value: "list" },
+        { name: "List New Quizzes in a Course", value: "list" },
         { name: "Edit a New Quiz", value: "edit" },
         { name: "Delete a New Quiz", value: "delete" },
         { name: "Back", value: "back" },

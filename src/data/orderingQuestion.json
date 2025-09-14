@@ -43,7 +43,7 @@
       "scoring_data": {
         "value": ["1", "2", "3", "4"]
       },
-      "scoring_algorithm": "exact"
+      "scoring_algorithm": "DeepEquals"
     }
   }
 }

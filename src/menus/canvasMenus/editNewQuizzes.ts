@@ -4,6 +4,8 @@ import {
   listNewQuizItems,
   NewQuizItem,
   deleteAllNewQuizItems,
+  createQuestionItemInNewQuiz,
+  createMultipleQuestionsInNewQuiz,
 } from "../../api/newQuizItems/index.js";
 
 export async function editNewQuizzes() {
@@ -25,8 +27,6 @@ export async function editNewQuizzes() {
 
     const courseIdNum = Number(courseId);
 
-    console.log("📡 Fetching quizzes from Canvas...");
-
     // Step 2: List all quizzes for the course
     const quizzes = await listNewQuizzes(courseIdNum);
 
@@ -36,15 +36,14 @@ export async function editNewQuizzes() {
     }
 
     // Step 3: Display quizzes and let user select one
-    console.log("✅ Available Quizzes:");
 
-    quizzes.forEach((quiz: NewQuiz, index: number) => {
-      console.log(
-        `${index + 1}. ID: ${quiz.id}, Title: ${quiz.title}, Points: ${
-          quiz.points_possible
-        }`
-      );
-    });
+    // quizzes.forEach((quiz: NewQuiz, index: number) => {
+    //   console.log(
+    //     `${index + 1}. ID: ${quiz.id}, Title: ${quiz.title}, Points: ${
+    //       quiz.points_possible
+    //     }`
+    //   );
+    // });
 
     const { selectedQuizIndex } = await inquirer.prompt([
       {
@@ -75,10 +74,13 @@ async function showQuizActionOptions(courseId: number, selectedQuiz: NewQuiz) {
       name: "action",
       message: `What would you like to do with "${selectedQuiz.title}"?`,
       choices: [
-        { name: "List all New Quiz items", value: "list_items" },
-        { name: "Delete all New Quiz items", value: "delete_all_items" },
-        { name: "Add New Quiz item", value: "add_item" },
-        { name: "Back to quiz selection", value: "back" },
+        { name: "List question", value: "list_items" },
+        { name: "Add a single question", value: "add_item" },
+        { name: "Add multiple questions", value: "add_items" },
+        { name: "Delete All questions", value: "delete_all_items" },
+        { name: "Back to Quiz Selection", value: "back" },
+        { name: "🏠 Return to Home", value: "home" },
+        { name: "❌ Exit Application", value: "exit" },
       ],
     },
   ]);
@@ -91,10 +93,19 @@ async function showQuizActionOptions(courseId: number, selectedQuiz: NewQuiz) {
       await deleteAllQuizItems(courseId, selectedQuiz);
       break;
     case "add_item":
-      console.log("🚧 Add quiz item functionality coming soon...");
+      await addQuizItem(courseId, selectedQuiz);
+      break;
+    case "add_items":
+      await addMultipleQuizItems(courseId, selectedQuiz);
       break;
     case "back":
       await editNewQuizzes(); // Recursive call to go back to quiz selection
+      break;
+    case "home":
+      return; // Return to main menu
+    case "exit":
+      console.log("👋 Goodbye!");
+      process.exit(0);
       break;
   }
 }
@@ -140,19 +151,27 @@ async function deleteAllQuizItems(courseId: number, selectedQuiz: NewQuiz) {
         name: "continueAction",
         message: "What would you like to do next?",
         choices: [
-          { name: "➕ Add new quiz items", value: "add_items" },
-          { name: "🔙 Back to quiz selection", value: "back" },
-          { name: "🏠 Back to main menu", value: "main" },
+          { name: "➕ Add Quiz Items", value: "add_items" },
+          { name: "📋 View Quiz Items", value: "view_items" },
+          { name: "🔙 Back to Quiz Selection", value: "back" },
+          { name: "🏠 Return to Home", value: "home" },
+          { name: "❌ Exit Application", value: "exit" },
         ],
       },
     ]);
 
     if (continueAction === "add_items") {
-      console.log("🚧 Add quiz item functionality coming soon...");
+      await addQuizItem(courseId, selectedQuiz);
+    } else if (continueAction === "view_items") {
+      await listQuizItemsForQuiz(courseId, selectedQuiz.id, selectedQuiz);
     } else if (continueAction === "back") {
       await editNewQuizzes();
+    } else if (continueAction === "home") {
+      return; // Return to main menu
+    } else if (continueAction === "exit") {
+      console.log("👋 Goodbye!");
+      process.exit(0);
     }
-    // If "main", just return to let the menu system handle it
   } catch (error) {
     console.error("❌ Error deleting quiz items:", error);
   }
@@ -193,13 +212,13 @@ async function listQuizItemsForQuiz(
         console.log(`   Type: ${interactionType}`);
 
         // Show item body preview (first 100 characters)
-        if (item.entry.item_body) {
-          const preview =
-            item.entry.item_body.length > 100
-              ? item.entry.item_body.substring(0, 100) + "..."
-              : item.entry.item_body;
-          console.log(`   Preview: ${preview}`);
-        }
+        // if (item.entry.item_body) {
+        //   const preview =
+        //     item.entry.item_body.length > 100
+        //       ? item.entry.item_body.substring(0, 100) + "..."
+        //       : item.entry.item_body;
+        //   console.log(`   Preview: ${preview}`);
+        // }
       }
       console.log(""); // Empty line for readability
     });
@@ -211,9 +230,12 @@ async function listQuizItemsForQuiz(
         name: "nextAction",
         message: "What would you like to do?",
         choices: [
-          { name: "✏️ Edit a specific quiz item", value: "edit_item" },
-          { name: "🗑️ Delete a specific quiz item", value: "delete_item" },
-          { name: "🔙 Back to quiz actions", value: "back" },
+          { name: "✏️ Edit Quiz Item", value: "edit_item" },
+          { name: "🗑️ Delete Quiz Item", value: "delete_item" },
+          { name: "➕ Add New Item", value: "add_item" },
+          { name: "🔙 Back to Quiz Actions", value: "back" },
+          { name: "🏠 Return to Home", value: "home" },
+          { name: "❌ Exit Application", value: "exit" },
         ],
       },
     ]);
@@ -222,9 +244,16 @@ async function listQuizItemsForQuiz(
       await selectAndEditQuizItem(quizItems, courseId, Number(quizId));
     } else if (nextAction === "delete_item") {
       console.log("🚧 Delete specific quiz item functionality coming soon...");
+    } else if (nextAction === "add_item") {
+      await addQuizItem(courseId, selectedQuiz);
     } else if (nextAction === "back") {
       // Go back to the quiz action options
       await showQuizActionOptions(courseId, selectedQuiz);
+    } else if (nextAction === "home") {
+      return; // Return to main menu
+    } else if (nextAction === "exit") {
+      console.log("👋 Goodbye!");
+      process.exit(0);
     }
   } catch (error) {
     console.error("❌ Error fetching quiz items:", error);
@@ -268,5 +297,163 @@ async function selectAndEditQuizItem(
     console.log(JSON.stringify(selectedItem, null, 2));
   } catch (error) {
     console.error("❌ Error selecting quiz item:", error);
+  }
+}
+
+async function addQuizItem(courseId: number, selectedQuiz: NewQuiz) {
+  try {
+    console.log(`\n➕ Adding a single quiz item to "${selectedQuiz.title}"`);
+
+    // Get file path from user
+    const { filePath } = await inquirer.prompt([
+      {
+        type: "input",
+        name: "filePath",
+        message:
+          "Enter the path to the JSON file containing a single quiz question:",
+        validate: (input: string) => {
+          return input.trim() ? true : "Please enter a valid file path";
+        },
+      },
+    ]);
+
+    let jsonData: any;
+
+    try {
+      const fs = await import("fs/promises");
+      const fileContent = await fs.readFile(filePath, "utf-8");
+      jsonData = JSON.parse(fileContent);
+    } catch (error) {
+      console.error("❌ Error reading file or invalid JSON format:", error);
+      return;
+    }
+
+    // Validate that we have the required data structure for a single quiz item
+    if (!jsonData || !jsonData.item) {
+      console.error(
+        "❌ Invalid quiz item data. Expected an object with an 'item' property."
+      );
+      return;
+    }
+
+    // Create single quiz item
+    console.log("📡 Creating single quiz item...");
+    const createdItem = await createQuestionItemInNewQuiz(
+      courseId,
+      Number(selectedQuiz.id),
+      jsonData
+    );
+    console.log("✅ Quiz item created successfully!");
+
+    // Ask what to do next
+    const { nextAction } = await inquirer.prompt([
+      {
+        type: "list",
+        name: "nextAction",
+        message: "What would you like to do next?",
+        choices: [
+          { name: "View All Items", value: "list_items" },
+          { name: "Back to Quiz Actions", value: "back" },
+          { name: "🏠 Return to Home", value: "home" },
+          { name: "❌ Exit Application", value: "exit" },
+        ],
+      },
+    ]);
+
+    if (nextAction === "list_items") {
+      await listQuizItemsForQuiz(courseId, selectedQuiz.id, selectedQuiz);
+    } else if (nextAction === "back") {
+      await showQuizActionOptions(courseId, selectedQuiz);
+    } else if (nextAction === "home") {
+      return; // Return to main menu
+    } else if (nextAction === "exit") {
+      console.log("👋 Goodbye!");
+      process.exit(0);
+    }
+  } catch (error) {
+    console.error("❌ Error adding quiz item:", error);
+  }
+}
+
+async function addMultipleQuizItems(courseId: number, selectedQuiz: NewQuiz) {
+  try {
+    console.log(`\n➕ Adding multiple quiz items to "${selectedQuiz.title}"`);
+
+    // Get file path from user
+    const { filePath } = await inquirer.prompt([
+      {
+        type: "input",
+        name: "filePath",
+        message:
+          "Enter the path to the JSON file containing multiple quiz questions:",
+        validate: (input: string) => {
+          return input.trim() ? true : "Please enter a valid file path";
+        },
+      },
+    ]);
+
+    let jsonData: any;
+
+    try {
+      const fs = await import("fs/promises");
+      const fileContent = await fs.readFile(filePath, "utf-8");
+      jsonData = JSON.parse(fileContent);
+    } catch (error) {
+      console.error("❌ Error reading file or invalid JSON format:", error);
+      return;
+    }
+
+    // Validate that we have the required data structure for multiple questions
+    if (
+      !jsonData ||
+      !jsonData.questions ||
+      !Array.isArray(jsonData.questions)
+    ) {
+      console.error(
+        "❌ Invalid quiz data. Expected an object with a 'questions' array property."
+      );
+      return;
+    }
+
+    if (jsonData.questions.length === 0) {
+      console.error("❌ The questions array is empty.");
+      return;
+    }
+
+    console.log(`📡 Creating ${jsonData.questions.length} quiz items...`);
+    const createdItems = await createMultipleQuestionsInNewQuiz(
+      courseId,
+      Number(selectedQuiz.id),
+      jsonData
+    );
+    console.log(`✅ Successfully created ${createdItems.length} quiz items!`);
+
+    // Ask what to do next
+    const { nextAction } = await inquirer.prompt([
+      {
+        type: "list",
+        name: "nextAction",
+        message: "What would you like to do next?",
+        choices: [
+          { name: "📋 View All Items", value: "list_items" },
+          { name: "🔙 Back to Quiz Actions", value: "back" },
+          { name: "🏠 Return to Home", value: "home" },
+          { name: "❌ Exit Application", value: "exit" },
+        ],
+      },
+    ]);
+
+    if (nextAction === "list_items") {
+      await listQuizItemsForQuiz(courseId, selectedQuiz.id, selectedQuiz);
+    } else if (nextAction === "back") {
+      await showQuizActionOptions(courseId, selectedQuiz);
+    } else if (nextAction === "home") {
+      return; // Return to main menu
+    } else if (nextAction === "exit") {
+      console.log("👋 Goodbye!");
+      process.exit(0);
+    }
+  } catch (error) {
+    console.error("❌ Error adding multiple quiz items:", error);
   }
 }

@@ -1,14 +1,15 @@
 import { v4 as uuidv4 } from "uuid";
 import {
   NewQuizItem,
-  NewQuizChoiceQuestionRequest,
-  NewQuizTrueFalseQuestionRequest,
   NewQuizEssayQuestionRequest,
   NewQuizOrderingQuestionRequest,
-} from "./types";
+  NewQuizTrueFalseQuestionRequest,
+} from "./newQuizItemTypes";
 
 const baseUrl = process.env.BASE_URL;
 const apiToken = process.env.API_TOKEN;
+
+// POST actions
 
 // Canvas New Quiz - Create Question Item
 export async function createQuestionItemInNewQuiz(
@@ -416,4 +417,176 @@ export function isNewQuizMultiAnswerQuestionRequest(x: any): boolean {
     return false;
 
   return true;
+}
+
+// UPDATE actions
+export async function updateNewQuizItem(
+  courseId: number,
+  assignmentId: number,
+  itemId: number,
+  quizParams: any
+): Promise<NewQuizItem> {
+  if (!baseUrl || !apiToken) {
+    throw new Error("Missing required variables");
+  }
+
+  const url = `${baseUrl}/api/quiz/v1/courses/${courseId}/quizzes/${assignmentId}/items/${itemId}`;
+
+  try {
+    const response = await fetch(url, {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${apiToken}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(quizParams),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const updatedQuizItem = (await response.json()) as NewQuizItem;
+    console.log(updatedQuizItem);
+    return updatedQuizItem;
+  } catch (error) {
+    console.error("Error creating quiz:", error);
+    throw error;
+  }
+}
+
+// GET actions
+export async function getNewQuizItem(
+  courseId: number,
+  quizId: number,
+  itemId: number
+): Promise<NewQuizItem> {
+  if (!baseUrl || !apiToken) {
+    throw new Error("Missing required variables");
+  }
+
+  const url = `${baseUrl}/api/quiz/v1/courses/${courseId}/quizzes/${quizId}/items/${itemId}`;
+
+  try {
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${apiToken}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const quizItem = (await response.json()) as NewQuizItem;
+    // console.log(quizItem);
+    return quizItem;
+  } catch (error) {
+    console.error("Error fetching quiz items", error);
+    throw error;
+  }
+}
+
+export async function listNewQuizItems(
+  courseId: number,
+  assignmentId: number
+): Promise<NewQuizItem[]> {
+  if (!baseUrl || !apiToken) {
+    throw new Error("Missing required variables");
+  }
+
+  const url = `${baseUrl}/api/quiz/v1/courses/${courseId}/quizzes/${assignmentId}/items`;
+
+  try {
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${apiToken}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const retrievedQuizItems = (await response.json()) as NewQuizItem[];
+    return retrievedQuizItems;
+  } catch (error) {
+    console.error("Error fetching quiz items:", error);
+    throw error;
+  }
+}
+
+// DELETE actions
+export async function deleteNewQuizItem(
+  courseId: number,
+  assignmentId: number,
+  itemId: number | string
+): Promise<NewQuizItem> {
+  if (!baseUrl || !apiToken) {
+    throw new Error("Missing required variables");
+  }
+
+  const url = `${baseUrl}/api/quiz/v1/courses/${courseId}/quizzes/${assignmentId}/items/${Number(
+    itemId
+  )}`;
+
+  try {
+    const response = await fetch(url, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${apiToken}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const deletedQuizItem = (await response.json()) as NewQuizItem;
+    return deletedQuizItem;
+  } catch (error) {
+    console.error("Error fetching quiz items", error);
+    throw error;
+  }
+}
+
+export async function deleteAllNewQuizItems(
+  courseId: number,
+  assignmentId: number
+): Promise<{ deleted: (number | string)[]; failed: (number | string)[] }> {
+  const deleted: (number | string)[] = [];
+  const failed: (number | string)[] = [];
+
+  try {
+    // Step 1: Get all items
+    const items: NewQuizItem[] = await listNewQuizItems(courseId, assignmentId);
+    const itemIds = items.map((item) => item.id);
+
+    // console.log(`Found ${itemIds.length} quiz items:`, itemIds);
+
+    // Step 2: Loop and delete
+    for (const id of itemIds) {
+      try {
+        await deleteNewQuizItem(courseId, assignmentId, id);
+        console.log(`✅ Deleted quiz item ${id}`);
+        deleted.push(id);
+
+        // Small delay to avoid rate limits
+        await new Promise((resolve) => setTimeout(resolve, 200));
+      } catch (error) {
+        console.error(`❌ Failed to delete quiz item ${id}:`, error);
+        failed.push(id);
+      }
+    }
+  } catch (err) {
+    console.error("Error listing quiz items:", err);
+    throw err;
+  }
+
+  return { deleted, failed };
 }

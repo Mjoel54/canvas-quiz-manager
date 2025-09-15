@@ -2,11 +2,11 @@ import inquirer from "inquirer";
 import { listNewQuizzes, NewQuiz } from "../../api/newQuizzes/index.js";
 import {
   listNewQuizItems,
-  NewQuizItem,
   deleteAllNewQuizItems,
   createQuestionItemInNewQuiz,
   createMultipleQuestionsInNewQuiz,
-} from "../../api/newQuizItems/index.js";
+} from "../../api/canvas/newQuiz/newQuizItemsApi.js";
+import { NewQuizItem } from "../../api/canvas/newQuiz/newQuizItemTypes";
 
 export async function editNewQuizzes() {
   try {
@@ -302,8 +302,6 @@ async function selectAndEditQuizItem(
 
 async function addQuizItem(courseId: number, selectedQuiz: NewQuiz) {
   try {
-    console.log(`\n➕ Adding a single quiz item to "${selectedQuiz.title}"`);
-
     // Get file path from user
     const { filePath } = await inquirer.prompt([
       {

@@ -1,14 +1,16 @@
 import { v4 as uuidv4 } from "uuid";
 import {
   NewQuizItem,
-  NewQuizChoiceQuestionRequest,
-  NewQuizTrueFalseQuestionRequest,
   NewQuizEssayQuestionRequest,
   NewQuizOrderingQuestionRequest,
-} from "./types";
+  NewQuizTrueFalseQuestionRequest,
+} from "./newQuizItemTypes";
+import { transformToCanvasNewQuizTrueFalseItem } from "../../../helper/transformForCanvasNewQuiz.js";
 
 const baseUrl = process.env.BASE_URL;
 const apiToken = process.env.API_TOKEN;
+
+// POST actions
 
 // Canvas New Quiz - Create Question Item
 export async function createQuestionItemInNewQuiz(
@@ -60,43 +62,47 @@ export async function createMultipleQuestionsInNewQuiz(
     const results: any = [];
 
     for (let question of data.questions) {
-      const slug = question?.item?.entry?.interaction_type_slug;
+      // const slug = question?.item?.entry?.interaction_type_slug;
 
-      switch (slug) {
-        case "choice":
-          if (!isValidMultipleChoiceRequestData(question)) {
-            throw new Error("❌ Invalid multiple choice question request");
-          }
-          break;
+      // switch (slug) {
+      //   case "choice":
+      //     if (!isValidMultipleChoiceRequestData(question)) {
+      //       throw new Error("❌ Invalid multiple choice question request");
+      //     }
+      //     break;
+      //     case "true":
+      //       if (!isValidEssayRequestData(question)) {
+      //         throw new Error("❌ Invalid essay question request");
+      //       }
+      //       break;
 
-        case "true-false":
-          if (!isValidTrueFalseRequestData(question)) {
-            throw new Error("❌ Invalid true/false question request");
-          }
-          break;
+      //   case "essay":
+      //     if (!isValidEssayRequestData(question)) {
+      //       throw new Error("❌ Invalid essay question request");
+      //     }
+      //     break;
+      //   case "ordering":
+      //     if (!isValidOrderingQuestion(question)) {
+      //       throw new Error("❌ Invalid ordering question request");
+      //     } else {
+      //       question = transformOrderingQuestion(question);
+      //     }
+      //     break;
+      //   case "multi-answer":
+      //     if (!isNewQuizMultiAnswerQuestionRequest(question)) {
+      //       throw new Error("❌ Invalid multi-answer question request");
+      //     }
+      //     break;
 
-        case "essay":
-          if (!isValidEssayRequestData(question)) {
-            throw new Error("❌ Invalid essay question request");
-          }
-          break;
-        case "ordering":
-          if (!isValidOrderingQuestion(question)) {
-            throw new Error("❌ Invalid ordering question request");
-          } else {
-            question = transformOrderingQuestion(question);
-          }
-          break;
-        case "multi-answer":
-          if (!isNewQuizMultiAnswerQuestionRequest(question)) {
-            throw new Error("❌ Invalid multi-answer question request");
-          }
-          break;
+      //   default:
+      //     throw new Error(
+      //       `❌ Unsupported or missing interaction_type_slug: ${slug}`
+      //     );
+      // }
 
-        default:
-          throw new Error(
-            `❌ Unsupported or missing interaction_type_slug: ${slug}`
-          );
+      // Transform legacy true_false items into Canvas New Quiz format
+      if (question?.type === "true_false") {
+        question = transformToCanvasNewQuizTrueFalseItem(question);
       }
 
       // Only runs if validation passed
@@ -107,7 +113,7 @@ export async function createMultipleQuestionsInNewQuiz(
       );
 
       results.push(created);
-      console.log(`✅ Created ${slug} item:`);
+      // console.log(`✅ Created ${slug} item:`);
     }
 
     return results;
@@ -216,47 +222,6 @@ export function isValidMultipleChoiceRequestData(data: any): boolean {
     // );
     return false;
   }
-}
-
-export function isValidTrueFalseRequestData(obj: unknown): boolean {
-  if (typeof obj !== "object" || obj === null) return false;
-
-  const root = obj as Partial<NewQuizTrueFalseQuestionRequest>;
-  const item = root.item;
-  if (!item || item.entry_type !== "Item") return false;
-
-  const entry = item.entry;
-  if (!entry) return false;
-
-  // Required checks
-  if (typeof entry.item_body !== "string" || !entry.item_body.trim())
-    return false;
-  if (entry.interaction_type_slug !== "true-false") return false;
-  if (entry.scoring_algorithm !== "Equivalence") return false;
-
-  // interaction_data
-  if (
-    !entry.interaction_data ||
-    typeof entry.interaction_data.true_choice !== "string" ||
-    typeof entry.interaction_data.false_choice !== "string"
-  ) {
-    return false;
-  }
-
-  // scoring_data
-  if (!entry.scoring_data || typeof entry.scoring_data.value !== "boolean") {
-    return false;
-  }
-
-  // Optional fields sanity check
-  if (
-    entry.calculator_type &&
-    !["none", "basic", "scientific"].includes(entry.calculator_type)
-  ) {
-    return false;
-  }
-
-  return true;
 }
 
 export function isValidEssayRequestData(input: any): boolean | string[] {
@@ -416,4 +381,176 @@ export function isNewQuizMultiAnswerQuestionRequest(x: any): boolean {
     return false;
 
   return true;
+}
+
+// UPDATE actions
+export async function updateNewQuizItem(
+  courseId: number,
+  assignmentId: number,
+  itemId: number,
+  quizParams: any
+): Promise<NewQuizItem> {
+  if (!baseUrl || !apiToken) {
+    throw new Error("Missing required variables");
+  }
+
+  const url = `${baseUrl}/api/quiz/v1/courses/${courseId}/quizzes/${assignmentId}/items/${itemId}`;
+
+  try {
+    const response = await fetch(url, {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${apiToken}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(quizParams),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const updatedQuizItem = (await response.json()) as NewQuizItem;
+    console.log(updatedQuizItem);
+    return updatedQuizItem;
+  } catch (error) {
+    console.error("Error creating quiz:", error);
+    throw error;
+  }
+}
+
+// GET actions
+export async function getNewQuizItem(
+  courseId: number,
+  quizId: number,
+  itemId: number
+): Promise<NewQuizItem> {
+  if (!baseUrl || !apiToken) {
+    throw new Error("Missing required variables");
+  }
+
+  const url = `${baseUrl}/api/quiz/v1/courses/${courseId}/quizzes/${quizId}/items/${itemId}`;
+
+  try {
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${apiToken}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const quizItem = (await response.json()) as NewQuizItem;
+    // console.log(quizItem);
+    return quizItem;
+  } catch (error) {
+    console.error("Error fetching quiz items", error);
+    throw error;
+  }
+}
+
+export async function listNewQuizItems(
+  courseId: number,
+  assignmentId: number
+): Promise<NewQuizItem[]> {
+  if (!baseUrl || !apiToken) {
+    throw new Error("Missing required variables");
+  }
+
+  const url = `${baseUrl}/api/quiz/v1/courses/${courseId}/quizzes/${assignmentId}/items`;
+
+  try {
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${apiToken}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const retrievedQuizItems = (await response.json()) as NewQuizItem[];
+    return retrievedQuizItems;
+  } catch (error) {
+    console.error("Error fetching quiz items:", error);
+    throw error;
+  }
+}
+
+// DELETE actions
+export async function deleteNewQuizItem(
+  courseId: number,
+  assignmentId: number,
+  itemId: number | string
+): Promise<NewQuizItem> {
+  if (!baseUrl || !apiToken) {
+    throw new Error("Missing required variables");
+  }
+
+  const url = `${baseUrl}/api/quiz/v1/courses/${courseId}/quizzes/${assignmentId}/items/${Number(
+    itemId
+  )}`;
+
+  try {
+    const response = await fetch(url, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${apiToken}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const deletedQuizItem = (await response.json()) as NewQuizItem;
+    return deletedQuizItem;
+  } catch (error) {
+    console.error("Error fetching quiz items", error);
+    throw error;
+  }
+}
+
+export async function deleteAllNewQuizItems(
+  courseId: number,
+  assignmentId: number
+): Promise<{ deleted: (number | string)[]; failed: (number | string)[] }> {
+  const deleted: (number | string)[] = [];
+  const failed: (number | string)[] = [];
+
+  try {
+    // Step 1: Get all items
+    const items: NewQuizItem[] = await listNewQuizItems(courseId, assignmentId);
+    const itemIds = items.map((item) => item.id);
+
+    // console.log(`Found ${itemIds.length} quiz items:`, itemIds);
+
+    // Step 2: Loop and delete
+    for (const id of itemIds) {
+      try {
+        await deleteNewQuizItem(courseId, assignmentId, id);
+        console.log(`✅ Deleted quiz item ${id}`);
+        deleted.push(id);
+
+        // Small delay to avoid rate limits
+        await new Promise((resolve) => setTimeout(resolve, 200));
+      } catch (error) {
+        console.error(`❌ Failed to delete quiz item ${id}:`, error);
+        failed.push(id);
+      }
+    }
+  } catch (err) {
+    console.error("Error listing quiz items:", err);
+    throw err;
+  }
+
+  return { deleted, failed };
 }

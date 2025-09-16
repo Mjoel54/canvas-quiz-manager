@@ -14,8 +14,7 @@
           "value": false
         }
       ],
-      "correctAnswer": true,
-      "points": 1
+      "correctAnswer": true
     },
     {
       "type": "multiple_choice",
@@ -39,33 +38,12 @@
           "text": "int – a keyword from other languages, but not valid in JavaScript."
         }
       ],
-      "correctAnswer": "2",
-      "points": 1
+      "correctAnswer": "2"
     },
     {
-      "item": {
-        "entry_type": "Item",
-        "points_possible": 5,
-        "entry": {
-          "item_body": "Explain the process of photosynthesis in your own words.",
-          "interaction_type_slug": "essay",
-          "interaction_data": {
-            "rce": true,
-            "essay": null,
-            "word_count": true,
-            "file_upload": false,
-            "spell_check": true,
-            "word_limit_max": "500",
-            "word_limit_min": "50",
-            "word_limit_enabled": true
-          },
-          "properties": {},
-          "scoring_data": {
-            "value": "Ensure the answer includes mention of light, carbon dioxide, water, and glucose."
-          },
-          "scoring_algorithm": "None"
-        }
-      }
+      "type": "essay",
+      "title": "Programming Languages",
+      "questionText": "In a few words, explain why JavaScript is considered a versatile language."
     },
     {
       "item": {

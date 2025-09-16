@@ -5,7 +5,10 @@ import {
   NewQuizOrderingQuestionRequest,
   NewQuizTrueFalseQuestionRequest,
 } from "./newQuizItemTypes";
-import { transformToCanvasNewQuizTrueFalseItem } from "../../../helper/transformForCanvasNewQuiz.js";
+import {
+  transformToCanvasNewQuizTrueFalseItem,
+  transformToCanvasNewQuizChoiceItem,
+} from "../../../helper/transformForCanvasNewQuiz.js";
 
 const baseUrl = process.env.BASE_URL;
 const apiToken = process.env.API_TOKEN;
@@ -62,47 +65,14 @@ export async function createMultipleQuestionsInNewQuiz(
     const results: any = [];
 
     for (let question of data.questions) {
-      // const slug = question?.item?.entry?.interaction_type_slug;
+      switch (question.type) {
+        case "true_false":
+          question = transformToCanvasNewQuizTrueFalseItem(question);
+          break;
 
-      // switch (slug) {
-      //   case "choice":
-      //     if (!isValidMultipleChoiceRequestData(question)) {
-      //       throw new Error("❌ Invalid multiple choice question request");
-      //     }
-      //     break;
-      //     case "true":
-      //       if (!isValidEssayRequestData(question)) {
-      //         throw new Error("❌ Invalid essay question request");
-      //       }
-      //       break;
-
-      //   case "essay":
-      //     if (!isValidEssayRequestData(question)) {
-      //       throw new Error("❌ Invalid essay question request");
-      //     }
-      //     break;
-      //   case "ordering":
-      //     if (!isValidOrderingQuestion(question)) {
-      //       throw new Error("❌ Invalid ordering question request");
-      //     } else {
-      //       question = transformOrderingQuestion(question);
-      //     }
-      //     break;
-      //   case "multi-answer":
-      //     if (!isNewQuizMultiAnswerQuestionRequest(question)) {
-      //       throw new Error("❌ Invalid multi-answer question request");
-      //     }
-      //     break;
-
-      //   default:
-      //     throw new Error(
-      //       `❌ Unsupported or missing interaction_type_slug: ${slug}`
-      //     );
-      // }
-
-      // Transform legacy true_false items into Canvas New Quiz format
-      if (question?.type === "true_false") {
-        question = transformToCanvasNewQuizTrueFalseItem(question);
+        case "multiple_choice":
+          question = transformToCanvasNewQuizChoiceItem(question);
+          break;
       }
 
       // Only runs if validation passed
@@ -112,8 +82,9 @@ export async function createMultipleQuestionsInNewQuiz(
         question
       );
 
+      console.log(`✅ Created quiz item`);
+
       results.push(created);
-      // console.log(`✅ Created ${slug} item:`);
     }
 
     return results;

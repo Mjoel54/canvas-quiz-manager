@@ -18,33 +18,29 @@
       "points": 1
     },
     {
-      "item": {
-        "entry_type": "Item",
-        "points_possible": 1,
-        "position": 2,
-        "entry": {
-          "interaction_type_slug": "choice",
-          "item_body": "Which part of the cell contains most of the DNA?",
-          "interaction_data": {
-            "choices": [
-              {
-                "id": "4",
-                "position": 1,
-                "itemBody": "Nucleus"
-              },
-              {
-                "id": "5",
-                "position": 2,
-                "itemBody": "Mitochondria"
-              }
-            ]
-          },
-          "scoring_data": {
-            "value": "1"
-          },
-          "scoring_algorithm": "Equivalence"
+      "type": "multiple_choice",
+      "title": "JavaScript Basics",
+      "questionText": "Which keyword is used to declare a block-scoped variable in JavaScript?",
+      "options": [
+        {
+          "id": "1",
+          "text": "var – declares function-scoped variables, which can cause issues in block scoping."
+        },
+        {
+          "id": "2",
+          "text": "let – declares block-scoped variables, reducing scoping problems."
+        },
+        {
+          "id": "3",
+          "text": "const – declares block-scoped variables whose values cannot be reassigned."
+        },
+        {
+          "id": "4",
+          "text": "int – a keyword from other languages, but not valid in JavaScript."
         }
-      }
+      ],
+      "correctAnswer": "2",
+      "points": 1
     },
     {
       "item": {

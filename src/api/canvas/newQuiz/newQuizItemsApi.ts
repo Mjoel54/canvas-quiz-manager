@@ -10,6 +10,7 @@ import {
   transformToCanvasNewQuizChoiceItem,
   transformToCanvasNewQuizEssayItem,
   transformToCanvasNewQuizOrderingItem,
+  transformToCanvasNewQuizMultiAnswerItem,
 } from "../../../helper/transformForCanvasNewQuiz.js";
 
 const baseUrl = process.env.BASE_URL;
@@ -72,7 +73,7 @@ export async function createMultipleQuestionsInNewQuiz(
           question = transformToCanvasNewQuizTrueFalseItem(question);
           break;
 
-        case "multiple_choice":
+        case "choice":
           question = transformToCanvasNewQuizChoiceItem(question);
           break;
 
@@ -82,6 +83,10 @@ export async function createMultipleQuestionsInNewQuiz(
 
         case "ordering":
           question = transformToCanvasNewQuizOrderingItem(question);
+          break;
+
+        case "multi_answer":
+          question = transformToCanvasNewQuizMultiAnswerItem(question);
           break;
       }
 

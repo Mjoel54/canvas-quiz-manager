@@ -17,7 +17,7 @@
       "correctAnswer": true
     },
     {
-      "type": "multiple_choice",
+      "type": "choice",
       "title": "JavaScript Basics",
       "questionText": "Which keyword is used to declare a block-scoped variable in JavaScript?",
       "options": [
@@ -61,60 +61,28 @@
       "points": 1
     },
     {
-      "item": {
-        "position": 1,
-        "points_possible": 5,
-        "entry_type": "Item",
-        "entry": {
-          "title": "World War II Allies",
-          "item_body": "<p>Which of the following countries were part of the Allied Powers during World War II?</p>",
-          "calculator_type": "none",
-          "feedback": {
-            "neutral": "Think about the major powers in the two alliances.",
-            "correct": "That's right — these nations opposed the Axis Powers.",
-            "incorrect": "Not quite. Remember which nations fought against Germany, Italy, and Japan."
-          },
-          "interaction_type_slug": "multi-answer",
-          "interaction_data": {
-            "choices": [
-              {
-                "id": "1",
-                "position": 1,
-                "item_body": "<p>United States</p>"
-              },
-              {
-                "id": "2",
-                "position": 2,
-                "item_body": "<p>Germany</p>"
-              },
-              {
-                "id": "3",
-                "position": 3,
-                "item_body": "<p>Soviet Union</p>"
-              },
-              {
-                "id": "4",
-                "position": 4,
-                "item_body": "<p>United Kingdom</p>"
-              }
-            ]
-          },
-          "properties": {
-            "shuffle_rules": {
-              "choices": {
-                "shuffled": true
-              }
-            }
-          },
-          "scoring_data": {
-            "value": ["1", "3", "4"]
-          },
-          "answer_feedback": {
-            "2": "Germany was one of the Axis Powers."
-          },
-          "scoring_algorithm": "PartialScore"
+      "type": "multi_answer",
+      "title": "JavaScript Functions",
+      "questionText": "Which of the following are valid ways to define a function in JavaScript?",
+      "options": [
+        {
+          "id": "1",
+          "text": "Function declaration – using the 'function' keyword followed by a name."
+        },
+        {
+          "id": "2",
+          "text": "Function expression – assigning an anonymous function to a variable."
+        },
+        {
+          "id": "3",
+          "text": "Arrow function – a concise syntax using '=>' for functions."
+        },
+        {
+          "id": "4",
+          "text": "Lambda keyword – borrowed from other languages, but not valid in JavaScript."
         }
-      }
+      ],
+      "correctAnswers": ["1", "2", "3"]
     }
   ]
 }

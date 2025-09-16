@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 export function transformToCanvasNewQuizTrueFalseItem(data: any) {
   return {
     item: {
-      points_possible: data.points || 1,
+      points_possible: 1,
       entry_type: "Item",
       entry: {
         title: data.title || null,
@@ -72,7 +72,7 @@ export function transformToCanvasNewQuizChoiceItem(
   return {
     item: {
       entry_type: "Item",
-      points_possible: data.points || 1,
+      points_possible: 1,
       position: itemPosition,
       entry: {
         interaction_type_slug: "choice",
@@ -84,6 +84,33 @@ export function transformToCanvasNewQuizChoiceItem(
           value: correctChoice.id, // UUID of the correct answer
         },
         scoring_algorithm: "Equivalence",
+      },
+    },
+  };
+}
+
+// Short Answer
+export function transformToCanvasNewQuizEssayItem(data: any): any {
+  return {
+    item: {
+      entry_type: "Item",
+      points_possible: 1,
+      entry: {
+        title: data.title || null,
+        item_body: data.questionText,
+        interaction_type_slug: "essay",
+        interaction_data: {
+          rce: true,
+          essay: null,
+          word_count: false,
+          file_upload: false,
+          spell_check: true,
+        },
+        properties: {},
+        scoring_data: {
+          value: "",
+        },
+        scoring_algorithm: "None",
       },
     },
   };

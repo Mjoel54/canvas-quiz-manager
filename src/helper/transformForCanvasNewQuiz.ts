@@ -115,3 +115,64 @@ export function transformToCanvasNewQuizEssayItem(data: any): any {
     },
   };
 }
+
+export function transformToCanvasNewQuizOrderingItem(data: any): any {
+  // Step 1: Build choices as an OBJECT keyed by the new UUIDs
+  // ---------------------------------------------------------
+  // Previously: Object.values(choicesMap) -> array
+  // Adjustment: keep it as { uuid: { id, item_body } }
+  // so the final structure matches your multiple-choice format.
+  const choices: Record<string, any> = {};
+
+  // Map of originalId → new UUID for scoring lookup
+  const idMap: Record<string, string> = {};
+
+  for (const opt of data.options) {
+    const newId = uuidv4();
+    const origId = String(opt.id); // normalize ID
+
+    choices[newId] = {
+      id: newId,
+      item_body: `<p>${opt.text}</p>`,
+    };
+
+    idMap[origId] = newId;
+  }
+
+  // Step 2: Map correctOrder to new UUIDs
+  const correctUUIDOrder = data.correctOrder.map((origId: string) => {
+    const newId = idMap[String(origId)];
+    if (!newId) {
+      throw new Error(`correctOrder contains unknown id: ${origId}`);
+    }
+    return newId;
+  });
+
+  // Step 3: Return Canvas New Quiz object
+  return {
+    item: {
+      points_possible: data.points || 1,
+      entry_type: "Item",
+      entry: {
+        title: data.title || null,
+        item_body: data.questionText,
+        calculator_type: "none",
+        interaction_type_slug: "ordering",
+        scoring_algorithm: "DeepEquals",
+        scoring_data: {
+          value: correctUUIDOrder,
+        },
+        properties: {
+          top_label: data.top_label || null,
+          bottom_label: data.bottom_label || null,
+          shuffle_rules: null,
+          include_labels: true,
+          display_answers_paragraph: false,
+        },
+        interaction_data: {
+          choices, // ✅ now an object keyed by UUIDs
+        },
+      },
+    },
+  };
+}

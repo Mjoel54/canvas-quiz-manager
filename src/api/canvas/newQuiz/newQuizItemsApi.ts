@@ -9,6 +9,7 @@ import {
   transformToCanvasNewQuizTrueFalseItem,
   transformToCanvasNewQuizChoiceItem,
   transformToCanvasNewQuizEssayItem,
+  transformToCanvasNewQuizOrderingItem,
 } from "../../../helper/transformForCanvasNewQuiz.js";
 
 const baseUrl = process.env.BASE_URL;
@@ -77,6 +78,10 @@ export async function createMultipleQuestionsInNewQuiz(
 
         case "essay":
           question = transformToCanvasNewQuizEssayItem(question);
+          break;
+
+        case "ordering":
+          question = transformToCanvasNewQuizOrderingItem(question);
           break;
       }
 
@@ -386,7 +391,7 @@ export async function deleteAllNewQuizItems(
         deleted.push(id);
 
         // Small delay to avoid rate limits
-        await new Promise((resolve) => setTimeout(resolve, 200));
+        await new Promise((resolve) => setTimeout(resolve, 100));
       } catch (error) {
         console.error(`❌ Failed to delete quiz item ${id}:`, error);
         failed.push(id);

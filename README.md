@@ -165,6 +165,63 @@ The application supports a wide variety of question types with full configuratio
 - **Type Safety**: TypeScript prevents common API interaction errors
 - **Comprehensive Validation**: Input validation and error handling throughout the application
 
+## Required JSON Structure
+
+The application expects quiz questions to be defined in a consistent JSON format.  
+Each question object must include a `type`, `title`, `questionText`, `options`, `correctAnswer`, and `points`.
+
+### True/False Question Example
+
+```
+{
+  "type": "true_false",
+  "title": "JavaScript Variable Declaration",
+  "questionText": "The 'let' keyword in JavaScript allows you to declare block-scoped variables.",
+  "options": [
+    {
+      "text": "True",
+      "value": true
+    },
+    {
+      "text": "False",
+      "value": false
+    }
+  ],
+  "correctAnswer": true,
+  "points": 1
+}
+```
+
+### True/False Question Example
+
+```
+{
+  "type": "multiple_choice",
+  "title": "JavaScript Basics",
+  "questionText": "Which keyword is used to declare a block-scoped variable in JavaScript?",
+  "options": [
+    {
+      "id": "1",
+      "text": "var – declares function-scoped variables, which can cause issues in block scoping."
+    },
+    {
+      "id": "2",
+      "text": "let – declares block-scoped variables, reducing scoping problems."
+    },
+    {
+      "id": "3",
+      "text": "const – declares block-scoped variables whose values cannot be reassigned."
+    },
+    {
+      "id": "4",
+      "text": "int – a keyword from other languages, but not valid in JavaScript."
+    }
+  ],
+  "correctAnswer": "2",
+  "points": 1
+}
+```
+
 ## 🚧 Roadmap
 
 - **Moodle Support**: Full integration with Moodle LMS
@@ -188,3 +245,7 @@ For issues related to:
 ---
 
 _Built with TypeScript for reliability and maintainability. Designed to streamline educational technology workflows._
+
+```
+
+```

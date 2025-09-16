@@ -115,3 +115,147 @@ export function transformToCanvasNewQuizEssayItem(data: any): any {
     },
   };
 }
+
+export function transformToCanvasNewQuizOrderingItem(data: any): any {
+  // Step 1: Build choices as an OBJECT keyed by the new UUIDs
+
+  const choices: Record<string, any> = {};
+
+  // Map of originalId → new UUID for scoring lookup
+  const idMap: Record<string, string> = {};
+
+  for (const opt of data.options) {
+    const newId = uuidv4();
+    const origId = String(opt.id); // normalize ID
+
+    choices[newId] = {
+      id: newId,
+      item_body: `<p>${opt.text}</p>`,
+    };
+
+    idMap[origId] = newId;
+  }
+
+  // Step 2: Map correctOrder to new UUIDs
+  const correctUUIDOrder = data.correctOrder.map((origId: string) => {
+    const newId = idMap[String(origId)];
+    if (!newId) {
+      throw new Error(`correctOrder contains unknown id: ${origId}`);
+    }
+    return newId;
+  });
+
+  // Step 3: Return Canvas New Quiz object
+  return {
+    item: {
+      points_possible: data.points || 1,
+      entry_type: "Item",
+      entry: {
+        title: data.title || null,
+        item_body: data.questionText,
+        calculator_type: "none",
+        interaction_type_slug: "ordering",
+        scoring_algorithm: "DeepEquals",
+        scoring_data: {
+          value: correctUUIDOrder,
+        },
+        properties: {
+          top_label: data.top_label || null,
+          bottom_label: data.bottom_label || null,
+          shuffle_rules: null,
+          include_labels: true,
+          display_answers_paragraph: false,
+        },
+        interaction_data: {
+          choices, // ✅ now an object keyed by UUIDs
+        },
+      },
+    },
+  };
+}
+
+export function transformToCanvasNewQuizMultiAnswerItem(
+  data: any,
+  itemPosition = 1
+): any {
+  if (!data || !Array.isArray(data.options)) {
+    throw new Error("Invalid question data: 'options' must be an array");
+  }
+
+  // Step 1: Build choices as an OBJECT keyed by the new UUIDs
+  const choices: Record<string, any> = {};
+  const idMap: Record<string, string> = {}; // map originalId → UUID
+
+  data.options.forEach((opt: any, index: number) => {
+    const newId = uuidv4();
+    const origId = String(opt.id);
+
+    choices[newId] = {
+      id: newId,
+
+      item_body: `<p>${opt.text}</p>`,
+    };
+
+    idMap[origId] = newId;
+  });
+
+  // Step 2: Map correctAnswers to new UUIDs
+  const correctUUIDs = (data.correctAnswers || []).map((origId: string) => {
+    const newId = idMap[String(origId)];
+    if (!newId) {
+      throw new Error(`correctAnswers contains unknown id: ${origId}`);
+    }
+    return newId;
+  });
+
+  // Step 3: Build answer_feedback keyed by UUIDs
+  const answer_feedback: Record<string, string> = {};
+  for (const opt of data.options) {
+    if (opt.feedback) {
+      const mappedId = idMap[String(opt.id)];
+      if (mappedId) {
+        answer_feedback[mappedId] = opt.feedback;
+      }
+    }
+  }
+
+  // Step 4: Return Canvas New Quiz object
+  return {
+    item: {
+      points_possible: data.points || 1,
+      entry_type: "Item",
+      entry: {
+        title: data.title || null,
+        item_body: `<p>${data.questionText || ""}</p>`,
+        calculator_type: "none",
+        feedback: {
+          neutral:
+            data.feedback?.neutral ||
+            "Review the main concepts before answering.",
+          correct:
+            data.feedback?.correct ||
+            "Correct — you selected the right answers.",
+          incorrect:
+            data.feedback?.incorrect ||
+            "Not quite. Try revisiting the material.",
+        },
+        interaction_type_slug: "multi-answer",
+        interaction_data: {
+          choices, // ✅ now an object keyed by UUIDs
+        },
+        properties: {
+          shuffle_rules: {
+            choices: {
+              shuffled: true,
+            },
+          },
+        },
+        scoring_data: {
+          value: correctUUIDs, // ✅ uses UUIDs instead of original ids
+        },
+        answer_feedback,
+        scoring_algorithm: "PartialScore",
+      },
+    },
+  };
+}

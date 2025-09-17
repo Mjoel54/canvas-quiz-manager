@@ -261,8 +261,17 @@ export function transformToCanvasNewQuizMultiAnswerItem(
 }
 
 export function transformToCanvasNewQuizMatchingItem(data: any): any {
+  // Transform data to add UUIDs to each option
+  let optionsWithUUID = data.options.map((opt: any) => {
+    return {
+      answer_body: opt.answer_body,
+      question_id: uuidv4(),
+      question_body: opt.question_body,
+    };
+  });
+
   // Array of string answers
-  let stringAnswersArr: string[] = data.options.reduce(
+  let stringAnswersArr: string[] = optionsWithUUID.reduce(
     (acc: string[], cur: any) => {
       acc.push(cur.answer_body);
       return acc;
@@ -271,20 +280,20 @@ export function transformToCanvasNewQuizMatchingItem(data: any): any {
   );
 
   // Array of question objects with id and item_body
-  let questionsArr = data.options.map((opt: any) => ({
+  let questionsArr = optionsWithUUID.map((opt: any) => ({
     id: String(opt.question_id), // force string IDs
     item_body: opt.question_body,
   }));
 
   // Array of matches objects
-  let matchesArr = data.options.map((opt: any) => ({
+  let matchesArr = optionsWithUUID.map((opt: any) => ({
     answer_body: String(opt.answer_body),
     question_id: String(opt.question_id), // ensure string
     question_body: String(opt.question_body),
   }));
 
   // Object mapping question_id to answer_body
-  let valueObj = data.options.reduce(
+  let valueObj = optionsWithUUID.reduce(
     (acc: any, { question_id, answer_body }: any) => ({
       ...acc,
       [question_id]: answer_body,

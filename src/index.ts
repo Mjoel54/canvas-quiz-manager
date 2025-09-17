@@ -1,4 +1,5 @@
 import { createQuestionItemInNewQuiz } from "./api/canvas/newQuiz/newQuizItemsApi.js";
+import { v4 as uuidv4 } from "uuid";
 
 let matchingQuestion = {
   item: {
@@ -137,3 +138,13 @@ let valueObj = data.options.reduce(
 );
 
 console.log(valueObj);
+
+let optionsWithUUID = data.options.map((opt: any) => {
+  return {
+    answer_body: opt.answer_body,
+    question_id: uuidv4(),
+    question_body: opt.question_body,
+  };
+});
+
+console.log(optionsWithUUID);

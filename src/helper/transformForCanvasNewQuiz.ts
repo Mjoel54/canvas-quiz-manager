@@ -259,3 +259,48 @@ export function transformToCanvasNewQuizMultiAnswerItem(
     },
   };
 }
+
+export function transformToCanvasNewQuizMatchingItem(minimalJson: any): any {
+  // Ensure unique answer bodies
+  const uniqueAnswers = Array.from(
+    new Set(minimalJson.options.map((opt: any) => opt.answer_body))
+  );
+
+  return {
+    item: {
+      points_possible: 1,
+      entry_type: "Item",
+      entry: {
+        item_body: minimalJson.questionText,
+        interaction_type_slug: "matching",
+        interaction_data: {
+          answers: uniqueAnswers,
+          questions: minimalJson.options.map((opt: any) => ({
+            id: String(opt.question_id), // force string IDs
+            item_body: opt.question_body,
+          })),
+        },
+        properties: {
+          shuffle_rules: {
+            questions: { shuffled: true },
+          },
+        },
+        scoring_data: {
+          value: minimalJson.options.reduce((acc: any, opt: any) => {
+            acc[String(opt.question_id)] = opt.answer_body; // force string keys
+            return acc;
+          }, {}),
+          edit_data: {
+            matches: minimalJson.options.map((opt: any) => ({
+              answer_body: opt.answer_body,
+              question_id: String(opt.question_id), // ensure string
+              question_body: opt.question_body,
+            })),
+            distractors: [],
+          },
+        },
+        scoring_algorithm: "DeepEquals",
+      },
+    },
+  };
+}

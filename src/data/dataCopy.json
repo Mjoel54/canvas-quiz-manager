@@ -1,6 +1,33 @@
 {
   "questions": [
     {
+      "type": "matching",
+      "title": "Musical Instruments",
+      "questionText": "Match each instrument to its family.",
+      "options": [
+        {
+          "answer_body": "Percussion",
+          "question_id": "48291753",
+          "question_body": "Timpani"
+        },
+        {
+          "answer_body": "String",
+          "question_id": "48291754",
+          "question_body": "Mandolin"
+        },
+        {
+          "answer_body": "Woodwind",
+          "question_id": "48291755",
+          "question_body": "Bassoon"
+        },
+        {
+          "answer_body": "Brass",
+          "question_id": "48291756",
+          "question_body": "Euphonium"
+        }
+      ]
+    },
+    {
       "type": "true_false",
       "title": "JavaScript Variable Declaration",
       "questionText": "The 'let' keyword in JavaScript allows you to declare block-scoped variables.",

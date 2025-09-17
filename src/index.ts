@@ -73,4 +73,67 @@ let matchingQuestion = {
   },
 };
 
-createQuestionItemInNewQuiz(12730833, 58390527, matchingQuestion);
+// createQuestionItemInNewQuiz(12730833, 58390527, matchingQuestion);
+
+let data = {
+  type: "matching",
+  title: "Musical Instruments",
+  questionText: "Match each instrument to its family.",
+  options: [
+    {
+      answer_body: "Percussion",
+      question_id: "48291753",
+      question_body: "Timpani",
+    },
+    {
+      answer_body: "String",
+      question_id: "48291754",
+      question_body: "Mandolin",
+    },
+    {
+      answer_body: "Woodwind",
+      question_id: "48291755",
+      question_body: "Bassoon",
+    },
+    {
+      answer_body: "Brass",
+      question_id: "48291756",
+      question_body: "Euphonium",
+    },
+  ],
+};
+
+let stringAnswersArr: string[] = data.options.reduce(
+  (acc: string[], cur: any) => {
+    acc.push(cur.answer_body);
+    return acc;
+  },
+  []
+);
+
+console.log(stringAnswersArr);
+
+let questionsArr = data.options.map((opt: any) => ({
+  id: String(opt.question_id), // force string IDs
+  item_body: opt.question_body,
+}));
+
+console.log(questionsArr);
+
+let matchesArr = data.options.map((opt: any) => ({
+  answer_body: String(opt.answer_body),
+  question_id: String(opt.question_id), // ensure string
+  question_body: String(opt.question_body),
+}));
+
+console.log(matchesArr);
+
+let valueObj = data.options.reduce(
+  (acc, { question_id, answer_body }) => ({
+    ...acc,
+    [question_id]: answer_body,
+  }),
+  {}
+);
+
+console.log(valueObj);

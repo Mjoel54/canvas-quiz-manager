@@ -260,10 +260,36 @@ export function transformToCanvasNewQuizMultiAnswerItem(
   };
 }
 
-export function transformToCanvasNewQuizMatchingItem(minimalJson: any): any {
-  // Ensure unique answer bodies
-  const uniqueAnswers = Array.from(
-    new Set(minimalJson.options.map((opt: any) => opt.answer_body))
+export function transformToCanvasNewQuizMatchingItem(data: any): any {
+  // Array of string answers
+  let stringAnswersArr: string[] = data.options.reduce(
+    (acc: string[], cur: any) => {
+      acc.push(cur.answer_body);
+      return acc;
+    },
+    []
+  );
+
+  // Array of question objects with id and item_body
+  let questionsArr = data.options.map((opt: any) => ({
+    id: String(opt.question_id), // force string IDs
+    item_body: opt.question_body,
+  }));
+
+  // Array of matches objects
+  let matchesArr = data.options.map((opt: any) => ({
+    answer_body: String(opt.answer_body),
+    question_id: String(opt.question_id), // ensure string
+    question_body: String(opt.question_body),
+  }));
+
+  // Object mapping question_id to answer_body
+  let valueObj = data.options.reduce(
+    (acc: any, { question_id, answer_body }: any) => ({
+      ...acc,
+      [question_id]: answer_body,
+    }),
+    {}
   );
 
   return {
@@ -271,31 +297,23 @@ export function transformToCanvasNewQuizMatchingItem(minimalJson: any): any {
       points_possible: 1,
       entry_type: "Item",
       entry: {
-        item_body: minimalJson.questionText,
+        item_body: data.questionText,
         interaction_type_slug: "matching",
         interaction_data: {
-          answers: uniqueAnswers,
-          questions: minimalJson.options.map((opt: any) => ({
-            id: String(opt.question_id), // force string IDs
-            item_body: opt.question_body,
-          })),
+          answers: stringAnswersArr,
+          questions: questionsArr,
         },
         properties: {
           shuffle_rules: {
-            questions: { shuffled: true },
+            questions: {
+              shuffled: true,
+            },
           },
         },
         scoring_data: {
-          value: minimalJson.options.reduce((acc: any, opt: any) => {
-            acc[String(opt.question_id)] = opt.answer_body; // force string keys
-            return acc;
-          }, {}),
+          value: valueObj,
           edit_data: {
-            matches: minimalJson.options.map((opt: any) => ({
-              answer_body: opt.answer_body,
-              question_id: String(opt.question_id), // ensure string
-              question_body: opt.question_body,
-            })),
+            matches: matchesArr,
             distractors: [],
           },
         },
@@ -304,3 +322,76 @@ export function transformToCanvasNewQuizMatchingItem(minimalJson: any): any {
     },
   };
 }
+
+// let matchingQuestion = {
+//   item: {
+//     points_possible: 1,
+//     entry_type: "Item",
+//     entry: {
+//       item_body: "Match each musical instrument to the correct family.",
+//       interaction_type_slug: "matching",
+//       interaction_data: {
+//         answers: ["String", "Brass", "Woodwind", "Percussion"],
+//         questions: [
+//           {
+//             id: "48291753",
+//             item_body: "Drum",
+//           },
+//           {
+//             id: "90346271",
+//             item_body: "Violin",
+//           },
+//           {
+//             id: "56182047",
+//             item_body: "Trumpet",
+//           },
+//           {
+//             id: "74829360",
+//             item_body: "Flute",
+//           },
+//         ],
+//       },
+//       properties: {
+//         shuffle_rules: {
+//           questions: {
+//             shuffled: true,
+//           },
+//         },
+//       },
+//       scoring_data: {
+//         value: {
+//           "48291753": "Percussion",
+//           "90346271": "String",
+//           "56182047": "Brass",
+//           "74829360": "Woodwind",
+//         },
+//         edit_data: {
+//           matches: [
+//             {
+//               answer_body: "Percussion",
+//               question_id: "48291753",
+//               question_body: "Drum",
+//             },
+//             {
+//               answer_body: "String",
+//               question_id: "90346271",
+//               question_body: "Violin",
+//             },
+//             {
+//               answer_body: "Brass",
+//               question_id: "56182047",
+//               question_body: "Trumpet",
+//             },
+//             {
+//               answer_body: "Woodwind",
+//               question_id: "74829360",
+//               question_body: "Flute",
+//             },
+//           ],
+//           distractors: [],
+//         },
+//       },
+//       scoring_algorithm: "DeepEquals",
+//     },
+//   },
+// };

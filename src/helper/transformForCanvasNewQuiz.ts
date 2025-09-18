@@ -261,47 +261,35 @@ export function transformToCanvasNewQuizMultiAnswerItem(
 }
 
 export function transformToCanvasNewQuizMatchingItem(data: any): any {
-  // Transform data to add UUIDs to each option
-  let optionsWithUUID = data.options.map((opt: any) => {
-    return {
-      answer_body: opt.answer_body,
-      question_id: uuidv4(),
-      question_body: opt.question_body,
-    };
+  // Arrays
+  let stringAnswersArr: string[] = [];
+  let questionsArr: any[] = [];
+  let matchesArr: any[] = [];
+  let valueObj: Record<string, string> = {};
+
+  // Single pass ensures consistent ordering
+  data.options.forEach((opt: any) => {
+    const qid = uuidv4(); // generate a new UUID for each question
+    const ans = String(opt.answer_body);
+    const body = String(opt.question_body);
+
+    stringAnswersArr.push(ans);
+
+    questionsArr.push({
+      id: qid,
+      item_body: body,
+    });
+
+    matchesArr.push({
+      answer_body: ans,
+      question_id: qid,
+      question_body: body,
+    });
+
+    valueObj[qid] = ans; // preserves insertion order
   });
 
-  // Array of string answers
-  let stringAnswersArr: string[] = optionsWithUUID.reduce(
-    (acc: string[], cur: any) => {
-      acc.push(cur.answer_body);
-      return acc;
-    },
-    []
-  );
-
-  // Array of question objects with id and item_body
-  let questionsArr = optionsWithUUID.map((opt: any) => ({
-    id: String(opt.question_id), // force string IDs
-    item_body: opt.question_body,
-  }));
-
-  // Array of matches objects
-  let matchesArr = optionsWithUUID.map((opt: any) => ({
-    answer_body: String(opt.answer_body),
-    question_id: String(opt.question_id), // ensure string
-    question_body: String(opt.question_body),
-  }));
-
-  // Object mapping question_id to answer_body
-  let valueObj = optionsWithUUID.reduce(
-    (acc: any, { question_id, answer_body }: any) => ({
-      ...acc,
-      [question_id]: answer_body,
-    }),
-    {}
-  );
-
-  return {
+  let reqObj = {
     item: {
       points_possible: 1,
       entry_type: "Item",
@@ -330,7 +318,85 @@ export function transformToCanvasNewQuizMatchingItem(data: any): any {
       },
     },
   };
+
+  console.log(JSON.stringify(reqObj, null, 2));
+  return reqObj;
 }
+
+// export function transformToCanvasNewQuizMatchingItem(data: any): any {
+//   // Transform data to add UUIDs to each option
+//   // let optionsWithUUID = data.options.map((opt: any) => {
+//   //   return {
+//   //     answer_body: opt.answer_body,
+//   //     question_id: uuidv4(),
+//   //     question_body: opt.question_body,
+//   //   };
+//   // });
+
+//   // Array of string answers
+//   let stringAnswersArr: string[] = data.options.reduce(
+//     (acc: string[], cur: any) => {
+//       acc.push(cur.answer_body);
+//       return acc;
+//     },
+//     []
+//   );
+
+//   // Array of question objects with id and item_body
+//   let questionsArr = data.options.map((opt: any) => ({
+//     id: String(opt.question_id), // force string IDs
+//     item_body: opt.question_body,
+//   }));
+
+//   // Array of matches objects
+//   let matchesArr = data.options.map((opt: any) => ({
+//     answer_body: String(opt.answer_body),
+//     question_id: String(opt.question_id), // ensure string
+//     question_body: String(opt.question_body),
+//   }));
+
+//   // Object mapping question_id to answer_body
+//   let valueObj = data.options.reduce(
+//     (acc: any, { question_id, answer_body }: any) => ({
+//       ...acc,
+//       [question_id]: answer_body,
+//     }),
+//     {}
+//   );
+
+//   let reqObj = {
+//     item: {
+//       points_possible: 1,
+//       entry_type: "Item",
+//       entry: {
+//         item_body: data.questionText,
+//         interaction_type_slug: "matching",
+//         interaction_data: {
+//           answers: stringAnswersArr,
+//           questions: questionsArr,
+//         },
+//         properties: {
+//           shuffle_rules: {
+//             questions: {
+//               shuffled: true,
+//             },
+//           },
+//         },
+//         scoring_data: {
+//           value: valueObj,
+//           edit_data: {
+//             matches: matchesArr,
+//             distractors: [],
+//           },
+//         },
+//         scoring_algorithm: "DeepEquals",
+//       },
+//     },
+//   };
+
+//   console.log(JSON.stringify(reqObj, null, 2));
+//   return reqObj;
+// }
 
 // let matchingQuestion = {
 //   item: {

@@ -1,6 +1,35 @@
 {
   "questions": [
     {
+      "item_number": "Q1",
+      "type": "matching",
+      "title": "Musical Instruments",
+      "questionText": "Match each instrument to its family.",
+      "options": [
+        {
+          "answer_body": "Percussion",
+          "question_id": "Q1O1",
+          "question_body": "Timpani"
+        },
+        {
+          "answer_body": "String",
+          "question_id": "Q1O2",
+          "question_body": "Mandolin"
+        },
+        {
+          "answer_body": "Woodwind",
+          "question_id": "Q1O3",
+          "question_body": "Bassoon"
+        },
+        {
+          "answer_body": "Brass",
+          "question_id": "Q1O4",
+          "question_body": "Euphonium"
+        }
+      ]
+    },
+    {
+      "item_number": "Q2",
       "type": "true_false",
       "title": "JavaScript Variable Declaration",
       "questionText": "The 'let' keyword in JavaScript allows you to declare block-scoped variables.",
@@ -17,72 +46,76 @@
       "correctAnswer": true
     },
     {
+      "item_number": "Q3",
       "type": "choice",
       "title": "JavaScript Basics",
       "questionText": "Which keyword is used to declare a block-scoped variable in JavaScript?",
       "options": [
         {
-          "id": "1",
+          "id": "Q301",
           "text": "var – declares function-scoped variables, which can cause issues in block scoping."
         },
         {
-          "id": "2",
+          "id": "Q302",
           "text": "let – declares block-scoped variables, reducing scoping problems."
         },
         {
-          "id": "3",
+          "id": "Q303",
           "text": "const – declares block-scoped variables whose values cannot be reassigned."
         },
         {
-          "id": "4",
+          "id": "q3o4",
           "text": "int – a keyword from other languages, but not valid in JavaScript."
         }
       ],
-      "correctAnswer": "2"
+      "correctAnswer": "Q302"
     },
     {
+      "item_number": "Q4",
       "type": "essay",
       "title": "Programming Languages",
       "questionText": "In a few words, explain why JavaScript is considered a versatile language."
     },
     {
+      "item_number": "Q5",
       "type": "ordering",
       "title": "Order of Planets",
       "questionText": "Arrange the planets in order from closest to farthest from the Sun:",
       "options": [
-        { "id": "1", "text": "Venus" },
-        { "id": "2", "text": "Mercury" },
-        { "id": "3", "text": "Mars" },
-        { "id": "4", "text": "Earth" }
+        { "id": "Q501", "text": "Venus" },
+        { "id": "Q502", "text": "Mercury" },
+        { "id": "Q503", "text": "Mars" },
+        { "id": "Q504", "text": "Earth" }
       ],
-      "correctOrder": ["2", "1", "4", "3"],
+      "correctOrder": ["Q502", "Q501", "Q504", "Q503"],
       "top_label": "Closest",
       "bottom_label": "Farthest",
       "points": 1
     },
     {
+      "item_number": "Q6",
       "type": "multi_answer",
       "title": "JavaScript Functions",
       "questionText": "Which of the following are valid ways to define a function in JavaScript?",
       "options": [
         {
-          "id": "1",
+          "id": "Q601",
           "text": "Function declaration – using the 'function' keyword followed by a name."
         },
         {
-          "id": "2",
+          "id": "Q602",
           "text": "Function expression – assigning an anonymous function to a variable."
         },
         {
-          "id": "3",
+          "id": "Q603",
           "text": "Arrow function – a concise syntax using '=>' for functions."
         },
         {
-          "id": "4",
+          "id": "Q604",
           "text": "Lambda keyword – borrowed from other languages, but not valid in JavaScript."
         }
       ],
-      "correctAnswers": ["1", "2", "3"]
+      "correctAnswers": ["Q601", "Q602", "Q604"]
     }
   ]
 }

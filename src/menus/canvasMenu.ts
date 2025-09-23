@@ -1,9 +1,9 @@
 import inquirer from "inquirer";
-import { fetchAndDisplayNewQuizzes } from "./canvasMenuItems/fetchAndDisplayNewQuizzes.js";
+import { displayNewQuizzes } from "./canvasMenuItems/displayNewQuizzes.js";
 import { editNewQuizzes } from "./canvasMenuItems/editNewQuizzes.js";
 
 export async function showCanvasMenu() {
-  const answer = await inquirer.prompt([
+  const { action } = await inquirer.prompt([
     {
       type: "list",
       name: "action",
@@ -18,14 +18,12 @@ export async function showCanvasMenu() {
     },
   ]);
 
-  // console.log(`You selected: ${JSON.stringify(answer)}`);
-
-  const action = answer.action;
-
-  if (action === "list") {
-    await fetchAndDisplayNewQuizzes();
+  if (action === "create") {
+    console.log("Create functionality not implemented yet.");
   } else if (action === "edit") {
     await editNewQuizzes();
+  } else if (action === "list") {
+    await displayNewQuizzes();
   } else if (action === "delete") {
     console.log("Delete functionality not implemented yet.");
   } else if (action === "back") {

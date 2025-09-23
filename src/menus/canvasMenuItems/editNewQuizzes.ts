@@ -6,7 +6,7 @@ import {
   createQuestionItemInNewQuiz,
   createMultipleQuestionsInNewQuiz,
 } from "../../api/canvas/newQuiz/newQuizItemsApi.js";
-import { NewQuizItem } from "../../api/canvas/newQuiz/newQuizItemTypes";
+import { NewQuizItem } from "../../api/canvas/newQuiz/newQuizItemTypes.js";
 
 export async function editNewQuizzes() {
   try {

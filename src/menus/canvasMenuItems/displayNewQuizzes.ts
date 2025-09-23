@@ -1,8 +1,8 @@
 import inquirer from "inquirer";
-// import your API function (adjust the path if needed)
 import { listNewQuizzes, NewQuiz } from "../../api/newQuizzes/index.js";
+import { getCourse, Course } from "../../api/canvas/courses/getCourse.js";
 
-export async function fetchAndDisplayNewQuizzes() {
+export async function displayNewQuizzes() {
   const answers = await inquirer.prompt([
     {
       type: "input",
@@ -13,7 +13,13 @@ export async function fetchAndDisplayNewQuizzes() {
 
   const courseId = Number(answers.courseId);
 
-  console.log("📡 Fetching quiz items from Canvas…");
+  let course: Course | null = null;
+
+  try {
+    course = await getCourse(courseId);
+  } catch (error) {
+    console.error("❌ Failed to fetch course:", error);
+  }
 
   try {
     const items = await listNewQuizzes(courseId);
@@ -23,11 +29,9 @@ export async function fetchAndDisplayNewQuizzes() {
       return;
     }
 
-    console.log("✅ Canvas New Quizzes:");
+    console.log(`✅ New Quizzes in course: ${course ? course.name : courseId}`);
     items.forEach((item: NewQuiz, index: number) => {
-      console.log(
-        `${index + 1}. ID: ${item.id}, Title: ${item.title ?? "Untitled"}`
-      );
+      console.log(`${index + 1}. ${item.title ?? "Untitled"}`);
     });
   } catch (error) {
     console.error("❌ Failed to fetch quiz items:", error);

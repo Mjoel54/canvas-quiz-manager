@@ -1,4 +1,5 @@
 import inquirer from "inquirer";
+import chalk from "chalk";
 import { listNewQuizzes, NewQuiz } from "../../api/newQuizzes/index.js";
 import { getCourse, Course } from "../../api/canvas/courses/getCourse.js";
 
@@ -29,9 +30,12 @@ export async function displayNewQuizzes() {
       return;
     }
 
-    console.log(`✅ New Quizzes in course: ${course ? course.name : courseId}`);
+    console.log(`Course: ${course ? course.name : courseId}`);
     items.forEach((item: NewQuiz, index: number) => {
-      console.log(`${index + 1}. ${item.title ?? "Untitled"}`);
+      let isPublished = item.published
+        ? chalk.green("Published")
+        : chalk.red("Unpublished");
+      console.log(`${index + 1}. ${item.title ?? "Untitled"} - ${isPublished}`);
     });
   } catch (error) {
     console.error("❌ Failed to fetch quiz items:", error);

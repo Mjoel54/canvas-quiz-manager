@@ -1,14 +1,14 @@
 export interface NewQuiz {
   id: string;
-  title: string;
-  instructions: string;
+  title?: string;
+  instructions?: string;
   assignment_group_id?: string;
-  points_possible: number;
-  due_at: string;
-  lock_at: string | null;
-  unlock_at: string | null;
-  published: boolean;
-  grading_type:
+  points_possible?: number;
+  due_at?: string;
+  lock_at?: string | null;
+  unlock_at?: string | null;
+  published?: boolean;
+  grading_type?:
     | "pass_fail"
     | "percent"
     | "letter_grade"

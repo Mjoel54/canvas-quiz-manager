@@ -28,7 +28,6 @@ export async function createNewQuiz(
     }
 
     const createdQuiz = (await response.json()) as NewQuiz;
-    console.log(createdQuiz);
     return createdQuiz;
   } catch (error) {
     console.error("Error creating quiz:", error);

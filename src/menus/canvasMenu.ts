@@ -1,7 +1,9 @@
 import inquirer from "inquirer";
-import { displayNewQuizzes } from "./canvasMenuItems/displayNewQuizzes.js";
-import { editNewQuizzes } from "./canvasMenuItems/editNewQuizzes.js";
-import { createNewQuizFromCliInput } from "./canvasMenuItems/createNewQuizFromCliInput.js";
+import {
+  handleCreateNewQuiz,
+  handleEditNewQuiz,
+  handleListNewQuizzes,
+} from "./canvasMenuItems/index.js";
 
 export async function showCanvasMenu() {
   const { action } = await inquirer.prompt([
@@ -20,11 +22,11 @@ export async function showCanvasMenu() {
   ]);
 
   if (action === "create") {
-    await createNewQuizFromCliInput();
+    await handleCreateNewQuiz();
   } else if (action === "edit") {
-    await editNewQuizzes();
+    await handleEditNewQuiz();
   } else if (action === "list") {
-    await displayNewQuizzes();
+    await handleListNewQuizzes();
   } else if (action === "delete") {
     console.log("Delete functionality not implemented yet.");
   } else if (action === "back") {

@@ -1,6 +1,7 @@
 import inquirer from "inquirer";
 import { displayNewQuizzes } from "./canvasMenuItems/displayNewQuizzes.js";
 import { editNewQuizzes } from "./canvasMenuItems/editNewQuizzes.js";
+import { createNewQuizFromCliInput } from "./canvasMenuItems/createNewQuizFromCliInput.js";
 
 export async function showCanvasMenu() {
   const { action } = await inquirer.prompt([
@@ -19,7 +20,7 @@ export async function showCanvasMenu() {
   ]);
 
   if (action === "create") {
-    console.log("Create functionality not implemented yet.");
+    await createNewQuizFromCliInput();
   } else if (action === "edit") {
     await editNewQuizzes();
   } else if (action === "list") {

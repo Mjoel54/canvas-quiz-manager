@@ -11,6 +11,7 @@ import {
   transformToCanvasNewQuizEssayItem,
   transformToCanvasNewQuizOrderingItem,
   transformToCanvasNewQuizMultiAnswerItem,
+  transformToCanvasNewQuizMatchingItem,
 } from "../../../helper/transformForCanvasNewQuiz.js";
 
 const baseUrl = process.env.BASE_URL;
@@ -48,7 +49,6 @@ export async function createQuestionItemInNewQuiz(
     }
 
     const createdQuizItem = (await response.json()) as NewQuizItem;
-    // console.log(createdQuizItem);
     return createdQuizItem;
   } catch (error) {
     console.error("Error creating quiz:", error);
@@ -87,6 +87,9 @@ export async function createMultipleQuestionsInNewQuiz(
 
         case "multi_answer":
           question = transformToCanvasNewQuizMultiAnswerItem(question);
+          break;
+        case "matching":
+          question = transformToCanvasNewQuizMatchingItem(question);
           break;
       }
 

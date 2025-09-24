@@ -1,6 +1,7 @@
 import inquirer from "inquirer";
-import { fetchAndDisplayNewQuizzes } from "./canvasMenus/fetchAndDisplayNewQuizzes.js";
-import { editNewQuizzes } from "./canvasMenus/editNewQuizzes.js";
+import { displayNewQuizzes } from "./canvasMenuItems/displayNewQuizzes.js";
+import { editNewQuizzes } from "./canvasMenuItems/editNewQuizzes.js";
+import { createNewQuizFromCliInput } from "./canvasMenuItems/createNewQuizFromCliInput.js";
 
 export async function showCanvasMenu() {
   const { action } = await inquirer.prompt([
@@ -10,18 +11,20 @@ export async function showCanvasMenu() {
       message: "Canvas Actions:",
       choices: [
         { name: "Create a New Quiz", value: "create" },
-        { name: "List New Quizzes in a Course", value: "list" },
         { name: "Edit a New Quiz", value: "edit" },
+        { name: "List New Quizzes in a Course", value: "list" },
         { name: "Delete a New Quiz", value: "delete" },
         { name: "Back", value: "back" },
       ],
     },
   ]);
 
-  if (action === "list") {
-    await fetchAndDisplayNewQuizzes();
+  if (action === "create") {
+    await createNewQuizFromCliInput();
   } else if (action === "edit") {
     await editNewQuizzes();
+  } else if (action === "list") {
+    await displayNewQuizzes();
   } else if (action === "delete") {
     console.log("Delete functionality not implemented yet.");
   } else if (action === "back") {

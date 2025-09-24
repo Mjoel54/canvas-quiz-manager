@@ -1,4 +1,5 @@
 import inquirer from "inquirer";
+import chalk from "chalk";
 import { listNewQuizzes, NewQuiz } from "../../api/newQuizzes/index.js";
 import {
   listNewQuizItems,
@@ -51,7 +52,9 @@ export async function editNewQuizzes() {
         name: "selectedQuizIndex",
         message: "Select a quiz to edit:",
         choices: quizzes.map((quiz: NewQuiz, index: number) => ({
-          name: `${quiz.title} (ID: ${quiz.id}, Points: ${quiz.points_possible})`,
+          name: `${index + 1}. ${quiz.title} - ${
+            quiz.published ? chalk.green("Published") : chalk.red("Unpublished")
+          }`,
           value: index,
         })),
       },

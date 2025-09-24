@@ -9,7 +9,7 @@ import {
 } from "../../api/canvas/newQuiz/newQuizItemsApi.js";
 import { NewQuizItem } from "../../api/canvas/newQuiz/newQuizItemTypes.js";
 
-export async function editNewQuizzes() {
+export async function handleEditNewQuiz() {
   try {
     // Step 1: Get course ID from user
     const { courseId } = await inquirer.prompt([
@@ -102,7 +102,7 @@ async function showQuizActionOptions(courseId: number, selectedQuiz: NewQuiz) {
       await addMultipleQuizItems(courseId, selectedQuiz);
       break;
     case "back":
-      await editNewQuizzes(); // Recursive call to go back to quiz selection
+      await handleEditNewQuiz(); // Recursive call to go back to quiz selection
       break;
     case "home":
       return; // Return to main menu
@@ -168,7 +168,7 @@ async function deleteAllQuizItems(courseId: number, selectedQuiz: NewQuiz) {
     } else if (continueAction === "view_items") {
       await listQuizItemsForQuiz(courseId, selectedQuiz.id, selectedQuiz);
     } else if (continueAction === "back") {
-      await editNewQuizzes();
+      await handleEditNewQuiz();
     } else if (continueAction === "home") {
       return; // Return to main menu
     } else if (continueAction === "exit") {

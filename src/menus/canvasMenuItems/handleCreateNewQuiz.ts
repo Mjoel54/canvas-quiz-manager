@@ -2,7 +2,7 @@ import inquirer from "inquirer";
 import chalk from "chalk";
 import { createNewQuiz, NewQuiz } from "../../api/newQuizzes/index.js";
 
-export async function createNewQuizFromCliInput() {
+export async function handleCreateNewQuiz() {
   const answers = await inquirer.prompt([
     {
       type: "input",

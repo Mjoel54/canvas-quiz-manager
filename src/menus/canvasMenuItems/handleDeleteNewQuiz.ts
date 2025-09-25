@@ -49,8 +49,6 @@ export async function handleDeleteNewQuiz() {
     ]);
 
     const selectedQuiz = quizzes[selectedQuizIndex];
-    console.log(`\n🗑️ Selected Quiz: ${selectedQuiz.title}`);
-    console.log(selectedQuiz.id);
 
     // Step 4: Confirm deletion
     const { confirm } = await inquirer.prompt([

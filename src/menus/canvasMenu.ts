@@ -3,6 +3,7 @@ import {
   handleCreateNewQuiz,
   handleEditNewQuiz,
   handleListNewQuizzes,
+  handleDeleteNewQuiz,
 } from "./canvasMenuItems/index.js";
 
 export async function showCanvasMenu() {
@@ -28,7 +29,7 @@ export async function showCanvasMenu() {
   } else if (action === "list") {
     await handleListNewQuizzes();
   } else if (action === "delete") {
-    console.log("Delete functionality not implemented yet.");
+    await handleDeleteNewQuiz();
   } else if (action === "back") {
     return; // Go back to main menu
   }

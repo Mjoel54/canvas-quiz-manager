@@ -27,7 +27,6 @@ export async function deleteNewQuiz(
     }
 
     const deletedQuiz = (await response.json()) as NewQuiz;
-    console.log(deletedQuiz);
     return deletedQuiz;
   } catch (error) {
     console.error("Error fetching quizzes:", error);

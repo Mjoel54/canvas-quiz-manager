@@ -3,7 +3,7 @@ import chalk from "chalk";
 import { listNewQuizzes, NewQuiz } from "../../api/newQuizzes/index.js";
 import { getCourse, Course } from "../../api/canvas/courses/getCourse.js";
 
-export async function displayNewQuizzes() {
+export async function handleListNewQuizzes() {
   const answers = await inquirer.prompt([
     {
       type: "input",

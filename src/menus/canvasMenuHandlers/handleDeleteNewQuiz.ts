@@ -6,34 +6,16 @@ import {
   deleteNewQuiz,
 } from "../../api/newQuizzes/index.js";
 
-export async function handleDeleteNewQuiz() {
+export async function handleDeleteNewQuiz(courseId: number) {
   try {
-    // Step 1: Get course ID from user
-    const { courseId } = await inquirer.prompt([
-      {
-        type: "input",
-        name: "courseId",
-        message: "Enter the Course ID:",
-        validate: (input: string) => {
-          const num = Number(input);
-          return !isNaN(num) && num > 0
-            ? true
-            : "Please enter a valid course ID";
-        },
-      },
-    ]);
-
-    const courseIdNum = Number(courseId);
-
-    // Step 2: List all quizzes for the course
-    const quizzes = await listNewQuizzes(courseIdNum);
+    const quizzes = await listNewQuizzes(courseId);
 
     if (!quizzes || quizzes.length === 0) {
       console.log("⚠️ No New Quizzes found for this course.");
       return;
     }
 
-    // Step 3: Display quizzes and let user select one to delete
+    // Display quizzes and let user select one to delete
     const { selectedQuizIndex } = await inquirer.prompt([
       {
         type: "list",
@@ -50,7 +32,7 @@ export async function handleDeleteNewQuiz() {
 
     const selectedQuiz = quizzes[selectedQuizIndex];
 
-    // Step 4: Confirm deletion
+    // Confirm deletion
     const { confirm } = await inquirer.prompt([
       {
         type: "confirm",
@@ -65,9 +47,9 @@ export async function handleDeleteNewQuiz() {
       return;
     }
 
-    // Step 5: Delete quiz
+    // Delete quiz
 
-    await deleteNewQuiz(courseIdNum, Number(selectedQuiz.id));
+    await deleteNewQuiz(courseId, Number(selectedQuiz.id));
     let successMessage = chalk.green(
       `New Quiz Deleted: ${selectedQuiz.title} (ID: ${selectedQuiz.id})`
     );

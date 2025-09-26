@@ -1,8 +1,8 @@
 #!/usr/bin/env node
-import { showMainMenu } from "./menus/mainMenu.js";
+import { mainMenu } from "./menus/mainMenu.js";
 
-async function main() {
-  await showMainMenu();
+async function runCli() {
+  await mainMenu();
 }
 
-main();
+runCli();

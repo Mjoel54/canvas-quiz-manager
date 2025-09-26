@@ -26,18 +26,22 @@ export async function handleListNewQuizzes() {
     const items = await listNewQuizzes(courseId);
 
     if (!items || items.length === 0) {
-      console.log("⚠️ No quiz items found.");
+      console.log(chalk.red("No New Quizzes found in this course.");
       return;
     }
 
     console.log(`Course: ${course ? course.name : courseId}`);
     items.forEach((item: NewQuiz, index: number) => {
-      let isPublished = item.published
+      const isPublished = item.published
         ? chalk.green("Published")
         : chalk.red("Unpublished");
-      console.log(`${index + 1}. ${item.title ?? "Untitled"} - ${isPublished}`);
+
+      const itemTitle = item.title ?? "Untitled";
+
+      console.log(`${index + 1}. ${itemTitle} - ${isPublished}`);
     });
   } catch (error) {
-    console.error("❌ Failed to fetch quiz items:", error);
+    const errorMessage = chalk.red("Failed to fetch New Quizzes");
+    console.error(errorMessage);
   }
 }

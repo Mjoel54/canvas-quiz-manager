@@ -4,7 +4,7 @@ import {
   handleEditNewQuiz,
   handleListNewQuizzes,
   handleDeleteNewQuiz,
-} from "./canvasMenuItems/index.js";
+} from "./canvasMenuHandlers/index.js";
 
 export async function showCanvasMenu() {
   const { action } = await inquirer.prompt([

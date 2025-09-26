@@ -9,42 +9,17 @@ import {
 } from "../../api/canvas/newQuiz/newQuizItemsApi.js";
 import { NewQuizItem } from "../../api/canvas/newQuiz/newQuizItemTypes.js";
 
-export async function handleEditNewQuiz() {
+export async function handleEditNewQuiz(courseId: number) {
   try {
-    // Step 1: Get course ID from user
-    const { courseId } = await inquirer.prompt([
-      {
-        type: "input",
-        name: "courseId",
-        message: "Enter the Course ID:",
-        validate: (input: string) => {
-          const num = Number(input);
-          return !isNaN(num) && num > 0
-            ? true
-            : "Please enter a valid course ID";
-        },
-      },
-    ]);
-
     const courseIdNum = Number(courseId);
 
-    // Step 2: List all quizzes for the course
+    // List all quizzes for the course
     const quizzes = await listNewQuizzes(courseIdNum);
 
     if (!quizzes || quizzes.length === 0) {
       console.log("⚠️ No quizzes found for this course.");
       return;
     }
-
-    // Step 3: Display quizzes and let user select one
-
-    // quizzes.forEach((quiz: NewQuiz, index: number) => {
-    //   console.log(
-    //     `${index + 1}. ID: ${quiz.id}, Title: ${quiz.title}, Points: ${
-    //       quiz.points_possible
-    //     }`
-    //   );
-    // });
 
     const { selectedQuizIndex } = await inquirer.prompt([
       {
@@ -102,7 +77,7 @@ async function showQuizActionOptions(courseId: number, selectedQuiz: NewQuiz) {
       await addMultipleQuizItems(courseId, selectedQuiz);
       break;
     case "back":
-      await handleEditNewQuiz(); // Recursive call to go back to quiz selection
+      await handleEditNewQuiz(courseId); // Recursive call to go back to quiz selection
       break;
     case "home":
       return; // Return to main menu
@@ -168,7 +143,7 @@ async function deleteAllQuizItems(courseId: number, selectedQuiz: NewQuiz) {
     } else if (continueAction === "view_items") {
       await listQuizItemsForQuiz(courseId, selectedQuiz.id, selectedQuiz);
     } else if (continueAction === "back") {
-      await handleEditNewQuiz();
+      await handleEditNewQuiz(courseId);
     } else if (continueAction === "home") {
       return; // Return to main menu
     } else if (continueAction === "exit") {
@@ -213,15 +188,6 @@ async function listQuizItemsForQuiz(
       if (item.entry) {
         const interactionType = item.entry.interaction_type_slug;
         console.log(`   Type: ${interactionType}`);
-
-        // Show item body preview (first 100 characters)
-        // if (item.entry.item_body) {
-        //   const preview =
-        //     item.entry.item_body.length > 100
-        //       ? item.entry.item_body.substring(0, 100) + "..."
-        //       : item.entry.item_body;
-        //   console.log(`   Preview: ${preview}`);
-        // }
       }
       console.log(""); // Empty line for readability
     });

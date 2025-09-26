@@ -3,17 +3,7 @@ import chalk from "chalk";
 import { listNewQuizzes, NewQuiz } from "../../api/newQuizzes/index.js";
 import { getCourse, Course } from "../../api/canvas/courses/getCourse.js";
 
-export async function handleListNewQuizzes() {
-  const answers = await inquirer.prompt([
-    {
-      type: "input",
-      name: "courseId",
-      message: "Enter the Course ID:",
-    },
-  ]);
-
-  const courseId = Number(answers.courseId);
-
+export async function handleListNewQuizzes(courseId: number) {
   let course: Course | null = null;
 
   try {
@@ -26,11 +16,11 @@ export async function handleListNewQuizzes() {
     const items = await listNewQuizzes(courseId);
 
     if (!items || items.length === 0) {
-      console.log(chalk.red("No New Quizzes found in this course.");
+      console.log(chalk.red("No New Quizzes found in this course."));
       return;
     }
 
-    console.log(`Course: ${course ? course.name : courseId}`);
+    console.log(`Course: ${course?.name} (ID: ${course?.id})`);
     items.forEach((item: NewQuiz, index: number) => {
       const isPublished = item.published
         ? chalk.green("Published")

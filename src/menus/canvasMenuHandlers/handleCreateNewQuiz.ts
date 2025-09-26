@@ -1,14 +1,10 @@
 import inquirer from "inquirer";
 import chalk from "chalk";
 import { createNewQuiz, NewQuiz } from "../../api/newQuizzes/index.js";
+import { getCourse, Course } from "../../api/canvas/courses/getCourse.js";
 
-export async function handleCreateNewQuiz() {
+export async function handleCreateNewQuiz(courseId: number) {
   const answers = await inquirer.prompt([
-    {
-      type: "input",
-      name: "courseId",
-      message: "Enter the Course ID:",
-    },
     {
       type: "input",
       name: "quizTitle",
@@ -16,7 +12,13 @@ export async function handleCreateNewQuiz() {
     },
   ]);
 
-  const courseId = Number(answers.courseId);
+  let course: Course | null = null;
+
+  try {
+    course = await getCourse(courseId);
+  } catch (error) {
+    console.error("❌ Failed to fetch course:", error);
+  }
 
   const reqBody = {
     quiz: {
@@ -27,7 +29,9 @@ export async function handleCreateNewQuiz() {
   try {
     const quiz = (await createNewQuiz(courseId, reqBody)) as NewQuiz;
     let successMessage = chalk.green(
-      `New Quiz Created: ${quiz.title} (ID: ${quiz.id})`
+      `New Quiz Created: ${quiz.title} in ${
+        course?.name ? course.name : "Unnamed Course"
+      } (${course?.id})`
     );
     console.log(`${successMessage}`);
     return quiz;

@@ -3,7 +3,7 @@ import chalk from "chalk";
 import { NewQuiz } from "../../../api/newQuizzes/index.js";
 import { createMultipleQuestionsInNewQuiz } from "../../../api/canvas/newQuiz/newQuizItemsApi.js";
 import { NewQuizItem } from "../../../api/canvas/newQuiz/newQuizItemTypes.js";
-import { handleEditNewQuiz } from "../handleEditNewQuiz.js";
+import { handleUpdateNewQuiz } from "../handleUpdateNewQuiz.js";
 
 export async function handleAddNewQuizItems(
   courseId: number,
@@ -84,7 +84,7 @@ export async function handleAddNewQuizItems(
     }
 
     // Return control the Edit Quiz menu
-    return await handleEditNewQuiz(courseId);
+    return await handleUpdateNewQuiz(courseId);
   } catch (error) {
     console.error("❌ Error adding multiple quiz items:", error);
   }

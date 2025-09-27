@@ -1,11 +1,11 @@
 import { handleCreateNewQuiz } from "./handleCreateNewQuiz.js";
-import { handleEditNewQuiz } from "./handleEditNewQuiz.js";
+import { handleUpdateNewQuiz } from "./handleUpdateNewQuiz.js";
 import { handleListNewQuizzes } from "./handleListNewQuizzes.js";
 import { handleDeleteNewQuiz } from "./handleDeleteNewQuiz.js";
 
 export {
   handleCreateNewQuiz,
-  handleEditNewQuiz,
+  handleUpdateNewQuiz,
   handleListNewQuizzes,
   handleDeleteNewQuiz,
 };

@@ -2,7 +2,7 @@ import inquirer from "inquirer";
 import chalk from "chalk";
 import {
   handleCreateNewQuiz,
-  handleEditNewQuiz,
+  handleUpdateNewQuiz,
   handleListNewQuizzes,
   handleDeleteNewQuiz,
 } from "./index.js";
@@ -49,7 +49,7 @@ export async function canvasCourseMenu() {
           await handleCreateNewQuiz(courseIdNum);
           break;
         case "edit":
-          await handleEditNewQuiz(courseIdNum);
+          await handleUpdateNewQuiz(courseIdNum);
           break;
         case "list":
           await handleListNewQuizzes(courseIdNum);

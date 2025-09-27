@@ -2,12 +2,15 @@ import inquirer from "inquirer";
 import chalk from "chalk";
 import { listNewQuizzes, NewQuiz } from "../../api/newQuizzes/index.js";
 import {
-  listNewQuizItems,
-  deleteAllNewQuizItems,
   createQuestionItemInNewQuiz,
   createMultipleQuestionsInNewQuiz,
 } from "../../api/canvas/newQuiz/newQuizItemsApi.js";
 import { NewQuizItem } from "../../api/canvas/newQuiz/newQuizItemTypes.js";
+
+import {
+  handleListNewQuizItems,
+  handleDeleteAllNewQuizItems,
+} from "./newQuizItemsActions/index.js";
 
 export async function handleEditNewQuiz(courseId: number) {
   try {
@@ -35,8 +38,12 @@ export async function handleEditNewQuiz(courseId: number) {
       },
     ]);
 
+    // Show the user the selected quiz
     const selectedQuiz = quizzes[selectedQuizIndex];
-    console.log(`\n📝 Selected Quiz: ${selectedQuiz.title}`);
+    const selectedQuizMessage = chalk.bold.blue(
+      `\n📚 Selected Quiz: ${selectedQuiz.title}\n`
+    );
+    console.log(selectedQuizMessage);
 
     // Step 4: Show quiz action options
     await showQuizActionOptions(courseIdNum, selectedQuiz);
@@ -52,7 +59,7 @@ async function showQuizActionOptions(courseId: number, selectedQuiz: NewQuiz) {
       name: "action",
       message: `What would you like to do with "${selectedQuiz.title}"?`,
       choices: [
-        { name: "List question", value: "list_items" },
+        { name: "List questions", value: "list_items" },
         { name: "Add a single question", value: "add_item" },
         { name: "Add multiple questions", value: "add_items" },
         { name: "Delete All questions", value: "delete_all_items" },
@@ -65,10 +72,10 @@ async function showQuizActionOptions(courseId: number, selectedQuiz: NewQuiz) {
 
   switch (action) {
     case "list_items":
-      await listQuizItemsForQuiz(courseId, selectedQuiz.id, selectedQuiz);
+      await handleListNewQuizItems(courseId, selectedQuiz.id, selectedQuiz);
       break;
     case "delete_all_items":
-      await deleteAllQuizItems(courseId, selectedQuiz);
+      await handleDeleteAllNewQuizItems(courseId, selectedQuiz);
       break;
     case "add_item":
       await addQuizItem(courseId, selectedQuiz);
@@ -85,147 +92,6 @@ async function showQuizActionOptions(courseId: number, selectedQuiz: NewQuiz) {
       console.log("👋 Goodbye!");
       process.exit(0);
       break;
-  }
-}
-
-async function deleteAllQuizItems(courseId: number, selectedQuiz: NewQuiz) {
-  try {
-    // First, show current quiz items count
-    const quizItems = await listNewQuizItems(courseId, Number(selectedQuiz.id));
-    const itemCount = quizItems ? quizItems.length : 0;
-
-    if (itemCount === 0) {
-      console.log("⚠️ No quiz items found to delete.");
-      return;
-    }
-
-    console.log(
-      `\n⚠️ WARNING: This will delete ALL ${itemCount} quiz items from "${selectedQuiz.title}"`
-    );
-    console.log("This action cannot be undone!");
-
-    const { confirm } = await inquirer.prompt([
-      {
-        type: "confirm",
-        name: "confirm",
-        message: "Are you sure you want to delete all quiz items?",
-        default: false,
-      },
-    ]);
-
-    if (!confirm) {
-      console.log("❌ Deletion cancelled.");
-      return;
-    }
-
-    console.log("🗑️ Deleting all quiz items...");
-    await deleteAllNewQuizItems(courseId, Number(selectedQuiz.id));
-    console.log("✅ All quiz items have been deleted successfully!");
-
-    // Ask if user wants to continue with other actions
-    const { continueAction } = await inquirer.prompt([
-      {
-        type: "list",
-        name: "continueAction",
-        message: "What would you like to do next?",
-        choices: [
-          { name: "➕ Add Quiz Items", value: "add_items" },
-          { name: "📋 View Quiz Items", value: "view_items" },
-          { name: "🔙 Back to Quiz Selection", value: "back" },
-          { name: "🏠 Return to Home", value: "home" },
-          { name: "❌ Exit Application", value: "exit" },
-        ],
-      },
-    ]);
-
-    if (continueAction === "add_items") {
-      await addQuizItem(courseId, selectedQuiz);
-    } else if (continueAction === "view_items") {
-      await listQuizItemsForQuiz(courseId, selectedQuiz.id, selectedQuiz);
-    } else if (continueAction === "back") {
-      await handleEditNewQuiz(courseId);
-    } else if (continueAction === "home") {
-      return; // Return to main menu
-    } else if (continueAction === "exit") {
-      console.log("👋 Goodbye!");
-      process.exit(0);
-    }
-  } catch (error) {
-    console.error("❌ Error deleting quiz items:", error);
-  }
-}
-
-async function listQuizItemsForQuiz(
-  courseId: number,
-  quizId: string,
-  selectedQuiz: NewQuiz
-) {
-  try {
-    console.log("📡 Fetching quiz items...");
-
-    const quizItems = await listNewQuizItems(courseId, Number(quizId));
-
-    if (!quizItems || quizItems.length === 0) {
-      console.log("⚠️ No quiz items found for this quiz.");
-      return;
-    }
-
-    // Step 5: Display all quiz items
-    console.log("✅ Quiz Items:");
-    quizItems.forEach((item: NewQuizItem, index: number) => {
-      const entryType = item.entry_type;
-      const points = item.points_possible;
-      const status = item.status;
-      const entryTitle = item.entry?.title || "Untitled";
-
-      console.log(
-        `${
-          index + 1
-        }. [${entryType}] ${entryTitle} (Points: ${points}, Status: ${status})`
-      );
-
-      // Show additional details for items with entry data
-      if (item.entry) {
-        const interactionType = item.entry.interaction_type_slug;
-        console.log(`   Type: ${interactionType}`);
-      }
-      console.log(""); // Empty line for readability
-    });
-
-    // Step 6: Ask what the user wants to do next
-    const { nextAction } = await inquirer.prompt([
-      {
-        type: "list",
-        name: "nextAction",
-        message: "What would you like to do?",
-        choices: [
-          { name: "✏️ Edit Quiz Item", value: "edit_item" },
-          { name: "🗑️ Delete Quiz Item", value: "delete_item" },
-          { name: "➕ Add New Item", value: "add_item" },
-          { name: "🔙 Back to Quiz Actions", value: "back" },
-          { name: "🏠 Return to Home", value: "home" },
-          { name: "❌ Exit Application", value: "exit" },
-        ],
-      },
-    ]);
-
-    if (nextAction === "edit_item") {
-      await selectAndEditQuizItem(quizItems, courseId, Number(quizId));
-    } else if (nextAction === "delete_item") {
-      console.log("🚧 Delete specific quiz item functionality coming soon...");
-    } else if (nextAction === "add_item") {
-      await addQuizItem(courseId, selectedQuiz);
-    } else if (nextAction === "back") {
-      // Go back to the quiz action options
-      await showQuizActionOptions(courseId, selectedQuiz);
-    } else if (nextAction === "home") {
-      return; // Return to main menu
-    } else if (nextAction === "exit") {
-      console.log("👋 Goodbye!");
-      process.exit(0);
-    }
-  } catch (error) {
-    console.error("❌ Error fetching quiz items:", error);
   }
 }
 
@@ -328,7 +194,7 @@ async function addQuizItem(courseId: number, selectedQuiz: NewQuiz) {
     ]);
 
     if (nextAction === "list_items") {
-      await listQuizItemsForQuiz(courseId, selectedQuiz.id, selectedQuiz);
+      await handleListNewQuizItems(courseId, selectedQuiz.id, selectedQuiz);
     } else if (nextAction === "back") {
       await showQuizActionOptions(courseId, selectedQuiz);
     } else if (nextAction === "home") {
@@ -411,7 +277,7 @@ async function addMultipleQuizItems(courseId: number, selectedQuiz: NewQuiz) {
     ]);
 
     if (nextAction === "list_items") {
-      await listQuizItemsForQuiz(courseId, selectedQuiz.id, selectedQuiz);
+      await handleListNewQuizItems(courseId, selectedQuiz.id, selectedQuiz);
     } else if (nextAction === "back") {
       await showQuizActionOptions(courseId, selectedQuiz);
     } else if (nextAction === "home") {

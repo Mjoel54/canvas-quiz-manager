@@ -63,8 +63,8 @@ The application supports a wide variety of question types with full configuratio
 
 5. **Encrypt environment variables (Recommended)**
    For enhanced security, encrypt your environment variables using dotenvx:
-   ```bash
-   npx dotenvx encrypt
+   ```
+   dotenvx encrypt
    ```
 
 ### Usage
@@ -76,15 +76,6 @@ The application supports a wide variety of question types with full configuratio
    ```
 
 2. **Follow the interactive menu**
-
-   - Select your LMS (Canvas/Moodle)
-   - Choose from available actions:
-     - Create a New Quiz
-     - List New Quizzes in a Course
-     - Edit a New Quiz
-     - Delete a New Quiz
-
-3. **Navigate through the guided interface**
    The application will prompt you for necessary information and guide you through each operation.
 
 ## Development

@@ -38,8 +38,12 @@ export async function handleEditNewQuiz(courseId: number) {
       },
     ]);
 
+    // Show the user the selected quiz
     const selectedQuiz = quizzes[selectedQuizIndex];
-    console.log(`\n📝 Selected Quiz: ${selectedQuiz.title}`);
+    const selectedQuizMessage = chalk.bold.blue(
+      `\n📚 Selected Quiz: ${selectedQuiz.title}\n`
+    );
+    console.log(selectedQuizMessage);
 
     // Step 4: Show quiz action options
     await showQuizActionOptions(courseIdNum, selectedQuiz);

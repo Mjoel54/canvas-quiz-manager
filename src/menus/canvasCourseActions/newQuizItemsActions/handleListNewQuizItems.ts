@@ -9,12 +9,6 @@ export async function handleListNewQuizItems(
   selectedQuiz: NewQuiz
 ) {
   try {
-    // Blank line for readability
-    console.log("");
-
-    // Let the user know we're trying to fetch the quiz items
-    console.log(`📡 Fetching quiz items...\n`);
-
     // Fetch all quiz items for the selected Canvas New Quiz
     const quizItems = await listNewQuizItems(courseId, Number(quizId));
 
@@ -26,7 +20,7 @@ export async function handleListNewQuizItems(
 
     // Tell the user which Canvas New Quiz we're about to display items for
     const quizTitleMessage = chalk.bold.blue(
-      `Quiz Items for: ${selectedQuiz.title}\n`
+      `\n📚 Quiz Items: ${selectedQuiz.title}\n`
     );
     console.log(quizTitleMessage);
 

@@ -203,11 +203,11 @@ The application expects quiz questions to be defined in a consistent JSON format
 }
 ```
 
-## 🚧 Roadmap
+## Roadmap
 
 - **Moodle Support**: Full integration with Moodle LMS
 - **BrightSpace Support**: Full integration with BrightSpace LMS
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

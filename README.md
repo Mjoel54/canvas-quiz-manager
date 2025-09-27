@@ -1,43 +1,29 @@
 # LMS Quiz Manager
 
-A TypeScript CLI application designed to streamline quiz management across various Learning Management Systems (LMS), with current support for Canvas and planned support for Moodle. This tool automates repetitive quiz management tasks, providing educators and administrators with powerful command-line tools to efficiently handle quiz operations.
-
-## 🎯 Overview
-
-The Quiz Manager is a command-line interface that simplifies the creation, management, and automation of quizzes in Canvas LMS across the Classic and New quiz engines. Built with TypeScript for type safety and maintainability, it provides an intuitive menu-driven interface for complex quiz operations.
-
-This project maintains a clear separation of concerns:
-
-- **API Logic**: Handled by the developer with deep Canvas API expertise
-- **CLI Interface**: AI-assisted development for user experience optimization
+A TypeScript CLI application designed to streamline quiz management across various Learning Management Systems (LMS), with current support for Canvas New Quizzes quiz engine and planned support for Moodle. This tool automates repetitive quiz management tasks, providing educators and administrators with powerful command-line tools to efficiently handle quiz operations.Built with TypeScript for type safety and maintainability, it provides an intuitive menu-driven interface for complex quiz operations.
 
 ## ✨ Features
 
 ### Canvas LMS Support
 
-- **Create New Quizzes**: Set up quizzes with comprehensive configuration options
-- **List Quizzes**: View and browse existing quizzes in courses
-- **Edit Quizzes**: Modify quiz settings, questions, and configurations
-- **Delete Quizzes**: Remove quizzes when no longer needed
-- **Quiz Item Management**: Full CRUD operations for quiz questions and items
+- **Create quizzes**: Set up quizzes with comprehensive configuration options
+- **List quizzes in a course**: View and browse existing quizzes in courses
+- **Edit quizzes**: Modify quiz settings, questions, and configurations
+- **Delete quizzes**: Remove quizzes when no longer needed
+- **Quiz item management**: Full CRUD operations for quiz questions and items.
+- **Bulk actions**: bulk operations such as delete all questions in a quiz.
 
-### Question Types Supported
+### Supported Question Types
 
-- Multiple Choice Questions
-- True/False Questions
-- Essay Questions
-- Ordering Questions
-- Multiple Answer Questions
-- Fill-in-the-Blank Questions
-- And more...
+The application supports a wide variety of question types with full configuration options:
 
-### Advanced Features
+- **True/False**: Binary choice questions
+- **Multiple Choice**: Single correct answer
+- **Multiple Correct Answer**: Multiple correct answer from a list of options
+- **Essay**: Short/long response qestions
+- **Ordering**: Sequence-based questions
 
-- **Batch Operations**: Create multiple questions at once
-- **Interactive CLI**: User-friendly menu system with guided workflows
-- **Type Safety**: Full TypeScript implementation with comprehensive type definitions
-
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -80,7 +66,6 @@ This project maintains a clear separation of concerns:
    ```bash
    npx dotenvx encrypt
    ```
-   This will create an encrypted `.env.vault` file that can be safely committed to version control.
 
 ### Usage
 
@@ -102,23 +87,7 @@ This project maintains a clear separation of concerns:
 3. **Navigate through the guided interface**
    The application will prompt you for necessary information and guide you through each operation.
 
-## 🏗️ Project Structure
-
-```
-src/
-├── api/                    # API integration layer
-│   ├── newQuizzes/        # Quiz management operations
-│   └── newQuizItems/      # Quiz question/item operations
-├── menus/                 # CLI menu system
-│   ├── mainMenu.ts        # Main application menu
-│   ├── canvasMenu.ts      # Canvas-specific operations
-│   └── canvasMenus/       # Canvas sub-menus
-├── data/                  # Sample data and configurations
-├── cli.ts                 # CLI entry point
-└── index.ts               # Main application logic
-```
-
-## 🔧 Development
+## Development
 
 ### Available Scripts
 
@@ -136,116 +105,120 @@ npm install
 npm run build
 
 # Run the application
-npm run cli
+dotenvx run -- npm run cli
 ```
-
-## 📋 API Integration
-
-This application provides a clean separation between the CLI interface and API logic:
-
-- **CLI Layer**: Handles user interaction, menu navigation, and input validation
-- **API Layer**: Manages all Canvas API communications and data transformations
-- **Type Definitions**: Comprehensive TypeScript interfaces for all Canvas API objects
-
-## 🎨 Question Types & Configuration
-
-The application supports a wide variety of question types with full configuration options:
-
-- **Multiple Choice**: Single or multiple correct answers
-- **True/False**: Binary choice questions
-- **Essay**: Open-ended text responses
-- **Ordering**: Sequence-based questions
-- **Fill-in-the-Blank**: Text completion questions
-- **File Upload**: Document submission questions
-
-## 🔒 Security & Best Practices
-
-- **Encrypted Environment Variables**: Use `dotenvx` to encrypt sensitive credentials
-- **API Token Management**: All tokens stored in environment variables, never in code
-- **Type Safety**: TypeScript prevents common API interaction errors
-- **Comprehensive Validation**: Input validation and error handling throughout the application
 
 ## Required JSON Structure
 
-The application expects quiz questions to be defined in a consistent JSON format.  
-Each question object must include a `type`, `title`, `questionText`, `options`, `correctAnswer`, and `points`.
+The application expects quiz questions to be defined in a consistent JSON format. The JSON must contain a top-level questions key whose value is an array of question objects, each defining its type, text, options, and correct answer(s).
+
+### Example
+
+```
+{
+  "questions": [
+    {
+      "type": "true_false",
+      "questionText": "The sky is blue.",
+      "options": [
+        { "text": "True", "value": true },
+        { "text": "False", "value": false }
+      ],
+      "correctAnswer": true
+    }
+  ]
+}
+
+```
 
 ### True/False Question Example
 
 ```
 {
-  "type": "true_false",
-  "title": "JavaScript Variable Declaration",
-  "questionText": "The 'let' keyword in JavaScript allows you to declare block-scoped variables.",
+    "type": "true_false",
+    "title": "Beethoven’s Hearing",
+    "questionText": "Ludwig van Beethoven composed some of his most famous works after losing his hearing.",
+    "options": [
+      { "text": "True", "value": true },
+      { "text": "False", "value": false }
+    ],
+    "correctAnswer": true
+}
+```
+
+### Multiple Choice Example
+
+```
+{
+    "type": "choice",
+    "title": "Beatles Album",
+    "questionText": "Which Beatles album features the song 'Lucy in the Sky with Diamonds'?",
+    "options": [
+      { "id": "1", "text": "Revolver" },
+      { "id": "2", "text": "Sgt. Pepper's Lonely Hearts Club Band" },
+      { "id": "3", "text": "Abbey Road" },
+      { "id": "4", "text": "Let It Be" }
+    ],
+    "correctAnswer": "2"
+  }
+```
+
+### Multiple Correct Answers Question
+
+```
+{
+  "type": "multi_answer",
+  "title": "Classical Composers",
+  "questionText": "Which of the following composers are from the Classical era of Western music?",
   "options": [
-    {
-      "text": "True",
-      "value": true
-    },
-    {
-      "text": "False",
-      "value": false
-    }
+    { "id": "1", "text": "Wolfgang Amadeus Mozart" },
+    { "id": "2", "text": "Ludwig van Beethoven (early works)" },
+    { "id": "3", "text": "Johann Sebastian Bach" },
+    { "id": "4", "text": "Joseph Haydn" }
   ],
-  "correctAnswer": true,
+  "correctAnswers": ["1", "2", "4"]
+}
+```
+
+### Ordering Question
+
+```
+{
+  "type": "ordering",
+  "title": "Order of Guitar Strings",
+  "questionText": "Arrange the guitar strings from lowest pitch to highest pitch:",
+  "options": [
+    { "id": "1", "text": "E (6th string)" },
+    { "id": "2", "text": "A (5th string)" },
+    { "id": "3", "text": "D (4th string)" },
+    { "id": "4", "text": "G (3rd string)" },
+    { "id": "5", "text": "B (2nd string)" },
+    { "id": "6", "text": "E (1st string)" }
+  ],
+  "correctOrder": ["1", "2", "3", "4", "5", "6"],
+  "top_label": "Lowest Pitch",
+  "bottom_label": "Highest Pitch",
   "points": 1
 }
 ```
 
-### True/False Question Example
+### Essay Question
 
-```
+````
 {
-  "type": "multiple_choice",
-  "title": "JavaScript Basics",
-  "questionText": "Which keyword is used to declare a block-scoped variable in JavaScript?",
-  "options": [
-    {
-      "id": "1",
-      "text": "var – declares function-scoped variables, which can cause issues in block scoping."
-    },
-    {
-      "id": "2",
-      "text": "let – declares block-scoped variables, reducing scoping problems."
-    },
-    {
-      "id": "3",
-      "text": "const – declares block-scoped variables whose values cannot be reassigned."
-    },
-    {
-      "id": "4",
-      "text": "int – a keyword from other languages, but not valid in JavaScript."
-    }
-  ],
-  "correctAnswer": "2",
-  "points": 1
+    "type": "essay",
+    "title": "Impact of Jazz",
+    "questionText": "In a few sentences, explain how jazz music influenced modern popular music genres."
 }
 ```
 
 ## 🚧 Roadmap
 
 - **Moodle Support**: Full integration with Moodle LMS
-- **Batch Import**: CSV/JSON quiz import functionality
-- **Template System**: Reusable quiz templates
-- **Advanced Analytics**: Quiz performance reporting
-- **Multi-language Support**: Internationalization
+- **BrightSpace Support**: Full integration with BrightSpace LMS
+
 
 ## 📄 License
 
-This project is licensed under the ISC License - see the [LICENSE](LICENSE) file for details.
-
-## 🆘 Support
-
-For issues related to:
-
-- **Canvas API Integration**: Contact the developer
-- **CLI Interface**: Check the documentation or create an issue
-- **General Usage**: Refer to the Canvas API documentation
-
----
-
-_Built with TypeScript for reliability and maintainability. Designed to streamline educational technology workflows._
-
-```
-
-```
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+````

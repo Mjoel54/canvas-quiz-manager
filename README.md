@@ -101,13 +101,13 @@ dotenvx run -- npm run cli
 
 ## Required JSON Structure
 
-The application expects quiz questions to be defined in a consistent JSON format. The JSON must contain a top-level questions key whose value is an array of question objects, each defining its type, text, options, and correct answer(s).
+The application expects quiz questions to be defined in a consistent JSON format. The JSON must contain a top-level questionData key whose value is an array of question objects, each defining its type, text, options, and correct answer(s).
 
 ### Example
 
 ```
 {
-  "questions": [
+  "questionData": [
     {
       "type": "true_false",
       "questionText": "The sky is blue.",

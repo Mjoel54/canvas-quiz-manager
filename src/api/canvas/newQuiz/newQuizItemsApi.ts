@@ -61,13 +61,13 @@ export async function createMultipleQuestionsInNewQuiz(
   courseId: number,
   quizId: number,
   data: {
-    questions: any[];
+    questionData: any[];
   }
 ) {
   try {
     const results: any = [];
 
-    for (let question of data.questions) {
+    for (let question of data.questionData) {
       switch (question.type) {
         case "true_false":
           question = transformToCanvasNewQuizTrueFalseItem(question);

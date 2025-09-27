@@ -1,4 +1,5 @@
 import inquirer from "inquirer";
+import chalk from "chalk";
 import {
   handleCreateNewQuiz,
   handleEditNewQuiz,
@@ -7,6 +8,10 @@ import {
 } from "./index.js";
 
 export async function canvasCourseMenu() {
+  // Tell the user which Canvas New Quiz we're about to create items in
+  const quizTitleMessage = chalk.bold.blue(`\n📚 Select a course to work in\n`);
+  console.log(quizTitleMessage);
+
   while (true) {
     // Step 1: Ask for LMS + Course ID + Action
     const { courseId, action } = await inquirer.prompt([

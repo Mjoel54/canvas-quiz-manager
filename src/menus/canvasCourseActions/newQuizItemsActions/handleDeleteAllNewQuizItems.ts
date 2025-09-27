@@ -4,7 +4,7 @@ import { NewQuiz } from "../../../api/newQuizzes/index.js";
 import { listNewQuizItems } from "../../../api/canvas/newQuiz/newQuizItemsApi.js";
 import { NewQuizItem } from "../../../api/canvas/newQuiz/newQuizItemTypes.js";
 import { deleteAllNewQuizItems } from "../../../api/canvas/newQuiz/newQuizItemsApi.js";
-import { handleEditNewQuiz } from "../handleEditNewQuiz.js";
+import { handleUpdateNewQuiz } from "../handleUpdateNewQuiz.js";
 
 export async function handleDeleteAllNewQuizItems(
   courseId: number,
@@ -60,7 +60,7 @@ export async function handleDeleteAllNewQuizItems(
     console.log(successMessage);
 
     // Return control the Edit Quiz menu
-    return await handleEditNewQuiz(courseId);
+    return await handleUpdateNewQuiz(courseId);
   } catch (error) {
     console.error("❌ Error deleting quiz items:", error);
   }

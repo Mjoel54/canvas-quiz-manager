@@ -9,7 +9,7 @@ import {
   handleAddNewQuizItems,
 } from "./newQuizItemsActions/index.js";
 
-export async function handleEditNewQuiz(courseId: number) {
+export async function handleUpdateNewQuiz(courseId: number) {
   // Display course info to user
   console.log(
     chalk.bold.blue(`\n📚 Canvas New Quiz Selector: Course - ${courseId}\n`)
@@ -82,7 +82,7 @@ async function showQuizActionOptions(courseId: number, selectedQuiz: NewQuiz) {
       await handleAddNewQuizItems(courseId, selectedQuiz);
       break;
     case "back":
-      return await handleEditNewQuiz(courseId); // Recursive call to go back to quiz selection
+      return await handleUpdateNewQuiz(courseId); // Recursive call to go back to quiz selection
     case "home":
       return; // Return to main menu
     case "exit":

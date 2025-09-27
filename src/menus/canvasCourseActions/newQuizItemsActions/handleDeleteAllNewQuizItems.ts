@@ -4,6 +4,7 @@ import { NewQuiz } from "../../../api/newQuizzes/index.js";
 import { listNewQuizItems } from "../../../api/canvas/newQuiz/newQuizItemsApi.js";
 import { NewQuizItem } from "../../../api/canvas/newQuiz/newQuizItemTypes.js";
 import { deleteAllNewQuizItems } from "../../../api/canvas/newQuiz/newQuizItemsApi.js";
+import { handleUpdateNewQuiz } from "../handleUpdateNewQuiz.js";
 
 export async function handleDeleteAllNewQuizItems(
   courseId: number,
@@ -54,12 +55,12 @@ export async function handleDeleteAllNewQuizItems(
 
     // Confirm deletion to the user
     let successMessage = chalk.green(
-      `\nSuccessfully deleted all quiz items from "${selectedQuiz.title}".\n`
+      `\nSuccessfully deleted all quiz items from "${selectedQuiz.title}".`
     );
     console.log(successMessage);
 
-    // Return control to the calling function after successful execution
-    return;
+    // Return control the Edit Quiz menu
+    return await handleUpdateNewQuiz(courseId);
   } catch (error) {
     console.error("❌ Error deleting quiz items:", error);
   }

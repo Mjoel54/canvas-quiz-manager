@@ -1,7 +1,6 @@
 import inquirer from "inquirer";
 import chalk from "chalk";
 import { listNewQuizzes, NewQuiz } from "../../api/newQuizzes/index.js";
-import { createMultipleQuestionsInNewQuiz } from "../../api/canvas/newQuiz/newQuizItemsApi.js";
 import { NewQuizItem } from "../../api/canvas/newQuiz/newQuizItemTypes.js";
 
 import {
@@ -10,7 +9,12 @@ import {
   handleAddNewQuizItems,
 } from "./newQuizItemsActions/index.js";
 
-export async function handleEditNewQuiz(courseId: number) {
+export async function handleUpdateNewQuiz(courseId: number) {
+  // Display course info to user
+  console.log(
+    chalk.bold.blue(`\n📚 Canvas New Quiz Selector: Course - ${courseId}\n`)
+  );
+
   try {
     const courseIdNum = Number(courseId);
 
@@ -60,8 +64,8 @@ async function showQuizActionOptions(courseId: number, selectedQuiz: NewQuiz) {
         { name: "List questions", value: "list_items" },
         { name: "Add question/s", value: "add_items" },
         { name: "Delete All questions", value: "delete_all_items" },
-        { name: "Back to Quiz Selection", value: "back" },
-        { name: "🏠 Return to Home", value: "home" },
+        { name: "Back to select a New Quiz to edit", value: "back" },
+        { name: "Return to Home", value: "home" },
         { name: "❌ Exit Application", value: "exit" },
       ],
     },
@@ -78,14 +82,12 @@ async function showQuizActionOptions(courseId: number, selectedQuiz: NewQuiz) {
       await handleAddNewQuizItems(courseId, selectedQuiz);
       break;
     case "back":
-      await handleEditNewQuiz(courseId); // Recursive call to go back to quiz selection
-      break;
+      return await handleUpdateNewQuiz(courseId); // Recursive call to go back to quiz selection
     case "home":
       return; // Return to main menu
     case "exit":
       console.log("👋 Goodbye!");
       process.exit(0);
-      break;
   }
 }
 

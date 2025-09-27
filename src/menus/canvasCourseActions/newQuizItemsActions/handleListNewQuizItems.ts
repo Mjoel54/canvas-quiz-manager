@@ -2,6 +2,7 @@ import chalk from "chalk";
 import { NewQuiz } from "../../../api/newQuizzes/index.js";
 import { listNewQuizItems } from "../../../api/canvas/newQuiz/newQuizItemsApi.js";
 import { NewQuizItem } from "../../../api/canvas/newQuiz/newQuizItemTypes.js";
+import { handleUpdateNewQuiz } from "../handleUpdateNewQuiz.js";
 
 export async function handleListNewQuizItems(
   courseId: number,
@@ -42,8 +43,8 @@ export async function handleListNewQuizItems(
     // Blank line for readability
     console.log("");
 
-    // Return control to the calling function after successful execution
-    return;
+    // Return control the Edit Quiz menu
+    return await handleUpdateNewQuiz(courseId);
   } catch (error) {
     console.error("❌ Error fetching quiz items:", error);
   }

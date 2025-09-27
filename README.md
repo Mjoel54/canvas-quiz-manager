@@ -2,7 +2,7 @@
 
 A TypeScript CLI application designed to streamline quiz management across various Learning Management Systems (LMS), with current support for Canvas New Quizzes quiz engine and planned support for Moodle. This tool automates repetitive quiz management tasks, providing educators and administrators with powerful command-line tools to efficiently handle quiz operations.Built with TypeScript for type safety and maintainability, it provides an intuitive menu-driven interface for complex quiz operations.
 
-## ✨ Features
+## Features
 
 ### Canvas LMS Support
 
@@ -204,7 +204,7 @@ The application expects quiz questions to be defined in a consistent JSON format
 
 ### Essay Question
 
-````
+```
 {
     "type": "essay",
     "title": "Impact of Jazz",
@@ -217,8 +217,6 @@ The application expects quiz questions to be defined in a consistent JSON format
 - **Moodle Support**: Full integration with Moodle LMS
 - **BrightSpace Support**: Full integration with BrightSpace LMS
 
-
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-````

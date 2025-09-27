@@ -29,7 +29,7 @@ export async function handleCreateNewQuiz(courseId: number) {
   try {
     const quiz = (await createNewQuiz(courseId, reqBody)) as NewQuiz;
     let successMessage = chalk.green(
-      `New Quiz Created: ${quiz.title} in ${
+      `\nNew Quiz Created: ${quiz.title} in ${
         course?.name ? course.name : "Unnamed Course"
       } (${course?.id})`
     );

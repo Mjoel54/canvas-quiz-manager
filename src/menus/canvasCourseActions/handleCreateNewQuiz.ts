@@ -33,7 +33,7 @@ export async function handleCreateNewQuiz(courseId: number) {
     const spinner = ora("Creating New Quiz...").start();
     const quiz = (await createNewQuiz(courseId, reqBody)) as NewQuiz;
     spinner.succeed(
-      `Quiz created successfully: ${brandText(quiz.title)} in ${
+      `New Quiz created successfully: ${brandText(quiz.title)} in ${
         course?.name ? course.name : "Unnamed Course"
       } (${course?.id})\n`
     );

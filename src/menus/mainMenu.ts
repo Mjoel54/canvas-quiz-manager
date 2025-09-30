@@ -22,7 +22,7 @@ export async function mainMenu() {
       },
       borderStyle: "round",
       borderColor: brandHex,
-      title: "LMS Quiz Manager v1.1",
+      title: "LMS Quiz Manager v1.0",
     })
   );
 

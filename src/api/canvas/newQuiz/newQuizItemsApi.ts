@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
+import ora from "ora";
 import {
   NewQuizItem,
   NewQuizEssayQuestionRequest,
@@ -64,10 +65,17 @@ export async function createMultipleQuestionsInNewQuiz(
     questionData: any[];
   }
 ) {
+  const spinner = ora("Brewing up your quiz questions... ☕").start();
+
   try {
     const results: any = [];
+    const totalQuestions = data.questionData.length;
 
-    for (let question of data.questionData) {
+    for (let i = 0; i < data.questionData.length; i++) {
+      let question = data.questionData[i];
+
+      spinner.text = `Crafting question ${i + 1} of ${totalQuestions}... 🎨`;
+
       switch (question.type) {
         case "true_false":
           question = transformToCanvasNewQuizTrueFalseItem(question);
@@ -100,14 +108,18 @@ export async function createMultipleQuestionsInNewQuiz(
         question
       );
 
-      console.log(`✅ Created quiz item`);
-
       results.push(created);
     }
 
+    spinner.succeed(
+      `Successfully created ${totalQuestions} quiz question${
+        totalQuestions !== 1 ? "s" : ""
+      }! 🎉`
+    );
     return results;
   } catch (error) {
-    console.error("Batch creation failed:", error);
+    spinner.fail("Batch creation failed");
+    console.error("Error details:", error);
     throw error;
   }
 }

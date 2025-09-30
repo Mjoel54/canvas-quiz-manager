@@ -1,33 +1,33 @@
 import inquirer from "inquirer";
-import chalk from "chalk";
 import boxen from "boxen";
 import { canvasCourseMenu } from "./canvasCourseActions/canvasCourseMenu.js";
 import context from "../utils/context.js";
+import { brandHex, brandText } from "../utils/branding.js";
 
 export async function mainMenu() {
   // Blank line for readability
   console.log("");
 
-  const brandColor = "#1DE9B6";
-
-  const brandText = chalk.hex("#1DE9B6");
   // Welcome the user to the application
   const welcomeMessage = `📚 ${brandText(
     "Welcome to the quiz manager, handle your LMS quizzes with ease!"
-  )}\n`;
+  )}`;
   console.log(
     boxen(welcomeMessage, {
       padding: {
         top: 1,
-        right: 4,
-        bottom: 0,
-        left: 2,
+        right: 3,
+        bottom: 1,
+        left: 3,
       },
       borderStyle: "round",
-      borderColor: brandColor,
+      borderColor: brandHex,
       title: "LMS Quiz Manager v1.1",
     })
   );
+
+  // Blank line for readability
+  console.log("");
 
   // Prompt the user to select their LMS
   const { lms } = await inquirer.prompt([

@@ -29,24 +29,26 @@ export async function mainMenu() {
   // Blank line for readability
   console.log("");
 
-  // Prompt the user to select their LMS
-  const { lms } = await inquirer.prompt([
-    {
-      type: "list",
-      name: "lms",
-      message: "Select your LMS:",
-      choices: ["Canvas", "Moodle", "Brightspace", "Exit"],
-    },
-  ]);
+  while (true) {
+    // Prompt the user to select their LMS
+    const { lms } = await inquirer.prompt([
+      {
+        type: "list",
+        name: "lms",
+        message: "Select your LMS:",
+        choices: ["Canvas", "Moodle", "Brightspace", "Exit"],
+      },
+    ]);
 
-  // Exit the application if the user selects "Exit"
-  if (lms === "Exit") {
-    process.exit(0);
+    // Exit the application if the user selects "Exit"
+    if (lms === "Exit") {
+      process.exit(0);
+    }
+
+    // Store the selected LMS in the context for later use
+    context.lms = lms;
+
+    // Navigate to the appropriate LMS menu based on the user's selection
+    await canvasCourseMenu();
   }
-
-  // Store the selected LMS in the context for later use
-  context.lms = lms;
-
-  // Navigate to the appropriate LMS menu based on the user's selection
-  await canvasCourseMenu();
 }

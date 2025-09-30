@@ -32,7 +32,7 @@ export async function handleListNewQuizzes(courseId: number) {
 
       const itemTitle = item.title ?? "Untitled";
 
-      console.log(`${index + 1}. ${itemTitle} - ${isPublished}`);
+      console.log(`  ${index + 1}. ${itemTitle} - ${isPublished}`);
     });
 
     console.log(""); // Add a newline for better readability

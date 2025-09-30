@@ -35,7 +35,7 @@ export async function handleCreateNewQuiz(courseId: number) {
     spinner.succeed(
       `New Quiz created successfully: ${brandText(quiz.title)} in ${
         course?.name ? course.name : "Unnamed Course"
-      } (${course?.id})\n`
+      } (${course?.id})`
     );
 
     return quiz;

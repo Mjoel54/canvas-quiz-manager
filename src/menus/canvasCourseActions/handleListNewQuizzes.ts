@@ -21,9 +21,7 @@ export async function handleListNewQuizzes(courseId: number) {
     }
 
     // Display course info to user
-    console.log(
-      brandText(`\n📚 New Quizzes in: ${course?.name} (ID: ${course?.id})\n`)
-    );
+    console.log(brandText(`\n📚 New Quizzes in: ${course?.name}`));
 
     items.forEach((item: NewQuiz, index: number) => {
       const isPublished = item.published

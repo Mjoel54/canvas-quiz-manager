@@ -8,6 +8,9 @@ import {
 
 import { brandText } from "../../utils/branding.js";
 import { setCourseId, getContext } from "../../utils/context.js";
+import { getCourse } from "../../api/canvas/courses/getCourse.js";
+import chalk from "chalk";
+import { brandHex } from "../../utils/branding.js";
 
 export async function canvasCourseMenu() {
   // Tell the user which Canvas New Quiz we're about to create items in
@@ -33,6 +36,15 @@ export async function canvasCourseMenu() {
         },
       ]);
       setCourseId(Number(courseId));
+    }
+
+    // Fetch and display course title whenever we have a course ID
+    if (context.courseId !== null) {
+      const course = await getCourse(context.courseId);
+      const courseMessage = chalk
+        .hex(brandHex)
+        .underline(`Course: ${course.name} (${course.id})`);
+      console.log(`\n${courseMessage}\n`);
     }
 
     // Step 2: Ask for action

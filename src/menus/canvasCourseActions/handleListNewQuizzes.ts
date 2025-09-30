@@ -1,4 +1,5 @@
 import chalk from "chalk";
+import { brandText } from "../../utils/branding.js";
 import { listNewQuizzes, NewQuiz } from "../../api/newQuizzes/index.js";
 import { getCourse, Course } from "../../api/canvas/courses/getCourse.js";
 
@@ -21,9 +22,7 @@ export async function handleListNewQuizzes(courseId: number) {
 
     // Display course info to user
     console.log(
-      chalk.bold.blue(
-        `\n📚 New Quizzes in: ${course?.name} (ID: ${course?.id})\n`
-      )
+      brandText(`\n📚 New Quizzes in: ${course?.name} (ID: ${course?.id})\n`)
     );
 
     items.forEach((item: NewQuiz, index: number) => {

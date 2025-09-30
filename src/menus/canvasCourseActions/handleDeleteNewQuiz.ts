@@ -51,7 +51,7 @@ export async function handleDeleteNewQuiz(courseId: number) {
 
     await deleteNewQuiz(courseId, Number(selectedQuiz.id));
     let successMessage = chalk.green(
-      `New Quiz Deleted: ${selectedQuiz.title} (ID: ${selectedQuiz.id})`
+      `\nNew Quiz Deleted: ${selectedQuiz.title} (ID: ${selectedQuiz.id})\n`
     );
     console.log(successMessage);
   } catch (error) {

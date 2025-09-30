@@ -60,26 +60,12 @@ export async function handleAddNewQuizItems(
       return;
     }
 
-    // Inform the user about the number of questions to be created
-    console.log(
-      `\n📡 Creating ${jsonData.questionData.length} quiz items...\n`
-    );
-
     // Create multiple questions in the selected Canvas New Quiz
     const createdItems = (await createMultipleQuestionsInNewQuiz(
       courseId,
       Number(selectedQuiz.id),
       jsonData
     )) as NewQuizItem[];
-
-    // Confirm creation to the user
-    if (createdItems.length === 1) {
-      console.log(chalk.green(`\nSuccessfully created 1 quiz item!\n`));
-    } else {
-      console.log(
-        chalk.green(`\nSuccessfully created ${createdItems.length} quiz items!`)
-      );
-    }
 
     // Return control the Edit Quiz menu
     return await handleUpdateNewQuiz(courseId);

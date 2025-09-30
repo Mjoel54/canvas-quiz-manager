@@ -1,7 +1,9 @@
 import inquirer from "inquirer";
 import chalk from "chalk";
+
 import { listNewQuizzes, NewQuiz } from "../../api/newQuizzes/index.js";
 import { NewQuizItem } from "../../api/canvas/newQuiz/newQuizItemTypes.js";
+import { brandText } from "../../utils/branding.js";
 
 import {
   handleListNewQuizItems,
@@ -11,10 +13,7 @@ import {
 
 export async function handleUpdateNewQuiz(courseId: number) {
   // Display course info to user
-  console.log(
-    chalk.bold.blue(`\n📚 Canvas New Quiz Selector: Course - ${courseId}\n`)
-  );
-
+  console.log(brandText(`\n📚 Canvas New Quiz Selector\n`));
   try {
     const courseIdNum = Number(courseId);
 
@@ -42,7 +41,7 @@ export async function handleUpdateNewQuiz(courseId: number) {
 
     // Show the user the selected quiz
     const selectedQuiz = quizzes[selectedQuizIndex];
-    const selectedQuizMessage = chalk.bold.blue(
+    const selectedQuizMessage = brandText(
       `\n📚 Selected Quiz: ${selectedQuiz.title}\n`
     );
     console.log(selectedQuizMessage);

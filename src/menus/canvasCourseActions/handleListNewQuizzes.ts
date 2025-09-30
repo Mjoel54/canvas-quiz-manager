@@ -1,4 +1,5 @@
 import chalk from "chalk";
+import { brandText } from "../../utils/branding.js";
 import { listNewQuizzes, NewQuiz } from "../../api/newQuizzes/index.js";
 import { getCourse, Course } from "../../api/canvas/courses/getCourse.js";
 
@@ -20,11 +21,7 @@ export async function handleListNewQuizzes(courseId: number) {
     }
 
     // Display course info to user
-    console.log(
-      chalk.bold.blue(
-        `\n📚 New Quizzes in: ${course?.name} (ID: ${course?.id})\n`
-      )
-    );
+    console.log(brandText(`\n📚 New Quizzes in: ${course?.name}`));
 
     items.forEach((item: NewQuiz, index: number) => {
       const isPublished = item.published
@@ -33,7 +30,7 @@ export async function handleListNewQuizzes(courseId: number) {
 
       const itemTitle = item.title ?? "Untitled";
 
-      console.log(`${index + 1}. ${itemTitle} - ${isPublished}`);
+      console.log(`  ${index + 1}. ${itemTitle} - ${isPublished}`);
     });
 
     console.log(""); // Add a newline for better readability

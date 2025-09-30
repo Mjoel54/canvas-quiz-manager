@@ -1,5 +1,6 @@
 import inquirer from "inquirer";
 import chalk from "chalk";
+import ora from "ora";
 import {
   listNewQuizzes,
   NewQuiz,
@@ -7,11 +8,18 @@ import {
 } from "../../api/newQuizzes/index.js";
 
 export async function handleDeleteNewQuiz(courseId: number) {
-  try {
-    const quizzes = await listNewQuizzes(courseId);
+  console.log("");
+  const listSpinner = ora("Fetching New Quizzes...").start();
 
-    if (!quizzes || quizzes.length === 0) {
-      console.log("⚠️ No New Quizzes found for this course.");
+  let quizzes: NewQuiz[] = [];
+
+  try {
+    quizzes = await listNewQuizzes(courseId);
+
+    if (quizzes.length > 0) {
+      listSpinner.succeed(`Fetched New Quizzes\n`);
+    } else {
+      listSpinner.fail(`No New Quizzes found for this course\n`);
       return;
     }
 
@@ -51,7 +59,7 @@ export async function handleDeleteNewQuiz(courseId: number) {
 
     await deleteNewQuiz(courseId, Number(selectedQuiz.id));
     let successMessage = chalk.green(
-      `New Quiz Deleted: ${selectedQuiz.title} (ID: ${selectedQuiz.id})`
+      `\nNew Quiz Deleted: ${selectedQuiz.title} (ID: ${selectedQuiz.id})\n`
     );
     console.log(successMessage);
   } catch (error) {

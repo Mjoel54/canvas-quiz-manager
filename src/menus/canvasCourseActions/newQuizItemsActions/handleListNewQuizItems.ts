@@ -1,4 +1,5 @@
 import chalk from "chalk";
+import { brandText } from "../../../utils/branding.js";
 import { NewQuiz } from "../../../api/newQuizzes/index.js";
 import { listNewQuizItems } from "../../../api/canvas/newQuiz/newQuizItemsApi.js";
 import { NewQuizItem } from "../../../api/canvas/newQuiz/newQuizItemTypes.js";
@@ -20,8 +21,8 @@ export async function handleListNewQuizItems(
     }
 
     // Tell the user which Canvas New Quiz we're about to display items for
-    const quizTitleMessage = chalk.bold.blue(
-      `\n📚 Quiz Items: ${selectedQuiz.title}\n`
+    const quizTitleMessage = brandText(
+      `\n📚 Quiz Items: ${selectedQuiz.title} - ${selectedQuiz.id}\n`
     );
     console.log(quizTitleMessage);
 

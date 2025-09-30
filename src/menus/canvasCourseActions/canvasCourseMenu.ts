@@ -1,5 +1,4 @@
 import inquirer from "inquirer";
-import chalk from "chalk";
 import {
   handleCreateNewQuiz,
   handleUpdateNewQuiz,
@@ -7,9 +6,11 @@ import {
   handleDeleteNewQuiz,
 } from "./index.js";
 
+import { brandText } from "../../utils/branding.js";
+
 export async function canvasCourseMenu() {
   // Tell the user which Canvas New Quiz we're about to create items in
-  const quizTitleMessage = chalk.bold.blue(`\n📚 Select a course to work in\n`);
+  const quizTitleMessage = brandText(`\n📚 Select a course to work in\n`);
   console.log(quizTitleMessage);
 
   while (true) {

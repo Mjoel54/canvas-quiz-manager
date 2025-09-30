@@ -77,9 +77,7 @@ export async function handleAddNewQuizItems(
       console.log(chalk.green(`\nSuccessfully created 1 quiz item!\n`));
     } else {
       console.log(
-        chalk.green(
-          `\nSuccessfully created ${createdItems.length} quiz items!\n`
-        )
+        chalk.green(`\nSuccessfully created ${createdItems.length} quiz items!`)
       );
     }
 

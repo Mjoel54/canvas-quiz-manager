@@ -1,43 +1,10 @@
-import boxen from "boxen";
+import { editAssignment } from "./api/canvas/assignments/editAssignment.js";
 
-console.log(
-  boxen("unicorn", {
-    padding: 0.5,
-    width: 20,
-    borderStyle: "round",
-    borderColor: "#1DE9B6",
-  })
-);
-/*
-┌─────────────┐
-│             │
-│   unicorn   │
-│             │
-└─────────────┘
-*/
-
-console.log(boxen("unicorn", { padding: 1, margin: 1, borderStyle: "double" }));
-/*
-
-   ╔═════════════╗
-   ║             ║
-   ║   unicorn   ║
-   ║             ║
-   ╚═════════════╝
-
-*/
-
-console.log(
-  boxen("unicorns love rainbows", {
-    title: "magical",
-    titleAlignment: "center",
-  })
-);
-/*
-┌────── magical ───────┐
-│unicorns love rainbows│
-└──────────────────────┘
-*/
+editAssignment(12730833, 58715199, {
+  assignment: {
+    published: false,
+  },
+});
 
 // import { createQuestionItemInNewQuiz } from "./api/canvas/newQuiz/newQuizItemsApi.js";
 // import { v4 as uuidv4 } from "uuid";

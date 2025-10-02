@@ -4,7 +4,6 @@ import {
   handleUpdateNewQuiz,
   handleListNewQuizzes,
   handleDeleteNewQuiz,
-  handleTogglePublishStatus,
 } from "./index.js";
 
 import { brandText } from "../../utils/branding.js";

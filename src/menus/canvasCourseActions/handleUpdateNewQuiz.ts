@@ -9,7 +9,7 @@ import {
   handleListNewQuizItems,
   handleDeleteAllNewQuizItems,
   handleAddNewQuizItems,
-  handleTogglePublishStatus,
+  handlePublishNewQuiz,
 } from "./updateNewQuizActions/index.js";
 
 export async function handleUpdateNewQuiz(courseId: number) {
@@ -64,7 +64,7 @@ async function showQuizActionOptions(courseId: number, selectedQuiz: NewQuiz) {
         { name: "List questions", value: "list_items" },
         { name: "Add question/s", value: "add_items" },
         { name: "Delete All questions", value: "delete_all_items" },
-        { name: "Publish/Unpublish a New Quiz", value: "togglePublish" },
+        { name: "publish New Quiz", value: "publish" },
         { name: "Back to select a New Quiz to edit", value: "back" },
         { name: "Return to Home", value: "home" },
         { name: "❌ Exit Application", value: "exit" },
@@ -76,14 +76,14 @@ async function showQuizActionOptions(courseId: number, selectedQuiz: NewQuiz) {
     case "list_items":
       await handleListNewQuizItems(courseId, selectedQuiz.id, selectedQuiz);
       break;
+    case "add_items":
+      await handleAddNewQuizItems(courseId, selectedQuiz);
+      break;
     case "delete_all_items":
       await handleDeleteAllNewQuizItems(courseId, selectedQuiz);
       break;
-    case "togglePublish":
-      await handleTogglePublishStatus(courseIdNum, selectedQuiz.id);
-      break;
-    case "add_items":
-      await handleAddNewQuizItems(courseId, selectedQuiz);
+    case "publish":
+      await handlePublishNewQuiz(courseId);
       break;
     case "back":
       return await handleUpdateNewQuiz(courseId); // Recursive call to go back to quiz selection

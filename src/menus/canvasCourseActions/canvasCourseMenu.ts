@@ -6,6 +6,8 @@ import {
   handleDeleteNewQuiz,
 } from "./index.js";
 
+import { handleUnpublishNewQuiz } from "./updateNewQuizActions/handleUnpublishNewQuiz.js";
+
 import { brandText } from "../../utils/branding.js";
 import { setCourseId, getContext } from "../../utils/context.js";
 import { getCourse } from "../../api/canvas/courses/getCourse.js";
@@ -58,7 +60,8 @@ export async function canvasCourseMenu() {
           { name: "Edit a New Quiz", value: "edit" },
           { name: "List New Quizzes in a Course", value: "list" },
           { name: "Delete a New Quiz", value: "delete" },
-          { name: "Change Course ID", value: "changeCourse" },
+          { name: "Unpublish a New Quiz", value: "unpublish" },
+          { name: "Change Selected Course ID", value: "changeCourse" },
           { name: "Back to Main Menu", value: "back" },
           { name: "Exit", value: "exit" },
         ],
@@ -80,7 +83,9 @@ export async function canvasCourseMenu() {
       case "delete":
         await handleDeleteNewQuiz(courseIdNum);
         break;
-
+      case "unpublish":
+        await handleUnpublishNewQuiz(courseIdNum);
+        break;
       case "changeCourse":
         setCourseId(null as any);
         break;

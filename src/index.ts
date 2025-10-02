@@ -1,11 +1,3 @@
-import { editAssignment } from "./api/canvas/assignments/editAssignment.js";
-
-editAssignment(12730833, 58715199, {
-  assignment: {
-    published: false,
-  },
-});
-
 // import { createQuestionItemInNewQuiz } from "./api/canvas/newQuiz/newQuizItemsApi.js";
 // import { v4 as uuidv4 } from "uuid";
 

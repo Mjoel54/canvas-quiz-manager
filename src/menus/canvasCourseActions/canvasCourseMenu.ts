@@ -4,6 +4,7 @@ import {
   handleUpdateNewQuiz,
   handleListNewQuizzes,
   handleDeleteNewQuiz,
+  handleTogglePublishStatus,
 } from "./index.js";
 
 import { brandText } from "../../utils/branding.js";
@@ -80,6 +81,7 @@ export async function canvasCourseMenu() {
       case "delete":
         await handleDeleteNewQuiz(courseIdNum);
         break;
+
       case "changeCourse":
         setCourseId(null as any);
         break;

@@ -1,3 +1,14 @@
+// import {
+//   unpublishAssignment,
+//   getAssignment,
+// } from "./api/canvas/assignments/index.js";
+
+// // unpublishAssignment(12730833, 58715199);
+
+// let assignment = await getAssignment(12730833, 58715199);
+
+// console.log(assignment);
+
 // import { createQuestionItemInNewQuiz } from "./api/canvas/newQuiz/newQuizItemsApi.js";
 // import { v4 as uuidv4 } from "uuid";
 

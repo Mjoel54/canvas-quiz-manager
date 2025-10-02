@@ -80,6 +80,7 @@ export async function canvasCourseMenu() {
       case "delete":
         await handleDeleteNewQuiz(courseIdNum);
         break;
+
       case "changeCourse":
         setCourseId(null as any);
         break;

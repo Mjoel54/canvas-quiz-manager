@@ -3,7 +3,7 @@ import chalk from "chalk";
 
 import { listNewQuizzes, NewQuiz } from "../../api/newQuizzes/index.js";
 import { NewQuizItem } from "../../api/canvas/newQuiz/newQuizItemTypes.js";
-import { brandText } from "../../utils/branding.js";
+import { brandText, boxedHeading } from "../../utils/branding.js";
 
 import {
   handleListNewQuizItems,
@@ -13,7 +13,7 @@ import {
 
 export async function handleUpdateNewQuiz(courseId: number) {
   // Display course info to user
-  console.log(brandText(`\n📚 Canvas New Quiz Selector\n`));
+  console.log(brandText(`\nSelect a New Quiz to work on\n`));
   try {
     const courseIdNum = Number(courseId);
 
@@ -41,11 +41,13 @@ export async function handleUpdateNewQuiz(courseId: number) {
 
     // Show the user the selected quiz
     const selectedQuiz = quizzes[selectedQuizIndex];
-    const selectedQuizMessage = brandText(
-      `\n📚 Selected Quiz: ${selectedQuiz.title}\n`
-    );
-    console.log(selectedQuizMessage);
 
+    const selectedQuizMessage = boxedHeading(
+      `Selected Quiz: ${selectedQuiz.title} (${selectedQuiz.id})`
+    );
+    console.log("");
+    console.log(selectedQuizMessage);
+    console.log("");
     // Step 4: Show quiz action options
     await showQuizActionOptions(courseIdNum, selectedQuiz);
   } catch (error) {

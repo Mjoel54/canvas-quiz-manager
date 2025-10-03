@@ -5,10 +5,14 @@ export const brandHex = "#00FFFF";
 
 export const brandText = chalk.hex(brandHex);
 
-export function brandBoxen(text: string) {
-  return boxen(text, {
-    padding: 1,
-    margin: 1,
+export function boxedHeading(text: string) {
+  return boxen(brandText(text), {
+    padding: {
+      top: 0,
+      right: 1,
+      bottom: 0,
+      left: 1,
+    },
     borderStyle: "round",
     borderColor: brandHex,
   });

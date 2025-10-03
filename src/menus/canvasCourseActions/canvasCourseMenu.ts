@@ -9,13 +9,13 @@ import {
   handleUnpublishNewQuiz,
 } from "./index.js";
 
-import { brandText, brandHex, boxedHeading } from "../../utils/branding.js";
+import { brandText, boxedHeading } from "../../utils/branding.js";
 import { setCourseId, getContext } from "../../utils/context.js";
 import { getCourse } from "../../api/canvas/courses/getCourse.js";
 
 export async function canvasCourseMenu() {
   // Tell the user which Canvas New Quiz we're about to create items in
-  const quizTitleMessage = brandText(`\n📚 Select a course to work in\n`);
+  const quizTitleMessage = brandText(`\nSelect a course to work on\n`);
   console.log(quizTitleMessage);
 
   while (true) {

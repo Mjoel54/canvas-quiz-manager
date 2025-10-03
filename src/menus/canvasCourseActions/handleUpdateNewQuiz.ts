@@ -90,7 +90,7 @@ async function showQuizActionOptions(courseId: number, selectedQuiz: NewQuiz) {
       await handlePublishNewQuiz(courseId, selectedQuiz);
       break;
     case "unpublish":
-      await handleUnpublishNewQuiz(courseId);
+      await handleUnpublishNewQuiz(courseId, selectedQuiz);
       break;
     case "back":
       return await handleUpdateNewQuiz(courseId); // Recursive call to go back to quiz selection

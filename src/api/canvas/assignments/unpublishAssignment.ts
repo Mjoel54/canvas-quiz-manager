@@ -24,6 +24,6 @@ export async function unpublishAssignment(
     console.error("Error publishing assignment:", error);
     throw error;
   }
-  console.log(assignment);
+
   return assignment;
 }

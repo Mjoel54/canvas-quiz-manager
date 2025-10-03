@@ -1,5 +1,5 @@
-import chalk from "chalk";
 import ora from "ora";
+import { brandText } from "../../../utils/branding.js";
 import { NewQuiz } from "../../../api/newQuizzes/index.js";
 import { publishAssignment } from "../../../api/canvas/assignments/publishAssignment.js";
 
@@ -13,12 +13,12 @@ export async function handlePublishNewQuiz(
   try {
     await publishAssignment(courseId, Number(selectedQuiz.id));
     publishSpinner.succeed(
-      chalk.green(
-        `\nNew Quiz Published: ${selectedQuiz.title} (ID: ${selectedQuiz.id})\n`
-      )
+      `Successfully published ${brandText(selectedQuiz.title)} (${
+        selectedQuiz.id
+      })`
     );
   } catch (error) {
-    publishSpinner.fail(`Failed to publish ${selectedQuiz.title}`);
+    publishSpinner.fail(`Failed to publish ${brandText(selectedQuiz.title)}`);
     const errorMessage = "An unknown error occurred";
     console.error(errorMessage);
   }

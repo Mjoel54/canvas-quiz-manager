@@ -1,5 +1,6 @@
 import chalk from "chalk";
 import ora from "ora";
+import { brandText } from "../../../utils/branding.js";
 import { NewQuiz } from "../../../api/newQuizzes/index.js";
 import {
   unpublishAssignment,
@@ -12,9 +13,9 @@ export async function handleUnpublishNewQuiz(
 ) {
   console.log("");
 
-  // Publish quiz
-  const publishSpinner = ora(
-    `Attempting to publish ${selectedQuiz.title}...`
+  // Unpublish quiz
+  const unpublishSpinner = ora(
+    `Attempting to unpublish ${selectedQuiz.title}...`
   ).start();
 
   const retrievedNewQuiz = await getAssignment(
@@ -23,14 +24,14 @@ export async function handleUnpublishNewQuiz(
   );
 
   if (retrievedNewQuiz?.has_submitted_submissions === true) {
-    publishSpinner.fail("Cannot unpublish a quiz that has submissions.");
+    unpublishSpinner.fail("Cannot unpublish a quiz that has submissions.");
     return;
   } else {
     await unpublishAssignment(courseId, Number(selectedQuiz.id));
-    publishSpinner.succeed(
-      chalk.green(
-        `\nNew Quiz Published: ${selectedQuiz.title} (ID: ${selectedQuiz.id})\n`
-      )
+    unpublishSpinner.succeed(
+      `Successfully unpublished ${brandText(selectedQuiz.title)} (${
+        selectedQuiz.id
+      })`
     );
   }
 }

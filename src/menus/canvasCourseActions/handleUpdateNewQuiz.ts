@@ -3,17 +3,19 @@ import chalk from "chalk";
 
 import { listNewQuizzes, NewQuiz } from "../../api/newQuizzes/index.js";
 import { NewQuizItem } from "../../api/canvas/newQuiz/newQuizItemTypes.js";
-import { brandText } from "../../utils/branding.js";
+import { brandText, boxedHeading } from "../../utils/branding.js";
 
 import {
   handleListNewQuizItems,
   handleDeleteAllNewQuizItems,
   handleAddNewQuizItems,
+  handlePublishNewQuiz,
+  handleUnpublishNewQuiz,
 } from "./updateNewQuizActions/index.js";
 
 export async function handleUpdateNewQuiz(courseId: number) {
   // Display course info to user
-  console.log(brandText(`\n📚 Canvas New Quiz Selector\n`));
+  console.log(brandText(`\nSelect a New Quiz to work on\n`));
   try {
     const courseIdNum = Number(courseId);
 
@@ -41,11 +43,13 @@ export async function handleUpdateNewQuiz(courseId: number) {
 
     // Show the user the selected quiz
     const selectedQuiz = quizzes[selectedQuizIndex];
-    const selectedQuizMessage = brandText(
-      `\n📚 Selected Quiz: ${selectedQuiz.title}\n`
-    );
-    console.log(selectedQuizMessage);
 
+    const selectedQuizMessage = boxedHeading(
+      `Selected Quiz: ${selectedQuiz.title} (${selectedQuiz.id})`
+    );
+    console.log("");
+    console.log(selectedQuizMessage);
+    console.log("");
     // Step 4: Show quiz action options
     await showQuizActionOptions(courseIdNum, selectedQuiz);
   } catch (error) {
@@ -63,6 +67,8 @@ async function showQuizActionOptions(courseId: number, selectedQuiz: NewQuiz) {
         { name: "List questions", value: "list_items" },
         { name: "Add question/s", value: "add_items" },
         { name: "Delete All questions", value: "delete_all_items" },
+        { name: "Publish", value: "publish" },
+        { name: "Unpublish", value: "unpublish" },
         { name: "Back to select a New Quiz to edit", value: "back" },
         { name: "Return to Home", value: "home" },
         { name: "❌ Exit Application", value: "exit" },
@@ -79,6 +85,12 @@ async function showQuizActionOptions(courseId: number, selectedQuiz: NewQuiz) {
       break;
     case "delete_all_items":
       await handleDeleteAllNewQuizItems(courseId, selectedQuiz);
+      break;
+    case "publish":
+      await handlePublishNewQuiz(courseId, selectedQuiz);
+      break;
+    case "unpublish":
+      await handleUnpublishNewQuiz(courseId, selectedQuiz);
       break;
     case "back":
       return await handleUpdateNewQuiz(courseId); // Recursive call to go back to quiz selection

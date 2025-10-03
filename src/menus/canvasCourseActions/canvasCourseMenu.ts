@@ -1,21 +1,19 @@
 import inquirer from "inquirer";
-import chalk from "chalk";
+
 import {
   handleCreateNewQuiz,
   handleUpdateNewQuiz,
   handleListNewQuizzes,
   handleDeleteNewQuiz,
-  handlePublishNewQuiz,
-  handleUnpublishNewQuiz,
 } from "./index.js";
 
-import { brandText, brandHex } from "../../utils/branding.js";
+import { brandText, boxedHeading } from "../../utils/branding.js";
 import { setCourseId, getContext } from "../../utils/context.js";
 import { getCourse } from "../../api/canvas/courses/getCourse.js";
 
 export async function canvasCourseMenu() {
   // Tell the user which Canvas New Quiz we're about to create items in
-  const quizTitleMessage = brandText(`\n📚 Select a course to work in\n`);
+  const quizTitleMessage = brandText(`\nSelect a course to work on\n`);
   console.log(quizTitleMessage);
 
   while (true) {
@@ -42,9 +40,11 @@ export async function canvasCourseMenu() {
     // Fetch and display course title whenever we have a course ID
     if (context.courseId !== null) {
       const course = await getCourse(context.courseId);
-      const courseMessage = chalk
-        .hex(brandHex)
-        .underline(`Course: ${course.name} (${course.id})`);
+
+      const courseMessage = boxedHeading(
+        `Selected Course: ${course.name} (${course.id})`
+      );
+
       console.log(`\n${courseMessage}\n`);
     }
 
@@ -59,8 +59,7 @@ export async function canvasCourseMenu() {
           { name: "Edit a New Quiz", value: "edit" },
           { name: "List New Quizzes in a Course", value: "list" },
           { name: "Delete a New Quiz", value: "delete" },
-          { name: "Publish a New Quiz", value: "publish" },
-          { name: "Unpublish a New Quiz", value: "unpublish" },
+
           { name: "Change Selected Course ID", value: "changeCourse" },
           { name: "Back to Main Menu", value: "back" },
           { name: "Exit", value: "exit" },
@@ -83,12 +82,7 @@ export async function canvasCourseMenu() {
       case "delete":
         await handleDeleteNewQuiz(courseIdNum);
         break;
-      case "publish":
-        await handlePublishNewQuiz(courseIdNum);
-        break;
-      case "unpublish":
-        await handleUnpublishNewQuiz(courseIdNum);
-        break;
+
       case "changeCourse":
         setCourseId(null as any);
         break;

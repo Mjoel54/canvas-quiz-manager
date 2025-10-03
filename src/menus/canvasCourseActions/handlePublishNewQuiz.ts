@@ -1,8 +1,8 @@
 import inquirer from "inquirer";
 import chalk from "chalk";
 import ora from "ora";
-import { listNewQuizzes, NewQuiz } from "../../../api/newQuizzes/index.js";
-import { publishAssignment } from "../../../api/canvas/assignments/publishAssignment.js";
+import { listNewQuizzes, NewQuiz } from "../../api/newQuizzes/index.js";
+import { publishAssignment } from "../../api/canvas/assignments/publishAssignment.js";
 
 export async function handlePublishNewQuiz(courseId: number) {
   console.log("");

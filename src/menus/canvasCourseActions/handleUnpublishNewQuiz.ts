@@ -1,11 +1,11 @@
 import inquirer from "inquirer";
 import chalk from "chalk";
 import ora from "ora";
-import { listNewQuizzes, NewQuiz } from "../../../api/newQuizzes/index.js";
+import { listNewQuizzes, NewQuiz } from "../../api/newQuizzes/index.js";
 import {
   unpublishAssignment,
   getAssignment,
-} from "../../../api/canvas/assignments/index.js";
+} from "../../api/canvas/assignments/index.js";
 
 export async function handleUnpublishNewQuiz(courseId: number) {
   console.log("");

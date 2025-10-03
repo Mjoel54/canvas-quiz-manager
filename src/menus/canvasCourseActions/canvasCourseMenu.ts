@@ -1,18 +1,17 @@
 import inquirer from "inquirer";
+import chalk from "chalk";
 import {
   handleCreateNewQuiz,
   handleUpdateNewQuiz,
   handleListNewQuizzes,
   handleDeleteNewQuiz,
+  handlePublishNewQuiz,
+  handleUnpublishNewQuiz,
 } from "./index.js";
 
-import { handleUnpublishNewQuiz } from "./updateNewQuizActions/handleUnpublishNewQuiz.js";
-
-import { brandText } from "../../utils/branding.js";
+import { brandText, brandHex } from "../../utils/branding.js";
 import { setCourseId, getContext } from "../../utils/context.js";
 import { getCourse } from "../../api/canvas/courses/getCourse.js";
-import chalk from "chalk";
-import { brandHex } from "../../utils/branding.js";
 
 export async function canvasCourseMenu() {
   // Tell the user which Canvas New Quiz we're about to create items in
@@ -60,6 +59,7 @@ export async function canvasCourseMenu() {
           { name: "Edit a New Quiz", value: "edit" },
           { name: "List New Quizzes in a Course", value: "list" },
           { name: "Delete a New Quiz", value: "delete" },
+          { name: "Publish a New Quiz", value: "publish" },
           { name: "Unpublish a New Quiz", value: "unpublish" },
           { name: "Change Selected Course ID", value: "changeCourse" },
           { name: "Back to Main Menu", value: "back" },
@@ -82,6 +82,9 @@ export async function canvasCourseMenu() {
         break;
       case "delete":
         await handleDeleteNewQuiz(courseIdNum);
+        break;
+      case "publish":
+        await handlePublishNewQuiz(courseIdNum);
         break;
       case "unpublish":
         await handleUnpublishNewQuiz(courseIdNum);

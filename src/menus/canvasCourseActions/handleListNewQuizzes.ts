@@ -1,4 +1,5 @@
 import chalk from "chalk";
+import ora from "ora";
 import { brandText } from "../../utils/branding.js";
 import { listNewQuizzes, NewQuiz } from "../../api/newQuizzes/index.js";
 import { getCourse, Course } from "../../api/canvas/courses/getCourse.js";
@@ -11,17 +12,24 @@ export async function handleListNewQuizzes(courseId: number) {
   } catch (error) {
     console.error("❌ Failed to fetch course:", error);
   }
+  console.log("");
+  const fetchingQuizzesSpinner = ora("Fetching New Quizzes...");
 
   try {
+    fetchingQuizzesSpinner.start();
     const items = await listNewQuizzes(courseId);
 
     if (!items || items.length === 0) {
-      console.log(chalk.red("No New Quizzes found in this course."));
+      fetchingQuizzesSpinner.fail("No New Quizzes found in this course.");
       return;
+    } else {
+      fetchingQuizzesSpinner.succeed(
+        `Found ${brandText(items.length)} New Quizzes in ${brandText(
+          course?.name
+        )}`
+      );
     }
-
-    // Display course info to user
-    console.log(brandText(`\n📚 New Quizzes in: ${course?.name}`));
+    console.log("");
 
     items.forEach((item: NewQuiz, index: number) => {
       const isPublished = item.published
@@ -33,7 +41,6 @@ export async function handleListNewQuizzes(courseId: number) {
       console.log(`  ${index + 1}. ${itemTitle} - ${isPublished}`);
     });
 
-    console.log(""); // Add a newline for better readability
     return;
   } catch (error) {
     const errorMessage = chalk.red("Failed to fetch New Quizzes");

@@ -45,7 +45,11 @@ export async function handleUpdateNewQuiz(courseId: number) {
     const selectedQuiz = quizzes[selectedQuizIndex];
 
     const selectedQuizMessage = boxedHeading(
-      `Selected Quiz: ${selectedQuiz.title} (${selectedQuiz.id})`
+      `Selected Quiz: ${selectedQuiz.title} (${selectedQuiz.id}) ${
+        selectedQuiz.published
+          ? chalk.green("Published")
+          : chalk.red("Unpublished")
+      }`
     );
     console.log("");
     console.log(selectedQuizMessage);

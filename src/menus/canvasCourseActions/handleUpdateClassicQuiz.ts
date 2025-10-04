@@ -4,7 +4,10 @@ import ora from "ora";
 
 import { brandText, boxedHeading } from "../../utils/branding.js";
 
-import { handlePublishClassicQuiz } from "./updateClassicQuizActions/index.js";
+import {
+  handlePublishClassicQuiz,
+  handleUnpublishClassicQuiz,
+} from "./updateClassicQuizActions/index.js";
 import {
   listClassicQuizzes,
   ClassicQuiz,
@@ -25,7 +28,12 @@ export async function handleUpdateClassicQuiz(courseId: number) {
       fetchingQuizSpinner.fail("No Classic Quizzes found");
       return;
     } else {
-      fetchingQuizSpinner.succeed("Successfully fetched Classic Quizzes");
+      fetchingQuizSpinner.succeed(
+        `Successfully fetched ${brandText(quizzes.length)} Classic ${
+          quizzes.length === 1 ? "Quiz" : "Quizzes"
+        }`
+      );
+      console.log("");
     }
 
     const { selectedQuizIndex } = await inquirer.prompt([
@@ -73,7 +81,7 @@ async function showQuizActionOptions(
       message: `What would you like to do with "${selectedQuiz.title}"?`,
       choices: [
         { name: "Publish", value: "publish" },
-
+        { name: "Unpublish", value: "unpublish" },
         { name: "Return to Home", value: "home" },
         { name: "❌ Exit Application", value: "exit" },
       ],
@@ -84,7 +92,9 @@ async function showQuizActionOptions(
     case "publish":
       await handlePublishClassicQuiz(courseId, selectedQuiz);
       break;
-
+    case "unpublish":
+      await handleUnpublishClassicQuiz(courseId, selectedQuiz);
+      break;
     case "home":
       return; // Return to main menu
     case "exit":

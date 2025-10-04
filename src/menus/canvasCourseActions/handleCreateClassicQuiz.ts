@@ -36,7 +36,7 @@ export async function handleCreateClassicQuiz(courseId: number) {
     const spinner = ora("Creating Classic Quiz...").start();
     const quiz = (await createClassicQuiz(courseId, reqBody)) as ClassicQuiz;
     spinner.succeed(
-      `Classic Quiz created successfully: ${brandText(quiz.title)} in ${
+      `Successfully created Classic Quiz: ${brandText(quiz.title)} in ${
         course?.name ? course.name : "Unnamed Course"
       } (${course?.id})`
     );

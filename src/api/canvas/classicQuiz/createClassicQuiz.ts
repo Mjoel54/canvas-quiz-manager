@@ -1,7 +1,4 @@
-import dotenv from "dotenv";
 import { ClassicQuiz, CreateClassicQuizParams } from "./types";
-
-dotenv.config();
 
 const baseUrl = process.env.BASE_URL;
 const apiToken = process.env.API_TOKEN;

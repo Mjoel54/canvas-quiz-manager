@@ -24,9 +24,9 @@ export async function handleListNewQuizzes(courseId: number) {
       return;
     } else {
       fetchingQuizzesSpinner.succeed(
-        `Found ${brandText(items.length)} New Quizzes in ${brandText(
-          course?.name
-        )}`
+        `Found ${brandText(items.length)} New ${
+          items.length === 1 ? "Quiz" : "Quizzes"
+        } in ${brandText(course?.name)}`
       );
     }
     console.log("");

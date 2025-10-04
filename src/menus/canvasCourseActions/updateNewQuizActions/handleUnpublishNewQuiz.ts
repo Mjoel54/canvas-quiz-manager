@@ -15,7 +15,7 @@ export async function handleUnpublishNewQuiz(
 
   // Unpublish quiz
   const unpublishSpinner = ora(
-    `Attempting to unpublish ${selectedQuiz.title}...`
+    `Attempting to unpublish ${brandText(selectedQuiz.title)}...`
   ).start();
 
   const retrievedNewQuiz = await getAssignment(

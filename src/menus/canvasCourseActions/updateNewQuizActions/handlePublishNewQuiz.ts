@@ -8,7 +8,9 @@ export async function handlePublishNewQuiz(
   selectedQuiz: NewQuiz
 ) {
   console.log("");
-  const publishSpinner = ora(`Publishing ${selectedQuiz.title}...`).start();
+  const publishSpinner = ora(
+    `Publishing ${brandText(selectedQuiz.title)}...`
+  ).start();
 
   try {
     await publishAssignment(courseId, Number(selectedQuiz.id));

@@ -53,13 +53,12 @@ export async function canvasCourseMenu() {
       {
         type: "list",
         name: "action",
-        message: `Choose an action (Course ID: ${getContext().courseId}):`,
+        message: `Choose a course action`,
         choices: [
           { name: "Create a New Quiz", value: "create" },
           { name: "Edit a New Quiz", value: "edit" },
-          { name: "List New Quizzes in a Course", value: "list" },
+          { name: "List New Quizzes", value: "list" },
           { name: "Delete a New Quiz", value: "delete" },
-
           { name: "Change Selected Course ID", value: "changeCourse" },
           { name: "Back to Main Menu", value: "back" },
           { name: "Exit", value: "exit" },

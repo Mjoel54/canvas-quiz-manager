@@ -24,7 +24,7 @@ export async function handleCreateNewQuiz(courseId: number) {
 
   const reqBody = {
     quiz: {
-      title: answers.quizTitle,
+      title: answers.quizTitle.trim(),
     },
   };
 

@@ -1,6 +1,7 @@
 import inquirer from "inquirer";
 import chalk from "chalk";
 import ora from "ora";
+import { brandText } from "../../utils/branding.js";
 import {
   listNewQuizzes,
   NewQuiz,
@@ -56,12 +57,15 @@ export async function handleDeleteNewQuiz(courseId: number) {
     }
 
     // Delete quiz
-
+    console.log("");
+    const deletionSpinner = ora(
+      `Deleting ${brandText(selectedQuiz.title)}...`
+    ).start();
     await deleteNewQuiz(courseId, Number(selectedQuiz.id));
-    let successMessage = chalk.green(
-      `\nNew Quiz Deleted: ${selectedQuiz.title} (ID: ${selectedQuiz.id})\n`
+
+    deletionSpinner.succeed(
+      `Successfully deleted New Quiz: ${brandText(selectedQuiz.title)}`
     );
-    console.log(successMessage);
   } catch (error) {
     let errorMessage = chalk.red("Failed to delete new quiz.");
     console.error(errorMessage);

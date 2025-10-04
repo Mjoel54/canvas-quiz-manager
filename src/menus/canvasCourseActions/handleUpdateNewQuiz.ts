@@ -1,5 +1,6 @@
 import inquirer from "inquirer";
 import chalk from "chalk";
+import ora from "ora";
 
 import { listNewQuizzes, NewQuiz } from "../../api/newQuizzes/index.js";
 import { NewQuizItem } from "../../api/canvas/newQuiz/newQuizItemTypes.js";
@@ -19,12 +20,16 @@ export async function handleUpdateNewQuiz(courseId: number) {
   try {
     const courseIdNum = Number(courseId);
 
+    const fetchingQuizSpinner = ora(`Retrieving New Quizzes...`).start();
+
     // List all quizzes for the course
     const quizzes = await listNewQuizzes(courseIdNum);
 
     if (!quizzes || quizzes.length === 0) {
-      console.log("⚠️ No quizzes found for this course.");
+      fetchingQuizSpinner.fail("No New Quizzes found");
       return;
+    } else {
+      fetchingQuizSpinner.succeed("Successfully fetched New Quizzes");
     }
 
     const { selectedQuizIndex } = await inquirer.prompt([

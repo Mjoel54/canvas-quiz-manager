@@ -3,6 +3,7 @@ import { handleUpdateNewQuiz } from "./handleUpdateNewQuiz.js";
 import { handleListNewQuizzes } from "./handleListNewQuizzes.js";
 import { handleDeleteNewQuiz } from "./handleDeleteNewQuiz.js";
 import { handleCreateClassicQuiz } from "./handleCreateClassicQuiz.js";
+import { handleDeleteClassicQuiz } from "./handleDeleteClassicQuiz.js";
 
 export {
   handleCreateNewQuiz,
@@ -10,4 +11,5 @@ export {
   handleListNewQuizzes,
   handleDeleteNewQuiz,
   handleCreateClassicQuiz,
+  handleDeleteClassicQuiz,
 };

@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import ora from "ora";
+import { brandText } from "../../../utils/branding.js";
 import {
   NewQuizItem,
   NewQuizEssayQuestionRequest,
@@ -65,6 +66,7 @@ export async function createMultipleQuestionsInNewQuiz(
     questionData: any[];
   }
 ) {
+  console.log("");
   const spinner = ora("Brewing up your quiz questions... ☕").start();
 
   try {
@@ -74,7 +76,9 @@ export async function createMultipleQuestionsInNewQuiz(
     for (let i = 0; i < data.questionData.length; i++) {
       let question = data.questionData[i];
 
-      spinner.text = `Crafting question ${i + 1} of ${totalQuestions}... 🎨`;
+      spinner.text = `Crafting question ${brandText(i + 1)} of ${brandText(
+        totalQuestions
+      )}... 🎨`;
 
       switch (question.type) {
         case "true_false":
@@ -112,7 +116,7 @@ export async function createMultipleQuestionsInNewQuiz(
     }
 
     spinner.succeed(
-      `Successfully created ${totalQuestions} quiz question${
+      `Successfully created ${brandText(totalQuestions)} quiz question${
         totalQuestions !== 1 ? "s" : ""
       }! 🎉`
     );

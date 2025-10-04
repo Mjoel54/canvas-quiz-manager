@@ -1,5 +1,6 @@
 import inquirer from "inquirer";
 import chalk from "chalk";
+import { brandText } from "../../../utils/branding.js";
 import { NewQuiz } from "../../../api/newQuizzes/index.js";
 import { createMultipleQuestionsInNewQuiz } from "../../../api/canvas/newQuiz/newQuizItemsApi.js";
 import { NewQuizItem } from "../../../api/canvas/newQuiz/newQuizItemTypes.js";
@@ -11,9 +12,7 @@ export async function handleAddNewQuizItems(
 ) {
   try {
     // Tell the user which Canvas New Quiz we're about to create items in
-    const quizTitleMessage = chalk.bold.blue(
-      `\n📚 Create Quiz Items in: ${selectedQuiz.title}\n`
-    );
+    const quizTitleMessage = brandText(`\nCreate Quiz Items\n`);
     console.log(quizTitleMessage);
 
     // Get file path from user

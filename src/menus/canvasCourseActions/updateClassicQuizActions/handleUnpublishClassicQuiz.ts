@@ -1,14 +1,13 @@
 import ora from "ora";
 import { brandText } from "../../../utils/branding.js";
-import { NewQuiz } from "../../../api/newQuizzes/index.js";
 import {
-  unpublishAssignment,
-  getAssignment,
-} from "../../../api/canvas/assignments/index.js";
+  ClassicQuiz,
+  unpublishClassicQuiz,
+} from "../../../api/canvas/classicQuiz/index.js";
 
-export async function handleUnpublishNewQuiz(
+export async function handleUnpublishClassicQuiz(
   courseId: number,
-  selectedQuiz: NewQuiz
+  selectedQuiz: ClassicQuiz
 ) {
   console.log("");
 
@@ -17,16 +16,11 @@ export async function handleUnpublishNewQuiz(
     `Attempting to unpublish ${brandText(selectedQuiz.title)}...`
   ).start();
 
-  const retrievedNewQuiz = await getAssignment(
-    courseId,
-    Number(selectedQuiz.id)
-  );
-
-  if (retrievedNewQuiz?.has_submitted_submissions === true) {
+  if (selectedQuiz?.unpublishable === false) {
     unpublishSpinner.fail("Cannot unpublish a quiz that has submissions.");
     return;
   } else {
-    await unpublishAssignment(courseId, Number(selectedQuiz.id));
+    await unpublishClassicQuiz(courseId, Number(selectedQuiz.id));
     unpublishSpinner.succeed(
       `Successfully unpublished ${brandText(selectedQuiz.title)} (${
         selectedQuiz.id

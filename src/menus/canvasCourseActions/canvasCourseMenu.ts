@@ -8,6 +8,7 @@ import {
   handleCreateClassicQuiz,
   handleListClassicQuizzes,
   handleDeleteClassicQuiz,
+  handleUpdateClassicQuiz,
 } from "./index.js";
 
 import { brandText, boxedHeading } from "../../utils/branding.js";
@@ -63,6 +64,7 @@ export async function canvasCourseMenu() {
           { name: "List New Quizzes", value: "list" },
           { name: "Delete a New Quiz", value: "delete" },
           { name: "Create a Classic Quiz", value: "createClassic" },
+          { name: "Edit a Classic Quiz", value: "editClassic" },
           { name: "List Classic Quizzes", value: "listClassic" },
           { name: "Delete a Classic Quiz", value: "deleteClassic" },
           { name: "Change Selected Course ID", value: "changeCourse" },
@@ -89,6 +91,9 @@ export async function canvasCourseMenu() {
         break;
       case "createClassic":
         await handleCreateClassicQuiz(courseIdNum);
+        break;
+      case "editClassic":
+        await handleUpdateClassicQuiz(courseIdNum);
         break;
       case "listClassic":
         await handleListClassicQuizzes(courseIdNum);

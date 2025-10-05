@@ -4,6 +4,7 @@ import { listClassicQuizzes } from "./listClassicQuizzes.js";
 import { editClassicQuiz } from "./editClassicQuiz.js";
 import { publishClassicQuiz } from "./publishClassicQuiz.js";
 import { unpublishClassicQuiz } from "./unpublishClassicQuiz.js";
+import { getClassicQuiz } from "./getClassicQuiz.js";
 
 import { ClassicQuiz, ClassicQuizParams } from "./types";
 
@@ -16,4 +17,5 @@ export {
   unpublishClassicQuiz,
   ClassicQuiz,
   ClassicQuizParams,
+  getClassicQuiz,
 };

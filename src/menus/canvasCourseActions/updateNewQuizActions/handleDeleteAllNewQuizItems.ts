@@ -1,9 +1,9 @@
 import inquirer from "inquirer";
 import chalk from "chalk";
-import { NewQuiz } from "../../../api/newQuizzes/index.js";
-import { listNewQuizItems } from "../../../api/canvas/newQuiz/newQuizItemsApi.js";
-import { NewQuizItem } from "../../../api/canvas/newQuiz/newQuizItemTypes.js";
-import { deleteAllNewQuizItems } from "../../../api/canvas/newQuiz/newQuizItemsApi.js";
+import { NewQuiz } from "../../../api/canvas/newQuizzes/index.js";
+import { listNewQuizItems } from "../../../api/canvas/newQuizzes/newQuizItems/newQuizItemsApi.js";
+import { NewQuizItem } from "../../../api/canvas/newQuizzes/newQuizItems/newQuizItemTypes.js";
+import { deleteAllNewQuizItems } from "../../../api/canvas/newQuizzes/newQuizItems/newQuizItemsApi.js";
 import { handleUpdateNewQuiz } from "../handleUpdateNewQuiz.js";
 
 export async function handleDeleteAllNewQuizItems(

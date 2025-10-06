@@ -1,6 +1,6 @@
 import ora from "ora";
 import { brandText } from "../../../utils/branding.js";
-import { NewQuiz } from "../../../api/newQuizzes/index.js";
+import { NewQuiz } from "../../../api/canvas/newQuizzes/index.js";
 import { publishAssignment } from "../../../api/canvas/assignments/publishAssignment.js";
 
 export async function handlePublishNewQuiz(

@@ -1,12 +1,7 @@
-import dotenv from "dotenv";
-import { QuizQuestion } from "./quiz-question.types";
-
-dotenv.config();
+import { QuizQuestion } from "./types";
 
 const baseURL = process.env.BASE_URL;
 const apiToken = process.env.API_TOKEN;
-const testCourseId = process.env.TEST_COURSE_ID as string;
-const testQuizId = process.env.TEST_QUIZ_ID as string;
 
 export async function listQuestionsInAQuiz(
   courseId: string,
@@ -43,4 +38,4 @@ export async function listQuestionsInAQuiz(
 }
 
 //Example Usage
-listQuestionsInAQuiz(testCourseId, testQuizId);
+// listQuestionsInAQuiz(testCourseId, testQuizId);

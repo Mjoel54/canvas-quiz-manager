@@ -6,7 +6,7 @@ import {
   listNewQuizzes,
   NewQuiz,
   deleteNewQuiz,
-} from "../../api/newQuizzes/index.js";
+} from "../../api/canvas/newQuizzes/index.js";
 
 export async function handleDeleteNewQuiz(courseId: number) {
   console.log("");

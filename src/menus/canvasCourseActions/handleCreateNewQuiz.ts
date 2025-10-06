@@ -2,7 +2,7 @@ import inquirer from "inquirer";
 import chalk from "chalk";
 import ora from "ora";
 import { brandText } from "../../utils/branding.js";
-import { createNewQuiz, NewQuiz } from "../../api/newQuizzes/index.js";
+import { createNewQuiz, NewQuiz } from "../../api/canvas/newQuizzes/index.js";
 import { getCourse, Course } from "../../api/canvas/courses/getCourse.js";
 
 export async function handleCreateNewQuiz(courseId: number) {

@@ -1,13 +1,11 @@
 import ora from "ora";
-import { brandText } from "../../../utils/branding.js";
-import {
-  publishClassicQuiz,
-  ClassicQuiz,
-} from "../../../api/canvas/classicQuiz/index.js";
+import { brandText } from "../../../../utils/branding.js";
+import { NewQuiz } from "../../../../api/canvas/newQuizzes/index.js";
+import { publishAssignment } from "../../../../api/canvas/assignments/publishAssignment.js";
 
-export async function handlePublishClassicQuiz(
+export async function handlePublishNewQuiz(
   courseId: number,
-  selectedQuiz: ClassicQuiz
+  selectedQuiz: NewQuiz
 ) {
   console.log("");
   const publishSpinner = ora(
@@ -15,7 +13,7 @@ export async function handlePublishClassicQuiz(
   ).start();
 
   try {
-    await publishClassicQuiz(courseId, Number(selectedQuiz.id));
+    await publishAssignment(courseId, Number(selectedQuiz.id));
     publishSpinner.succeed(
       `Successfully published ${brandText(selectedQuiz.title)} (${
         selectedQuiz.id

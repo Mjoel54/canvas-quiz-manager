@@ -1,12 +1,12 @@
 import inquirer from "inquirer";
 import chalk from "chalk";
 import ora from "ora";
-import { brandText } from "../../utils/branding.js";
+import { brandText } from "../../../utils/branding.js";
 import {
   createClassicQuiz,
   ClassicQuiz,
-} from "../../api/canvas/classicQuiz/index.js";
-import { getCourse, Course } from "../../api/canvas/courses/getCourse.js";
+} from "../../../api/canvas/classicQuiz/index.js";
+import { getCourse, Course } from "../../../api/canvas/courses/getCourse.js";
 
 export async function handleCreateClassicQuiz(courseId: number) {
   const answers = await inquirer.prompt([
@@ -36,9 +36,9 @@ export async function handleCreateClassicQuiz(courseId: number) {
     const spinner = ora("Creating Classic Quiz...").start();
     const quiz = (await createClassicQuiz(courseId, reqBody)) as ClassicQuiz;
     spinner.succeed(
-      `Successfully created Classic Quiz: ${brandText(quiz.title)} in ${
-        course?.name ? course.name : "Unnamed Course"
-      } (${course?.id})`
+      `Successfully created Classic Quiz: ${brandText(quiz.title)} (${
+        quiz.id
+      }) in ${course?.name ? course.name : "Unnamed Course"} (${course?.id})`
     );
 
     return quiz;

@@ -1,12 +1,12 @@
 import inquirer from "inquirer";
 import chalk from "chalk";
 import ora from "ora";
-import { brandText } from "../../utils/branding.js";
+import { brandText } from "../../../utils/branding.js";
 import {
   listNewQuizzes,
   NewQuiz,
   deleteNewQuiz,
-} from "../../api/newQuizzes/index.js";
+} from "../../../api/canvas/newQuizzes/index.js";
 
 export async function handleDeleteNewQuiz(courseId: number) {
   console.log("");

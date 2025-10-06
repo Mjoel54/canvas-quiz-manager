@@ -5,11 +5,14 @@ import {
   handleUpdateNewQuiz,
   handleListNewQuizzes,
   handleDeleteNewQuiz,
+} from "./newQuizActions/index.js";
+
+import {
   handleCreateClassicQuiz,
   handleListClassicQuizzes,
   handleDeleteClassicQuiz,
   handleUpdateClassicQuiz,
-} from "./index.js";
+} from "./classicQuizActions/index.js";
 
 import { brandText, boxedHeading } from "../../utils/branding.js";
 import { setCourseId, getContext } from "../../utils/context.js";

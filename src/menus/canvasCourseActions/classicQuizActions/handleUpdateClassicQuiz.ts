@@ -2,16 +2,17 @@ import inquirer from "inquirer";
 import chalk from "chalk";
 import ora from "ora";
 
-import { brandText, boxedHeading } from "../../utils/branding.js";
+import { brandText, boxedHeading } from "../../../utils/branding.js";
 
 import {
   handlePublishClassicQuiz,
   handleUnpublishClassicQuiz,
-} from "./updateClassicQuizActions/index.js";
+  handleRenameClassicQuiz,
+} from "../classicQuizActions/updateClassicQuizActions/index.js";
 import {
   listClassicQuizzes,
   ClassicQuiz,
-} from "../../api/canvas/classicQuiz/index.js";
+} from "../../../api/canvas/classicQuiz/index.js";
 
 export async function handleUpdateClassicQuiz(courseId: number) {
   // Display course info to user
@@ -82,6 +83,7 @@ async function showQuizActionOptions(
       choices: [
         { name: "Publish", value: "publish" },
         { name: "Unpublish", value: "unpublish" },
+        { name: "Rename", value: "rename" },
         { name: "Return to Home", value: "home" },
         { name: "❌ Exit Application", value: "exit" },
       ],
@@ -94,6 +96,9 @@ async function showQuizActionOptions(
       break;
     case "unpublish":
       await handleUnpublishClassicQuiz(courseId, selectedQuiz);
+      break;
+    case "rename":
+      await handleRenameClassicQuiz(courseId, selectedQuiz);
       break;
     case "home":
       return; // Return to main menu

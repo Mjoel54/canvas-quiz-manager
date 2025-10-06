@@ -1,9 +1,9 @@
 import ora from "ora";
-import { brandText } from "../../../utils/branding.js";
+import { brandText } from "../../../../utils/branding.js";
 import {
   ClassicQuiz,
   unpublishClassicQuiz,
-} from "../../../api/canvas/classicQuiz/index.js";
+} from "../../../../api/canvas/classicQuiz/index.js";
 
 export async function handleUnpublishClassicQuiz(
   courseId: number,

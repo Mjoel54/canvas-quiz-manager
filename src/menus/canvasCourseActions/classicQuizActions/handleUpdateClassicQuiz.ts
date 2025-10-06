@@ -2,17 +2,17 @@ import inquirer from "inquirer";
 import chalk from "chalk";
 import ora from "ora";
 
-import { brandText, boxedHeading } from "../../utils/branding.js";
+import { brandText, boxedHeading } from "../../../utils/branding.js";
 
 import {
   handlePublishClassicQuiz,
   handleUnpublishClassicQuiz,
   handleRenameClassicQuiz,
-} from "./updateClassicQuizActions/index.js";
+} from "../classicQuizActions/updateClassicQuizActions/index.js";
 import {
   listClassicQuizzes,
   ClassicQuiz,
-} from "../../api/canvas/classicQuiz/index.js";
+} from "../../../api/canvas/classicQuiz/index.js";
 
 export async function handleUpdateClassicQuiz(courseId: number) {
   // Display course info to user

@@ -1,12 +1,12 @@
 import inquirer from "inquirer";
 import chalk from "chalk";
 import ora from "ora";
-import { brandText } from "../../utils/branding.js";
+import { brandText } from "../../../utils/branding.js";
 import {
   createClassicQuiz,
   ClassicQuiz,
-} from "../../api/canvas/classicQuiz/index.js";
-import { getCourse, Course } from "../../api/canvas/courses/getCourse.js";
+} from "../../../api/canvas/classicQuiz/index.js";
+import { getCourse, Course } from "../../../api/canvas/courses/getCourse.js";
 
 export async function handleCreateClassicQuiz(courseId: number) {
   const answers = await inquirer.prompt([

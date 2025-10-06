@@ -1,13 +1,13 @@
 import chalk from "chalk";
 import ora from "ora";
-import { brandText } from "../../utils/branding.js";
+import { brandText } from "../../../utils/branding.js";
 import {
-  listClassicQuizzes,
-  ClassicQuiz,
-} from "../../api/canvas/classicQuiz/index.js";
-import { getCourse, Course } from "../../api/canvas/courses/getCourse.js";
+  listNewQuizzes,
+  NewQuiz,
+} from "../../../api/canvas/newQuizzes/index.js";
+import { getCourse, Course } from "../../../api/canvas/courses/getCourse.js";
 
-export async function handleListClassicQuizzes(courseId: number) {
+export async function handleListNewQuizzes(courseId: number) {
   let course: Course | null = null;
 
   try {
@@ -20,21 +20,21 @@ export async function handleListClassicQuizzes(courseId: number) {
 
   try {
     fetchingQuizzesSpinner.start();
-    const items = await listClassicQuizzes(courseId);
+    const items = await listNewQuizzes(courseId);
 
     if (!items || items.length === 0) {
-      fetchingQuizzesSpinner.fail("No Classic Quizzes found in this course.");
+      fetchingQuizzesSpinner.fail("No New Quizzes found in this course.");
       return;
     } else {
       fetchingQuizzesSpinner.succeed(
-        `Found ${brandText(items.length)} Classic ${
+        `Found ${brandText(items.length)} New ${
           items.length === 1 ? "Quiz" : "Quizzes"
         } in ${brandText(course?.name)}`
       );
     }
     console.log("");
 
-    items.forEach((item: ClassicQuiz, index: number) => {
+    items.forEach((item: NewQuiz, index: number) => {
       const isPublished = item.published
         ? chalk.green("Published")
         : chalk.red("Unpublished");

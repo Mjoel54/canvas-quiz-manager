@@ -1,26 +1,26 @@
 import inquirer from "inquirer";
 import chalk from "chalk";
 import ora from "ora";
-import { brandText } from "../../utils/branding.js";
+import { brandText } from "../../../utils/branding.js";
 import {
-  listClassicQuizzes,
-  ClassicQuiz,
-  deleteClassicQuiz,
-} from "../../api/canvas/classicQuiz/index.js";
+  listNewQuizzes,
+  NewQuiz,
+  deleteNewQuiz,
+} from "../../../api/canvas/newQuizzes/index.js";
 
-export async function handleDeleteClassicQuiz(courseId: number) {
+export async function handleDeleteNewQuiz(courseId: number) {
   console.log("");
-  const listSpinner = ora("Fetching Classic Quizzes...").start();
+  const listSpinner = ora("Fetching New Quizzes...").start();
 
-  let quizzes: ClassicQuiz[] = [];
+  let quizzes: NewQuiz[] = [];
 
   try {
-    quizzes = await listClassicQuizzes(courseId);
+    quizzes = await listNewQuizzes(courseId);
 
     if (quizzes.length > 0) {
-      listSpinner.succeed(`Found Classic Quizzes\n`);
+      listSpinner.succeed(`Fetched New Quizzes\n`);
     } else {
-      listSpinner.fail(`No Classic Quizzes found in this course\n`);
+      listSpinner.fail(`No New Quizzes found for this course\n`);
       return;
     }
 
@@ -30,7 +30,7 @@ export async function handleDeleteClassicQuiz(courseId: number) {
         type: "list",
         name: "selectedQuizIndex",
         message: "Select a quiz to delete:",
-        choices: quizzes.map((quiz: ClassicQuiz, index: number) => ({
+        choices: quizzes.map((quiz: NewQuiz, index: number) => ({
           name: `${index + 1}. ${quiz.title} - ${
             quiz.published ? chalk.green("Published") : chalk.red("Unpublished")
           }`,
@@ -61,13 +61,13 @@ export async function handleDeleteClassicQuiz(courseId: number) {
     const deletionSpinner = ora(
       `Deleting ${brandText(selectedQuiz.title)}...`
     ).start();
-    await deleteClassicQuiz(courseId, Number(selectedQuiz.id));
+    await deleteNewQuiz(courseId, Number(selectedQuiz.id));
 
     deletionSpinner.succeed(
-      `Successfully deleted Classic Quiz: ${brandText(selectedQuiz.title)}`
+      `Successfully deleted New Quiz: ${brandText(selectedQuiz.title)}`
     );
   } catch (error) {
-    let errorMessage = chalk.red("Failed to delete classic quiz.");
+    let errorMessage = chalk.red("Failed to delete new quiz.");
     console.error(errorMessage);
   }
 }

@@ -1,10 +1,10 @@
 import inquirer from "inquirer";
 import ora from "ora";
-import { brandText } from "../../../utils/branding.js";
+import { brandText } from "../../../../utils/branding.js";
 import {
   editClassicQuiz,
   ClassicQuiz,
-} from "../../../api/canvas/classicQuiz/index.js";
+} from "../../../../api/canvas/classicQuiz/index.js";
 
 export async function handleRenameClassicQuiz(
   courseId: number,

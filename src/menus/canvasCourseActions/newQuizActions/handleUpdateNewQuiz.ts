@@ -2,9 +2,12 @@ import inquirer from "inquirer";
 import chalk from "chalk";
 import ora from "ora";
 
-import { listNewQuizzes, NewQuiz } from "../../api/canvas/newQuizzes/index.js";
-import { NewQuizItem } from "../../api/canvas/newQuizzes/newQuizItems/newQuizItemTypes.js";
-import { brandText, boxedHeading } from "../../utils/branding.js";
+import {
+  listNewQuizzes,
+  NewQuiz,
+} from "../../../api/canvas/newQuizzes/index.js";
+import { NewQuizItem } from "../../../api/canvas/newQuizzes/newQuizItems/newQuizItemTypes.js";
+import { brandText, boxedHeading } from "../../../utils/branding.js";
 
 import {
   handleListNewQuizItems,

@@ -10,7 +10,7 @@ export interface QuizGroup {
 }
 
 // Request interface for creating a question group
-export interface CreateQuestionGroupParams {
+export interface QuestionGroupParams {
   /** The name of the question group - REQUIRED */
   name: string;
   /** The number of questions to randomly select - REQUIRED */

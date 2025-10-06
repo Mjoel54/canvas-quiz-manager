@@ -1,14 +1,15 @@
-import { QuizGroup, CreateQuestionGroupParams } from "./types";
+import { Question } from "inquirer";
+import { QuizGroup, QuestionGroupParams } from "./types";
 
-const baseUrl = process.env.BETA_BASE_URL;
-const apiToken = process.env.BETA_API_TOKEN;
+const baseUrl = process.env.BASE_URL;
+const apiToken = process.env.API_TOKEN;
 
 // Creates a new question group for a quiz in Canvas LMS
 export async function createQuestionGroup(
   courseId: number,
   quizId: number,
-  params: CreateQuestionGroupParams
-): Promise<QuizGroup> {
+  params: QuestionGroupParams
+) {
   if (!baseUrl || !apiToken) {
     throw new Error("Missing required environment variables");
   }

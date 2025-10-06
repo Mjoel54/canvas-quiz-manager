@@ -8,6 +8,7 @@ import {
   handlePublishClassicQuiz,
   handleUnpublishClassicQuiz,
   handleRenameClassicQuiz,
+  handleCreateQuestionGroup,
 } from "../classicQuizActions/updateClassicQuizActions/index.js";
 import {
   listClassicQuizzes,
@@ -84,6 +85,7 @@ async function showQuizActionOptions(
         { name: "Publish", value: "publish" },
         { name: "Unpublish", value: "unpublish" },
         { name: "Rename", value: "rename" },
+        { name: "Create Question Group", value: "createQuestionGroup" },
         { name: "Return to Home", value: "home" },
         { name: "❌ Exit Application", value: "exit" },
       ],
@@ -99,6 +101,9 @@ async function showQuizActionOptions(
       break;
     case "rename":
       await handleRenameClassicQuiz(courseId, selectedQuiz);
+      break;
+    case "createQuestionGroup":
+      await handleCreateQuestionGroup(courseId, selectedQuiz);
       break;
     case "home":
       return; // Return to main menu

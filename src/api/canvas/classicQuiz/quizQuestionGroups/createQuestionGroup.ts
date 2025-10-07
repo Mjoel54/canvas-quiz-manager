@@ -1,5 +1,8 @@
-import { Question } from "inquirer";
-import { QuizGroup, QuestionGroupParams } from "./types";
+import {
+  QuizGroup,
+  QuestionGroupParams,
+  CreateQuizGroupResponse,
+} from "./types";
 
 const baseUrl = process.env.BASE_URL;
 const apiToken = process.env.API_TOKEN;
@@ -39,10 +42,9 @@ export async function createQuestionGroup(
     }
 
     // The response might also be an array
-    const result = await response.json();
+    const result = (await response.json()) as CreateQuizGroupResponse;
 
-    // Handle if the API returns an array
-    const createdGroup: QuizGroup = Array.isArray(result) ? result[0] : result;
+    const createdGroup: QuizGroup = { ...result.quiz_groups[0] };
 
     return createdGroup;
   } catch (error) {

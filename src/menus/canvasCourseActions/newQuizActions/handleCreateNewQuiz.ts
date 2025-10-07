@@ -1,19 +1,19 @@
 import inquirer from "inquirer";
 import chalk from "chalk";
 import ora from "ora";
-import { brandText } from "../../utils/branding.js";
+import { brandText } from "../../../utils/branding.js";
 import {
-  createClassicQuiz,
-  ClassicQuiz,
-} from "../../api/canvas/classicQuiz/index.js";
-import { getCourse, Course } from "../../api/canvas/courses/getCourse.js";
+  createNewQuiz,
+  NewQuiz,
+} from "../../../api/canvas/newQuizzes/index.js";
+import { getCourse, Course } from "../../../api/canvas/courses/getCourse.js";
 
-export async function handleCreateClassicQuiz(courseId: number) {
+export async function handleCreateNewQuiz(courseId: number) {
   const answers = await inquirer.prompt([
     {
       type: "input",
       name: "quizTitle",
-      message: "Enter a name for the Classic Quiz",
+      message: "Enter a name for the New Quiz",
     },
   ]);
 
@@ -33,12 +33,12 @@ export async function handleCreateClassicQuiz(courseId: number) {
 
   try {
     console.log("");
-    const spinner = ora("Creating Classic Quiz...").start();
-    const quiz = (await createClassicQuiz(courseId, reqBody)) as ClassicQuiz;
+    const spinner = ora("Creating New Quiz...").start();
+    const quiz = (await createNewQuiz(courseId, reqBody)) as NewQuiz;
     spinner.succeed(
-      `Classic Quiz created successfully: ${brandText(quiz.title)} in ${
-        course?.name ? course.name : "Unnamed Course"
-      } (${course?.id})`
+      `New Quiz created successfully: ${brandText(quiz.title)} (${
+        quiz.id
+      }) in ${course?.name ? course.name : "Unnamed Course"} (${course?.id})`
     );
 
     return quiz;

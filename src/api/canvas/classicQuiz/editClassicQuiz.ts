@@ -3,9 +3,10 @@ import { ClassicQuiz, ClassicQuizParams } from "./types";
 const baseUrl = process.env.BASE_URL;
 const apiToken = process.env.API_TOKEN;
 
-// Function to create a classic quiz in Canvas
-export async function createClassicQuiz(
+// Function to edit a classic quiz in Canvas
+export async function editClassicQuiz(
   courseId: number,
+  quizId: number,
   params: ClassicQuizParams
 ): Promise<ClassicQuiz> {
   // Validate environment variables
@@ -13,11 +14,11 @@ export async function createClassicQuiz(
     throw new Error("Missing required variables");
   }
 
-  const url = `${baseUrl}/api/v1/courses/${courseId}/quizzes`;
+  const url = `${baseUrl}/api/v1/courses/${courseId}/quizzes/${quizId}`;
 
   try {
     const response = await fetch(url, {
-      method: "POST",
+      method: "PUT",
       headers: {
         Authorization: `Bearer ${apiToken}`,
         "Content-Type": "application/json",
@@ -32,11 +33,11 @@ export async function createClassicQuiz(
       );
     }
 
-    const quiz = (await response.json()) as ClassicQuiz;
+    const updatedQuiz = (await response.json()) as ClassicQuiz;
 
-    return quiz;
+    return updatedQuiz;
   } catch (error) {
-    console.error("Error creating quiz:", error);
+    console.error("Error editing quiz:", error);
     throw error;
   }
 }

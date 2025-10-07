@@ -1,11 +1,10 @@
-import chalk from "chalk";
 import ora from "ora";
-import { brandText } from "../../../utils/branding.js";
-import { NewQuiz } from "../../../api/newQuizzes/index.js";
+import { brandText } from "../../../../utils/branding.js";
+import { NewQuiz } from "../../../../api/canvas/newQuizzes/index.js";
 import {
   unpublishAssignment,
   getAssignment,
-} from "../../../api/canvas/assignments/index.js";
+} from "../../../../api/canvas/assignments/index.js";
 
 export async function handleUnpublishNewQuiz(
   courseId: number,

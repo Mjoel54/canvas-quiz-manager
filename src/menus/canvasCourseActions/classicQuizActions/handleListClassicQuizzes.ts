@@ -1,11 +1,11 @@
 import chalk from "chalk";
 import ora from "ora";
-import { brandText } from "../../utils/branding.js";
+import { brandText } from "../../../utils/branding.js";
 import {
   listClassicQuizzes,
   ClassicQuiz,
-} from "../../api/canvas/classicQuiz/index.js";
-import { getCourse, Course } from "../../api/canvas/courses/getCourse.js";
+} from "../../../api/canvas/classicQuiz/index.js";
+import { getCourse, Course } from "../../../api/canvas/courses/getCourse.js";
 
 export async function handleListClassicQuizzes(courseId: number) {
   let course: Course | null = null;

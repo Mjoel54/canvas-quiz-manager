@@ -12,7 +12,7 @@ import {
   ResultViewSettings,
   CreateNewQuizParams,
   UpdateNewQuizParams,
-} from "./types";
+} from "./types.js";
 
 // export helper functions
 export {

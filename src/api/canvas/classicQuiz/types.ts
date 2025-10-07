@@ -52,9 +52,9 @@ export interface ClassicQuiz {
   anonymous_submissions: boolean;
 }
 
-export interface CreateClassicQuizParams {
+export interface ClassicQuizParams {
   quiz: {
-    title: string;
+    title?: string;
     description?: string;
     quiz_type?: ClassicQuizTypeValue;
     assignment_group_id?: number;

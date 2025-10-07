@@ -1,12 +1,12 @@
 import { v4 as uuidv4 } from "uuid";
 import ora from "ora";
-import { brandText } from "../../../utils/branding.js";
+import { brandText } from "../../../../utils/branding.js";
 import {
   NewQuizItem,
   NewQuizEssayQuestionRequest,
   NewQuizOrderingQuestionRequest,
   NewQuizTrueFalseQuestionRequest,
-} from "./newQuizItemTypes";
+} from "./newQuizItemTypes.js";
 import {
   transformToCanvasNewQuizTrueFalseItem,
   transformToCanvasNewQuizChoiceItem,
@@ -14,7 +14,7 @@ import {
   transformToCanvasNewQuizOrderingItem,
   transformToCanvasNewQuizMultiAnswerItem,
   transformToCanvasNewQuizMatchingItem,
-} from "../../../utils/transformForCanvasNewQuiz.js";
+} from "../../../../utils/transformForCanvasNewQuiz.js";
 
 const baseUrl = process.env.BASE_URL;
 const apiToken = process.env.API_TOKEN;

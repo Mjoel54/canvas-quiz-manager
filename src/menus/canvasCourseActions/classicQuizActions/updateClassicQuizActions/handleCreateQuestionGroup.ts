@@ -32,7 +32,7 @@ export async function handleCreateQuestionGroup(
     question_points: 1,
   };
 
-  const spinner = ora(`Creating ${brandText("question grop")}...`);
+  const spinner = ora(`Creating ${brandText("question group")}...`);
 
   try {
     console.log("");
@@ -43,10 +43,11 @@ export async function handleCreateQuestionGroup(
       selectedQuiz.id,
       reqBody
     );
+
     spinner.succeed(
-      `Successfully created Quiz Group ${brandText(quizGroup.name)} in ${
-        selectedQuiz.title
-      }`
+      `Successfully created Quiz Group ${brandText(quizGroup.name)} (${
+        quizGroup.id
+      }) in ${selectedQuiz.title}`
     );
 
     return quizGroup;

@@ -1,0 +1,14 @@
+{
+  "questionData": [
+    {
+      "type": "true_false",
+      "title": "Beethoven’s Hearing",
+      "questionText": "Ludwig van Beethoven composed some of his most famous works after losing his hearing.",
+      "options": [
+        { "text": "True", "value": true },
+        { "text": "False", "value": false }
+      ],
+      "correctAnswer": true
+    }
+  ]
+}

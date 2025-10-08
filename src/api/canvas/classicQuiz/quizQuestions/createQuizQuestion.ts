@@ -8,11 +8,8 @@ import {
 
 dotenv.config();
 
-const betaUrl = process.env.BETA_BASE_URL;
-const betaApiToken = process.env.BETA_API_TOKEN;
-
-const baseUrl = betaUrl;
-const apiToken = betaApiToken;
+const baseUrl = process.env.BASE_URL;
+const apiToken = process.env.API_TOKEN;
 
 export async function createQuizQuestion(
   courseId: number,
@@ -131,7 +128,7 @@ export async function createTrueFalseQuestion(
   quizId: number,
   questionParams: CreateQuizQuestionParams
 ): Promise<QuizQuestion> {
-  if (!betaUrl || !betaApiToken) {
+  if (!baseUrl || !apiToken) {
     throw new Error("Missing required variables");
   }
 

@@ -1,12 +1,12 @@
 import inquirer from "inquirer";
 import ora from "ora";
-import { brandText } from "../../../../utils/branding.js";
+import { brandText } from "../../../../../utils/branding.js";
 import {
   createQuestionGroup,
   QuestionGroupParams,
   CreateQuizGroupResponse,
-} from "../../../../api/canvas/classicQuiz/quizQuestionGroups/index.js";
-import { ClassicQuiz } from "../../../../api/canvas/classicQuiz/index.js";
+} from "../../../../../api/canvas/classicQuiz/quizQuestionGroups/index.js";
+import { ClassicQuiz } from "../../../../../api/canvas/classicQuiz/index.js";
 import { log } from "console";
 
 export async function handleCreateQuestionGroup(

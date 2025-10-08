@@ -4,8 +4,8 @@ const baseUrl = process.env.BASE_URL;
 const apiToken = process.env.API_TOKEN;
 
 export async function getClassicQuiz(
-  courseId: string,
-  quizId: string
+  courseId: number,
+  quizId: number
 ): Promise<ClassicQuiz> {
   if (!baseUrl || !apiToken || !courseId || !quizId) {
     throw new Error("Missing required variables");

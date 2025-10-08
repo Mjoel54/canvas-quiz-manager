@@ -1,5 +1,3 @@
-// classicQuizQuestionFactory.js
-
 export class ClassicQuizQuestionFactory {
   defaultPoints: number;
   constructor(defaultPoints = 1) {
@@ -24,7 +22,7 @@ export class ClassicQuizQuestionFactory {
     const type = data.type;
     switch (type) {
       case "true_false":
-        return { question: this.buildMultipleChoice(data) };
+        return { question: this.buildTrueFalse(data) };
       // case "true_false_question":
       //   return { question: this.buildTrueFalse(data) };
       // Additional question types here (essay, short answer, etc.)
@@ -50,14 +48,14 @@ export class ClassicQuizQuestionFactory {
     };
   }
 
-  buildMultipleChoice(data: any) {
-    const base = this.baseQuestion(data);
-    return {
-      ...base,
-      answers: data.answers.map((ans: any) => ({
-        answer_text: ans.text,
-        answer_weight: ans.correct ? 100 : 0,
-      })),
-    };
-  }
+  // buildMultipleChoice(data: any) {
+  //   const base = this.baseQuestion(data);
+  //   return {
+  //     ...base,
+  //     answers: data.answers.map((ans: any) => ({
+  //       answer_text: ans.text,
+  //       answer_weight: ans.correct ? 100 : 0,
+  //     })),
+  //   };
+  // }
 }

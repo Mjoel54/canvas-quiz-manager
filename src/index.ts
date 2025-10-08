@@ -1,13 +1,25 @@
-// import {
-//   unpublishAssignment,
-//   getAssignment,
-// } from "./api/canvas/assignments/index.js";
+import { ClassicQuizQuestionFactory } from "./utils/classicQuizQuestionFactory.js";
+import { createQuizQuestion } from "./api/canvas/classicQuiz/quizQuestions/createQuizQuestion.js";
 
-// // unpublishAssignment(12730833, 58715199);
+const factory = new ClassicQuizQuestionFactory();
 
-// let assignment = await getAssignment(12730833, 58715199);
+let questionData = {
+  type: "true_false",
+  title: "Beethoven’s Hearing",
+  questionText:
+    "Ludwig van Beethoven composed some of his most famous works after losing his hearing.",
+  options: [
+    { text: "True", value: true },
+    { text: "False", value: false },
+  ],
+  correctAnswer: true,
+};
 
-// console.log(assignment);
+let question = factory.create(questionData);
+console.log(JSON.stringify(question, null, 2));
+
+// @ts-ignore
+createQuizQuestion(12730833, 23515236, question);
 
 // import { createQuestionItemInNewQuiz } from "./api/canvas/newQuiz/newQuizItemsApi.js";
 // import { v4 as uuidv4 } from "uuid";

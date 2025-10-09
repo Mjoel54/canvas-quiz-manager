@@ -1,0 +1,28 @@
+{
+  "questionData": [
+    {
+      "type": "choice",
+      "title": "Beatles Album",
+      "questionText": "Which Beatles album features the song 'Lucy in the Sky with Diamonds'?",
+      "options": [
+        {
+          "id": "1",
+          "text": "Revolver"
+        },
+        {
+          "id": "2",
+          "text": "Sgt. Pepper's Lonely Hearts Club Band"
+        },
+        {
+          "id": "3",
+          "text": "Abbey Road"
+        },
+        {
+          "id": "4",
+          "text": "Let It Be"
+        }
+      ],
+      "correctAnswer": "2"
+    }
+  ]
+}

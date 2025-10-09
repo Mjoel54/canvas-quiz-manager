@@ -1,25 +1,28 @@
 import { ClassicQuizQuestionFactory } from "./utils/classicQuizQuestionFactory.js";
 import { createQuizQuestion } from "./api/canvas/classicQuiz/quizQuestions/createQuizQuestion.js";
+import questionData from "./data/singleChoice.json" assert { type: "json" };
 
 const factory = new ClassicQuizQuestionFactory();
 
-let questionData = {
-  type: "true_false",
-  title: "Beethoven’s Hearing",
+const question = {
+  type: "multi_answer",
+  title: "Classical Composers",
   questionText:
-    "Ludwig van Beethoven composed some of his most famous works after losing his hearing.",
+    "Which of the following composers are from the Classical era of Western music?",
   options: [
-    { text: "True", value: true },
-    { text: "False", value: false },
+    { id: "1", text: "Wolfgang Amadeus Mozart" },
+    { id: "2", text: "Ludwig van Beethoven (early works)" },
+    { id: "3", text: "Johann Sebastian Bach" },
+    { id: "4", text: "Joseph Haydn" },
   ],
-  correctAnswer: true,
+  correctAnswers: ["1", "2", "4"],
 };
 
-let question = factory.create(questionData);
-console.log(JSON.stringify(question, null, 2));
+let formattedQuestion = factory.create(question);
+console.log(JSON.stringify(formattedQuestion, null, 2));
 
 // @ts-ignore
-createQuizQuestion(12730833, 23515236, question);
+createQuizQuestion(12730833, 23515236, formattedQuestion);
 
 // import { createQuestionItemInNewQuiz } from "./api/canvas/newQuiz/newQuizItemsApi.js";
 // import { v4 as uuidv4 } from "uuid";

@@ -1,25 +1,40 @@
 import { ClassicQuizQuestionFactory } from "./utils/classicQuizQuestionFactory.js";
 import { createQuizQuestion } from "./api/canvas/classicQuiz/quizQuestions/createQuizQuestion.js";
+import questionData from "./data/singleChoice.json" assert { type: "json" };
 
 const factory = new ClassicQuizQuestionFactory();
 
-let questionData = {
-  type: "true_false",
-  title: "Beethoven’s Hearing",
+const question = {
+  type: "choice",
+  title: "Beatles Album",
   questionText:
-    "Ludwig van Beethoven composed some of his most famous works after losing his hearing.",
+    "Which Beatles album features the song 'Lucy in the Sky with Diamonds'?",
   options: [
-    { text: "True", value: true },
-    { text: "False", value: false },
+    {
+      id: "1",
+      text: "Revolver",
+    },
+    {
+      id: "2",
+      text: "Sgt. Pepper's Lonely Hearts Club Band",
+    },
+    {
+      id: "3",
+      text: "Abbey Road",
+    },
+    {
+      id: "4",
+      text: "Let It Be",
+    },
   ],
-  correctAnswer: true,
+  correctAnswer: "2",
 };
 
-let question = factory.create(questionData);
-console.log(JSON.stringify(question, null, 2));
+let formattedQuestion = factory.create(question);
+console.log(JSON.stringify(formattedQuestion, null, 2));
 
 // @ts-ignore
-createQuizQuestion(12730833, 23515236, question);
+createQuizQuestion(12730833, 23515236, formattedQuestion);
 
 // import { createQuestionItemInNewQuiz } from "./api/canvas/newQuiz/newQuizItemsApi.js";
 // import { v4 as uuidv4 } from "uuid";

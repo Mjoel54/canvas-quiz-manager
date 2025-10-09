@@ -23,9 +23,8 @@ export class ClassicQuizQuestionFactory {
     switch (type) {
       case "true_false":
         return { question: this.buildTrueFalse(data) };
-      // case "true_false_question":
-      //   return { question: this.buildTrueFalse(data) };
-      // Additional question types here (essay, short answer, etc.)
+      case "choice":
+        return { question: this.buildMultipleChoice(data) };
       default:
         throw new Error(`Unsupported question type: ${type}`);
     }
@@ -48,14 +47,17 @@ export class ClassicQuizQuestionFactory {
     };
   }
 
-  // buildMultipleChoice(data: any) {
-  //   const base = this.baseQuestion(data);
-  //   return {
-  //     ...base,
-  //     answers: data.answers.map((ans: any) => ({
-  //       answer_text: ans.text,
-  //       answer_weight: ans.correct ? 100 : 0,
-  //     })),
-  //   };
-  // }
+  buildMultipleChoice(data: any) {
+    const base = this.baseQuestion(data);
+    return {
+      ...base,
+      question_type: "multiple_choice_question",
+      answers: data.options.map((ans: any) => {
+        return {
+          answer_text: ans.text,
+          answer_weight: ans.id === data.correctAnswer ? 100 : 0,
+        };
+      }),
+    };
+  }
 }

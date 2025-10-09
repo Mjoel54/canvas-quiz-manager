@@ -5,17 +5,10 @@ import questionData from "./data/singleChoice.json" assert { type: "json" };
 const factory = new ClassicQuizQuestionFactory();
 
 const question = {
-  type: "multi_answer",
-  title: "Classical Composers",
+  type: "essay",
+  title: "Impact of Jazz",
   questionText:
-    "Which of the following composers are from the Classical era of Western music?",
-  options: [
-    { id: "1", text: "Wolfgang Amadeus Mozart" },
-    { id: "2", text: "Ludwig van Beethoven (early works)" },
-    { id: "3", text: "Johann Sebastian Bach" },
-    { id: "4", text: "Joseph Haydn" },
-  ],
-  correctAnswers: ["1", "2", "4"],
+    "In a few sentences, explain how jazz music influenced modern popular music genres.",
 };
 
 let formattedQuestion = factory.create(question);

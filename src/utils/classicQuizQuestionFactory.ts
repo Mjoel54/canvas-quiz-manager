@@ -27,6 +27,8 @@ export class ClassicQuizQuestionFactory {
         return { question: this.buildMultipleChoice(data) };
       case "multi_answer":
         return { question: this.buildMultipleAnswers(data) };
+      case "essay":
+        return { question: this.buildEssay(data) };
       default:
         throw new Error(`Unsupported question type: ${type}`);
     }
@@ -74,6 +76,14 @@ export class ClassicQuizQuestionFactory {
           answer_weight: data.correctAnswers.includes(ans.id) ? 100 : 0,
         };
       }),
+    };
+  }
+
+  buildEssay(data: any) {
+    const base = this.baseQuestion(data);
+    return {
+      ...base,
+      question_type: "essay_question",
     };
   }
 }

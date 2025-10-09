@@ -1,3 +1,7 @@
+// import { listQuestionsInAQuiz } from "./api/canvas/classicQuiz/quizQuestions/listClassicQuizQuestions.js";
+
+// -----------------------------------------//
+
 import { ClassicQuizQuestionFactory } from "./utils/classicQuizQuestionFactory.js";
 import { createQuizQuestion } from "./api/canvas/classicQuiz/quizQuestions/createQuizQuestion.js";
 import questionData from "./data/singleChoice.json" assert { type: "json" };
@@ -5,10 +9,31 @@ import questionData from "./data/singleChoice.json" assert { type: "json" };
 const factory = new ClassicQuizQuestionFactory();
 
 const question = {
-  type: "essay",
-  title: "Impact of Jazz",
-  questionText:
-    "In a few sentences, explain how jazz music influenced modern popular music genres.",
+  type: "matching",
+  title: "Musical Instruments",
+  questionText: "Match each instrument to its family.",
+  options: [
+    {
+      question_id: "48291753",
+      question_body: "Timpani",
+      answer_body: "Percussion",
+    },
+    {
+      question_id: "48291754",
+      question_body: "Mandolin",
+      answer_body: "String",
+    },
+    {
+      question_id: "48291755",
+      question_body: "Bassoon",
+      answer_body: "Woodwind",
+    },
+    {
+      question_id: "48291756",
+      question_body: "Euphonium",
+      answer_body: "Brass",
+    },
+  ],
 };
 
 let formattedQuestion = factory.create(question);
@@ -16,6 +41,7 @@ console.log(JSON.stringify(formattedQuestion, null, 2));
 
 // @ts-ignore
 createQuizQuestion(12730833, 23515236, formattedQuestion);
+// -----------------------------------------//
 
 // import { createQuestionItemInNewQuiz } from "./api/canvas/newQuiz/newQuizItemsApi.js";
 // import { v4 as uuidv4 } from "uuid";

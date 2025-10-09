@@ -6,24 +6,24 @@
       "questionText": "Match each instrument to its family.",
       "options": [
         {
-          "answer_body": "Percussion",
           "question_id": "48291753",
-          "question_body": "Timpani"
+          "question_body": "Timpani",
+          "answer_body": "Percussion"
         },
         {
-          "answer_body": "String",
           "question_id": "48291754",
-          "question_body": "Mandolin"
+          "question_body": "Mandolin",
+          "answer_body": "String"
         },
         {
-          "answer_body": "Woodwind",
           "question_id": "48291755",
-          "question_body": "Bassoon"
+          "question_body": "Bassoon",
+          "answer_body": "Woodwind"
         },
         {
-          "answer_body": "Brass",
           "question_id": "48291756",
-          "question_body": "Euphonium"
+          "question_body": "Euphonium",
+          "answer_body": "Brass"
         }
       ]
     }

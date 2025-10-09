@@ -29,6 +29,8 @@ export class ClassicQuizQuestionFactory {
         return { question: this.buildMultipleAnswers(data) };
       case "essay":
         return { question: this.buildEssay(data) };
+      case "matching":
+        return { question: this.buildMatching(data) };
       default:
         throw new Error(`Unsupported question type: ${type}`);
     }
@@ -84,6 +86,20 @@ export class ClassicQuizQuestionFactory {
     return {
       ...base,
       question_type: "essay_question",
+    };
+  }
+
+  buildMatching(data: any) {
+    const base = this.baseQuestion(data);
+    return {
+      ...base,
+      question_type: "matching_question",
+      answers: data.options.map((ans: any) => {
+        return {
+          answer_match_left: ans.question_body,
+          answer_match_right: ans.answer_body,
+        };
+      }),
     };
   }
 }

@@ -25,6 +25,8 @@ export class ClassicQuizQuestionFactory {
         return { question: this.buildTrueFalse(data) };
       case "choice":
         return { question: this.buildMultipleChoice(data) };
+      case "multi_answer":
+        return { question: this.buildMultipleAnswers(data) };
       default:
         throw new Error(`Unsupported question type: ${type}`);
     }
@@ -56,6 +58,20 @@ export class ClassicQuizQuestionFactory {
         return {
           answer_text: ans.text,
           answer_weight: ans.id === data.correctAnswer ? 100 : 0,
+        };
+      }),
+    };
+  }
+
+  buildMultipleAnswers(data: any) {
+    const base = this.baseQuestion(data);
+    return {
+      ...base,
+      question_type: "multiple_answers_question",
+      answers: data.options.map((ans: any) => {
+        return {
+          answer_text: ans.text,
+          answer_weight: data.correctAnswers.includes(ans.id) ? 100 : 0,
         };
       }),
     };

@@ -5,29 +5,17 @@ import questionData from "./data/singleChoice.json" assert { type: "json" };
 const factory = new ClassicQuizQuestionFactory();
 
 const question = {
-  type: "choice",
-  title: "Beatles Album",
+  type: "multi_answer",
+  title: "Classical Composers",
   questionText:
-    "Which Beatles album features the song 'Lucy in the Sky with Diamonds'?",
+    "Which of the following composers are from the Classical era of Western music?",
   options: [
-    {
-      id: "1",
-      text: "Revolver",
-    },
-    {
-      id: "2",
-      text: "Sgt. Pepper's Lonely Hearts Club Band",
-    },
-    {
-      id: "3",
-      text: "Abbey Road",
-    },
-    {
-      id: "4",
-      text: "Let It Be",
-    },
+    { id: "1", text: "Wolfgang Amadeus Mozart" },
+    { id: "2", text: "Ludwig van Beethoven (early works)" },
+    { id: "3", text: "Johann Sebastian Bach" },
+    { id: "4", text: "Joseph Haydn" },
   ],
-  correctAnswer: "2",
+  correctAnswers: ["1", "2", "4"],
 };
 
 let formattedQuestion = factory.create(question);

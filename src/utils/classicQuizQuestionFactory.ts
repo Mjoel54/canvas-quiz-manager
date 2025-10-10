@@ -31,6 +31,8 @@ export class ClassicQuizQuestionFactory {
         return { question: this.buildEssay(data) };
       case "matching":
         return { question: this.buildMatching(data) };
+      case "ordering":
+        return { question: this.buildOrdering(data) };
       default:
         throw new Error(`Unsupported question type: ${type}`);
     }
@@ -98,6 +100,22 @@ export class ClassicQuizQuestionFactory {
         return {
           answer_match_left: ans.question_body,
           answer_match_right: ans.answer_body,
+        };
+      }),
+    };
+  }
+
+  // Classic quizzes do not support ordering questions natively,
+  // but we can represent them as matching questions where the user selects the order from the matching options
+  buildOrdering(data: any) {
+    const base = this.baseQuestion(data);
+    return {
+      ...base,
+      question_type: "matching_question",
+      answers: data.options.map((ans: any) => {
+        return {
+          answer_match_left: ans.text,
+          answer_match_right: ans.id,
         };
       }),
     };

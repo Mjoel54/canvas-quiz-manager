@@ -57,8 +57,6 @@ export async function createQuizQuestion(
 
     const result = (await response.json()) as QuizQuestion;
 
-    console.log("Quiz question created successfully:", result);
-
     return result;
   } catch (error) {
     if (error) {

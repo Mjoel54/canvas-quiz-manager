@@ -1,4 +1,5 @@
 import inquirer from "inquirer";
+import ora from "ora";
 import chalk from "chalk";
 import { brandText } from "../../../../utils/branding.js";
 import { ClassicQuizQuestionFactory } from "../../../../utils/classicQuizQuestionFactory.js";
@@ -68,29 +69,39 @@ export async function handleCreateClassicQuizQuestions(
       factory.create(question)
     );
 
-    console.log(formattedQuestions);
+    console.log("");
+    const spinner = ora("Brewing up your quiz questions... ☕").start();
+
+    let successCount = 0;
+    let failedCount = 0;
 
     // Send each formatted question to Canvas
-    for (const formattedQuestion of formattedQuestions) {
+    for (let i = 0; i < formattedQuestions.length; i++) {
       try {
-        await createQuizQuestion(courseId, selectedQuiz.id, formattedQuestion);
-        console.log(
-          chalk.green(
-            `✅ Successfully added question: "${formattedQuestion.title}"`
-          )
+        await createQuizQuestion(
+          courseId,
+          selectedQuiz.id,
+          formattedQuestions[i]
         );
+        spinner.text = `Crafting question ${brandText(i + 1)} of ${brandText(
+          formattedQuestions.length
+        )}... 🎨`;
+        successCount++;
       } catch (error) {
         console.error(
           chalk.red(
-            `❌ Failed to add question: "${formattedQuestion.title}": ${error}`
+            `❌ Failed to add question: "${formattedQuestions[i].title}": ${error}`
           )
         );
+        failedCount++;
       }
     }
-    // Log the formatted question for debugging
 
-    // Create multiple questions in the selected Canvas Classic Quiz
-
+    spinner.succeed(
+      `Successfully added ${brandText(successCount)} questions to the quiz "${
+        selectedQuiz.title
+      }".`
+    );
     // Return control the Edit Quiz menu
     return await handleUpdateClassicQuiz(courseId);
   } catch (error) {

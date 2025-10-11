@@ -9,6 +9,7 @@ import {
   handleUnpublishClassicQuiz,
   handleRenameClassicQuiz,
   handleCreateQuestionGroup,
+  handleCreateClassicQuizQuestions,
 } from "../classicQuizActions/updateClassicQuizActions/index.js";
 import {
   listClassicQuizzes,
@@ -82,6 +83,7 @@ async function showQuizActionOptions(
       name: "action",
       message: `What would you like to do with "${selectedQuiz.title}"?`,
       choices: [
+        { name: "Add questions", value: "addQuestions" },
         { name: "Publish", value: "publish" },
         { name: "Unpublish", value: "unpublish" },
         { name: "Rename", value: "rename" },
@@ -93,6 +95,9 @@ async function showQuizActionOptions(
   ]);
 
   switch (action) {
+    case "addQuestions":
+      await handleCreateClassicQuizQuestions(courseId, selectedQuiz);
+      break;
     case "publish":
       await handlePublishClassicQuiz(courseId, selectedQuiz);
       break;
